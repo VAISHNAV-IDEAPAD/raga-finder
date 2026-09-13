@@ -1,0 +1,114 @@
+[
+  {
+    "id": "rule-test-1789314189245",
+    "createdAt": "2026-09-13T15:43:09.245Z",
+    "title": "Fast tempo Bhairav vs Kalingada",
+    "patternType": "correction",
+    "correctRaga": "Kalingada",
+    "tradition": "Hindustani",
+    "ruleInstruction": "If fast tempo is played without andolan, identify as Kalingada.",
+    "severity": "strict_override",
+    "active": true
+  },
+  {
+    "id": "rule-todi-differentiation",
+    "createdAt": "2026-09-01T10:00:00Z",
+    "title": "Carnatic Hanumatodi vs Hindustani Miyan ki Todi",
+    "patternType": "correction",
+    "swaraPattern": [
+      "S",
+      "R1",
+      "G2",
+      "M1",
+      "M2",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "triggerKeywords": [
+      "Todi",
+      "Thodi",
+      "Hanumatodi",
+      "Miyan ki Todi"
+    ],
+    "correctRaga": "Hanumatodi (Carnatic) vs Miyan ki Todi (Hindustani)",
+    "tradition": "Both",
+    "ruleInstruction": "CRITICAL: Do not confuse Carnatic Thodi (8th Melakarta Hanumatodi) with Hindustani Todi. Carnatic Thodi uses Shuddha Madhyamam (M1: S R1 G2 M1 P D1 N2). Hindustani Todi (Miyan ki Todi) uses Teevra Madhyamam (M2: S r g M2 P d N). Explicitly mention this distinction whenever Todi is queried.",
+    "severity": "strict_override",
+    "active": true
+  },
+  {
+    "id": "rule-pentatonic-mohanam",
+    "createdAt": "2026-09-02T11:00:00Z",
+    "title": "Mohanam / Bhoopali Pentatonic Strictness",
+    "patternType": "swaras",
+    "swaraPattern": [
+      "S",
+      "R2",
+      "G3",
+      "P",
+      "D2"
+    ],
+    "triggerKeywords": [
+      "Mohanam",
+      "Bhoopali",
+      "Bhoop"
+    ],
+    "correctRaga": "Mohanam (Carnatic) / Bhoopali (Hindustani)",
+    "tradition": "Both",
+    "ruleInstruction": "When only the 5 notes S R2 G3 P D2 (Sa Re Ga Pa Dha) are present with no Ma or Ni, the primary identification MUST be Mohanam (Carnatic) and Bhoopali/Bhoop (Hindustani). Do not identify as Shankarabharanam or Kalyani unless Ma/Ni are present.",
+    "severity": "strict_override",
+    "active": true
+  },
+  {
+    "id": "rule-keeravani-madhyamam",
+    "createdAt": "2026-09-03T12:00:00Z",
+    "title": "Keeravani vs Simhendramadhyamam M1/M2 rule",
+    "patternType": "swaras",
+    "swaraPattern": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "triggerKeywords": [
+      "Keeravani",
+      "Simhendramadhyamam",
+      "Kirwani"
+    ],
+    "correctRaga": "Keeravani (if M1) or Simhendramadhyamam (if M2)",
+    "tradition": "Carnatic",
+    "ruleInstruction": "Verify Madhyamam strictly: Keeravani (21st Melakarta) strictly uses Shuddha Madhyamam (M1). If Prati Madhyamam (M2) is present with R2, G2, D1, N3, it is strictly 57th Melakarta Simhendramadhyamam.",
+    "severity": "strict_override",
+    "active": true
+  },
+  {
+    "id": "rule-bhairav-kalingada",
+    "createdAt": "2026-09-05T09:30:00Z",
+    "title": "Bhairav vs Kalingada vs Mayamalavagowla",
+    "patternType": "phrase",
+    "swaraPattern": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "triggerKeywords": [
+      "Bhairav",
+      "Kalingada",
+      "Mayamalavagowla"
+    ],
+    "correctRaga": "Mayamalavagowla / Bhairav / Kalingada",
+    "tradition": "Both",
+    "ruleInstruction": "For notes S R1 G3 M1 P D1 N3: In Carnatic it is 15th Melakarta Mayamalavagowla. In Hindustani, Bhairav requires distinct oscillatory movement (andolan) on Komal Re and Komal Dha. Without slow andolan, or if sung briskly focusing on upper tetrachord, note Kalingada as a close variant.",
+    "severity": "disambiguation_hint",
+    "active": true
+  }
+]

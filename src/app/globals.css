@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 24, 24, 27;
+  --background-start-rgb: 254, 252, 248;
+  --background-end-rgb: 250, 245, 235;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Subtle musical wave / pattern background */
+.bg-music-pattern {
+  background-color: #faf5eb;
+  background-image: radial-gradient(#d7b380 0.75px, transparent 0.75px), radial-gradient(#d7b380 0.75px, #faf5eb 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 203, 169, 0.5);
+}
+
+.glass-panel-dark {
+  background: rgba(30, 24, 18, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(196, 145, 83, 0.3);
+}
+
+/* Pulse animation for note playback */
+@keyframes notePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); box-shadow: 0 0 15px rgba(221, 107, 32, 0.6); }
+}
+
+.playing-note {
+  animation: notePulse 0.4s ease-in-out;
+}

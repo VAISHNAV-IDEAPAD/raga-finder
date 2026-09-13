@@ -1,0 +1,18 @@
+[
+  {
+    "id": "test-rep-1789314189241",
+    "timestamp": "2026-09-13T15:43:09.241Z",
+    "query": {
+      "mode": "song",
+      "songQuery": "Test Song"
+    },
+    "aiSuggestedRaga": "Bhairav",
+    "userCorrection": {
+      "correctRaga": "Kalingada",
+      "notesOrExplanation": "Fast tempo without andolan indicates Kalingada.",
+      "reporterName": "Test Suite"
+    },
+    "status": "resolved",
+    "resolvedAsRuleId": "rule-test-1789314189245"
+  }
+]
