@@ -13,6 +13,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (body.mode === 'song' && (!body.songQuery || body.songQuery.trim() === '')) {
+      return NextResponse.json(
+        { success: false, error: 'Please enter a song, kriti, or raga name to search' },
+        { status: 400 }
+      );
+    }
+
+    if (body.mode === 'swaras' && (!body.swaras || body.swaras.length < 3)) {
+      return NextResponse.json(
+        { success: false, error: 'Please select at least 3 swaras to identify a raga' },
+        { status: 400 }
+      );
+    }
+
     const result = await identifyRaga(body);
     return NextResponse.json(result);
   } catch (error: any) {

@@ -100,6 +100,35 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
           </div>
         </div>
 
+        {/* Highlight if Matched Song / Krithi was found */}
+        {result.matchedSong && (
+          <div className="mt-4 p-3.5 rounded-2xl bg-amber-500/15 border border-amber-400/40 backdrop-blur-md">
+            <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                <Music className="w-3.5 h-3.5 text-amber-400" />
+                Matched Composition: {result.matchedSong.title}
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-200 border border-amber-400/30">
+                {result.matchedSong.source || 'Verified Database'}
+              </span>
+            </div>
+            <div className="text-xs text-stone-200 flex flex-wrap gap-x-4 gap-y-1 mt-1">
+              {result.matchedSong.filmOrAlbum && (
+                <span><strong className="text-amber-300">Film / Album:</strong> {result.matchedSong.filmOrAlbum}</span>
+              )}
+              {result.matchedSong.composer && (
+                <span><strong className="text-amber-300">Composer:</strong> {result.matchedSong.composer}</span>
+              )}
+              {result.matchedSong.singers && (
+                <span><strong className="text-amber-300">Singers:</strong> {result.matchedSong.singers}</span>
+              )}
+              {result.matchedSong.language && (
+                <span><strong className="text-amber-300">Language:</strong> {result.matchedSong.language}</span>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Highlight if Admin Ground-Truth rule was applied */}
         {appliedAdminRule && (
           <div className="mt-4 p-3 rounded-xl bg-amber-950/70 border border-amber-500/50 flex items-start gap-2.5 animate-fadeIn">

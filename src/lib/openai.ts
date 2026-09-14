@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition } from '@/types/raga';
 import { getAdminRules } from './storage';
 import seedRagas from '@/data/seed_ragas.json';
+import { findSongInDatabase, resolveRagaProfile, getSongSuggestions } from './songSearch';
 
 function getOpenAIClient(): OpenAI | null {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -35,11 +36,30 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
     matchedRule = activeRules.find(rule => 
       rule.triggerKeywords?.some(k => q.includes(k.toLowerCase()))
     );
+
+    // STAGE 1: Check verified ground-truth Song/Kriti Database first!
+    const dbMatch = findSongInDatabase(request.songQuery);
+    if (dbMatch) {
+      return {
+        success: true,
+        source: 'database',
+        confidence: 'Exact Match',
+        raga: dbMatch.ragaProfile,
+        matchedSong: dbMatch.matchedSong,
+        appliedAdminRule: matchedRule ? {
+          id: matchedRule.id,
+          title: matchedRule.title,
+          reason: matchedRule.ruleInstruction,
+        } : undefined,
+        rawQuery: request,
+      };
+    }
+    // If not found in database, continue to AI fallback!
   }
 
   const openai = getOpenAIClient();
 
-  // If OpenAI is available, call it with admin knowledge injection
+  // STAGE 2: If OpenAI is available, call it to dynamically identify the composition
   if (openai) {
     try {
       const response = await callOpenAIWithAdminRules(openai, request, activeRules, matchedRule);
@@ -118,7 +138,12 @@ You MUST respond with valid JSON ONLY matching this structure:
   if (request.mode === 'swaras') {
     userQueryText = `Identify the raga for these Swaras/Notes:\nSwaras: ${request.swaras?.join(' ') || ''}\nArohana: ${request.arohana || 'Not specified'}\nAvarohana: ${request.avarohana || 'Not specified'}\nPreferred Tradition: ${request.traditionPreference || 'Any'}`;
   } else if (request.mode === 'song') {
-    userQueryText = `Identify the raga of this song or composition: "${request.songQuery}". Specify classical kriti or film details, swaras, and tradition.`;
+    userQueryText = `The user is asking to identify the raga of this song, kriti, bandish, or film track: "${request.songQuery}".
+Please accurately determine:
+1. The exact Raga name (and equivalents in Carnatic / Hindustani traditions).
+2. The film title and music director if it is a film song (e.g. Malayalam, Tamil, Hindi, Telugu, Kannada), or the classical composer if it is a Carnatic kriti (e.g. Tyagaraja, Dikshitar, Purandara Dasa, Swathi Thirunal) or Hindustani bandish.
+3. The exact Arohana and Avarohana scales and Carnatic / Hindustani swara notes.
+4. A clear musicological explanation of how the song's melody and signature phrases reflect this raga.`;
   } else {
     userQueryText = `Identify the raga based on this description or Western notes: "${request.description}".`;
   }
@@ -249,45 +274,73 @@ function resolveFromDatabaseAndRules(
     };
   }
 
-  // Database search by song query
+  // Database search by song or krithi query
   if (request.mode === 'song' && request.songQuery) {
-    const q = request.songQuery.toLowerCase();
-    const foundBySong = seedRagas.find(r => 
-      r.famousSongs?.some(s => s.title.toLowerCase().includes(q) || (s.composerOrFilm && s.composerOrFilm.toLowerCase().includes(q))) ||
-      r.name.toLowerCase().includes(q)
-    );
+    const dbMatch = findSongInDatabase(request.songQuery);
+    if (dbMatch) {
+      return {
+        success: true,
+        source: 'database',
+        confidence: 'Exact Match',
+        raga: dbMatch.ragaProfile,
+        matchedSong: dbMatch.matchedSong,
+        rawQuery: request,
+      };
+    }
 
-    const match = foundBySong || seedRagas[0];
+    // Try suggestions
+    const suggestions = getSongSuggestions(request.songQuery, 5);
+    if (suggestions.length > 0) {
+      const top = suggestions[0];
+      const profile = resolveRagaProfile(top.raga);
+      return {
+        success: true,
+        source: 'database',
+        confidence: 'Moderate',
+        raga: profile,
+        matchedSong: top,
+        rawQuery: request,
+      };
+    }
+
+    // If genuinely not found in database and AI is unavailable
     return {
-      success: true,
+      success: false,
       source: 'database',
-      confidence: foundBySong ? 'High' : 'Moderate',
+      confidence: 'Moderate',
       raga: {
-        name: match.name,
-        alternateNames: match.alternateNames,
-        tradition: match.tradition as Tradition,
-        melakartaNumber: match.melakartaNumber,
-        thaat: match.thaat,
-        parentRaga: match.parentRaga,
-        arohana: match.arohana,
-        avarohana: match.avarohana,
-        swarasCarnatic: match.swaras,
-        swarasHindustani: match.hindustaniNotes ? match.hindustaniNotes.split(', ') : [],
-        vadi: match.vadi,
-        samvadi: match.samvadi,
-        pakadOrSignature: match.pakad,
-        rasaOrMood: match.rasa || 'Melodic',
-        timeOfDay: match.timeOfDay || 'Anytime',
-        famousSongs: match.famousSongs || [],
-        explanation: foundBySong 
-          ? `Found composition "${request.songQuery}" known to be based on Raga ${match.name}.`
-          : `Closest raga match found in reference database for query "${request.songQuery}".`,
+        name: 'Composition Not In Database',
+        alternateNames: [],
+        tradition: 'Both',
+        arohana: 'N/A',
+        avarohana: 'N/A',
+        swarasCarnatic: [],
+        swarasHindustani: [],
+        rasaOrMood: 'N/A',
+        timeOfDay: 'N/A',
+        famousSongs: [],
+        explanation: `The song or krithi "${request.songQuery}" was not found in the verified movie/kriti database. To dynamically identify rare songs or obscure ragas with precision AI analysis, please configure your OPENAI_API_KEY in .env.local or teach this song in the Admin portal.`,
       },
       rawQuery: request,
     };
   }
 
-  // Default fallback
+  // Default fallback for description mode
+  if (request.mode === 'description' && request.description) {
+    const dbMatch = findSongInDatabase(request.description);
+    if (dbMatch) {
+      return {
+        success: true,
+        source: 'database',
+        confidence: 'Moderate',
+        raga: dbMatch.ragaProfile,
+        matchedSong: dbMatch.matchedSong,
+        rawQuery: request,
+      };
+    }
+  }
+
+  // Clean fallback when query cannot be resolved
   const first = seedRagas[0];
   return {
     success: true,

@@ -65,11 +65,14 @@ export default function HomePage() {
       });
 
       const data = await res.json();
-      if (!res.ok || !data.success) {
+      if (!res.ok || (!data.success && !data.raga)) {
         throw new Error(data.error || 'Failed to identify raga');
       }
 
       setSearchResult(data);
+      if (!data.success && data.raga?.explanation) {
+        setErrorMsg(data.raga.explanation);
+      }
       // Scroll to result smoothly
       setTimeout(() => {
         const el = document.getElementById('raga-result-section');
@@ -189,7 +192,7 @@ export default function HomePage() {
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="e.g. Vatapi Ganapatim, Albela Sajan, Krishna Nee Begane, Chinnanjiru Kiliye..."
+                    placeholder="e.g. Omkaaram Omkaaram, Vatapi Ganapatim, Pramadavanam, Idhayam Oru Kovil, Albela Sajan..."
                     value={songQuery}
                     onChange={(e) => setSongQuery(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -204,11 +207,16 @@ export default function HomePage() {
                 <span className="text-xs text-stone-500 font-medium mr-2">Try searching:</span>
                 <div className="inline-flex flex-wrap gap-1.5 mt-1">
                   {[
+                    'Omkaaram Omkaaram',
                     'Vatapi Ganapatim',
+                    'Idhayam Oru Kovil',
+                    'Pramadavanam',
                     'Albela Sajan',
                     'Samaja Vara Gamana',
-                    'Mile Sur Mera Tumhara',
-                    'Nidhi Chala Sukhama',
+                    'Kalyana Then Nila',
+                    'Kannodu Kaanbadhellam',
+                    'Endaro Mahanubhavulu',
+                    'Mohanam',
                   ].map((s) => (
                     <button
                       key={s}
@@ -216,7 +224,7 @@ export default function HomePage() {
                       onClick={() => {
                         setSongQuery(s);
                       }}
-                      className="px-2.5 py-1 text-xs rounded-lg bg-stone-100 hover:bg-amber-100 text-stone-700 border border-stone-200 transition-colors"
+                      className="px-2.5 py-1 text-xs rounded-lg bg-stone-100 hover:bg-amber-100 text-stone-700 border border-stone-200 transition-colors font-medium"
                     >
                       {s}
                     </button>
@@ -233,12 +241,12 @@ export default function HomePage() {
                 {isLoading ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Searching Song in Classical Knowledge Base...</span>
+                    <span>Searching Verified Movie & Classical Database...</span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-5 h-5" />
-                    <span>Find Raga of this Song</span>
+                    <span>Find Raga of this Song / Kriti</span>
                   </>
                 )}
               </button>

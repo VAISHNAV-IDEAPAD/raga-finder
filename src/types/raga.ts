@@ -36,6 +36,17 @@ export interface IdentifyRequest {
   traditionPreference?: Tradition;
 }
 
+export interface SongRagaEntry {
+  title: string;
+  alternateTitles?: string[];
+  filmOrAlbum?: string;
+  composer?: string;
+  singers?: string;
+  language: string;
+  raga: string;
+  source: string;
+}
+
 export interface IdentifyResponse {
   success: boolean;
   source: 'openai' | 'admin_rule' | 'database';
@@ -64,6 +75,7 @@ export interface IdentifyResponse {
     explanation: string;
     closelyRelatedRagas?: string[];
   };
+  matchedSong?: SongRagaEntry;
   appliedAdminRule?: {
     id: string;
     title: string;
