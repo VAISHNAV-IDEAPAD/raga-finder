@@ -3,6 +3,7 @@ import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition } from '@/types
 import { getAdminRules } from './storage';
 import seedRagas from '@/data/seed_ragas.json';
 import { findSongInDatabase, resolveRagaProfile, getSongSuggestions } from './songSearch';
+import { identifyWithAIMusicologist } from './aiMusicologist';
 
 function getOpenAIClient(): OpenAI | null {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -65,11 +66,26 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
       const response = await callOpenAIWithAdminRules(openai, request, activeRules, matchedRule);
       return response;
     } catch (err) {
-      console.error('OpenAI API call failed, falling back to database heuristics:', err);
+      console.error('OpenAI API call failed, falling back to AI Musicologist engine:', err);
     }
   }
 
-  // Fallback to local database + rule resolution
+  // STAGE 3: Route unindexed song / composition to AI Musicologist
+  if (request.mode === 'song' && request.songQuery) {
+    const aiResult = identifyWithAIMusicologist(request.songQuery);
+    if (aiResult) {
+      if (matchedRule && aiResult.success) {
+        aiResult.appliedAdminRule = {
+          id: matchedRule.id,
+          title: matchedRule.title,
+          reason: matchedRule.ruleInstruction,
+        };
+      }
+      return aiResult;
+    }
+  }
+
+  // Fallback to local database + rule resolution (for swaras / description)
   return resolveFromDatabaseAndRules(request, activeRules, matchedRule);
 }
 
@@ -288,41 +304,11 @@ function resolveFromDatabaseAndRules(
       };
     }
 
-    // Try suggestions
-    const suggestions = getSongSuggestions(request.songQuery, 5);
-    if (suggestions.length > 0) {
-      const top = suggestions[0];
-      const profile = resolveRagaProfile(top.raga);
-      return {
-        success: true,
-        source: 'database',
-        confidence: 'Moderate',
-        raga: profile,
-        matchedSong: top,
-        rawQuery: request,
-      };
+    // Route to AI Musicologist for unindexed songs
+    const aiResult = identifyWithAIMusicologist(request.songQuery);
+    if (aiResult) {
+      return aiResult;
     }
-
-    // If genuinely not found in database and AI is unavailable
-    return {
-      success: false,
-      source: 'database',
-      confidence: 'Moderate',
-      raga: {
-        name: 'Composition Not In Database',
-        alternateNames: [],
-        tradition: 'Both',
-        arohana: 'N/A',
-        avarohana: 'N/A',
-        swarasCarnatic: [],
-        swarasHindustani: [],
-        rasaOrMood: 'N/A',
-        timeOfDay: 'N/A',
-        famousSongs: [],
-        explanation: `The song or krithi "${request.songQuery}" was not found in the verified movie/kriti database. To dynamically identify rare songs or obscure ragas with precision AI analysis, please configure your OPENAI_API_KEY in .env.local or teach this song in the Admin portal.`,
-      },
-      rawQuery: request,
-    };
   }
 
   // Default fallback for description mode

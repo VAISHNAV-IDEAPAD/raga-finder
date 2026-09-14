@@ -1,0 +1,611 @@
+import { IdentifyResponse, Tradition } from '@/types/raga';
+import { normalizeSongQuery, phoneticKey, resolveRagaProfile } from './songSearch';
+
+// Curated AI Musicological Knowledge Repository
+// Covers iconic cinema melodies, regional classics, ghazals, and kritis
+interface AIMusicKnowledge {
+  title: string;
+  aliases: string[];
+  filmOrContext: string;
+  composer: string;
+  singers?: string;
+  language: string;
+  raga: string;
+  tradition: Tradition;
+  arohana: string;
+  avarohana: string;
+  swarasCarnatic: string[];
+  swarasHindustani: string[];
+  melakartaNumber?: number;
+  thaat?: string;
+  parentRaga?: string;
+  rasaOrMood: string;
+  timeOfDay: string;
+  explanation: string;
+}
+
+const AI_MUSIC_KNOWLEDGE: AIMusicKnowledge[] = [
+  // Tamil Masterpieces
+  {
+    title: "Munbe Vaa",
+    aliases: ["Munbe Vaa En Anbe Vaa", "Munbe Vaa En Anbe", "Munbe Vaa Anbe Vaa"],
+    filmOrContext: "Sillunu Oru Kaadhal (2006)",
+    composer: "A. R. Rahman",
+    singers: "Naresh Iyer, Shreya Ghoshal",
+    language: "Tamil",
+    raga: "Brindavana Saranga / Kapi",
+    tradition: "Both",
+    arohana: "S R2 M1 P N3 S'",
+    avarohana: "S' N2 P M1 R2 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "N2", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Ni", "Shuddha Ni"],
+    melakartaNumber: 22,
+    thaat: "Kafi",
+    parentRaga: "Kharaharapriya Janya",
+    rasaOrMood: "Shringara (Romantic Devotion), Ethereal Tenderness",
+    timeOfDay: "Afternoon / Evening",
+    explanation: "Composed with soaring melodic contours based on Brindavana Saranga / Kapi. The interplay of both Shuddha Nishada (N3) in ascent and Kaisiki Nishada (N2) in descent brings out quintessential romantic yearning.",
+  },
+  {
+    title: "Malare Mounama",
+    aliases: ["Malare Mounamaa", "Malarey Mounama"],
+    filmOrContext: "Karna (1995)",
+    composer: "Vidyasagar",
+    singers: "S. P. Balasubrahmanyam, S. Janaki",
+    language: "Tamil",
+    raga: "Darbari Kanada",
+    tradition: "Both",
+    arohana: "S R2 G2 M1 P D1 N2 S'",
+    avarohana: "S' D1 N2 P M1 P G2 M1 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 20,
+    thaat: "Asavari",
+    parentRaga: "Natabhairavi Janya / Asavari Thaat",
+    rasaOrMood: "Deep Karuna (Pathos), Regal Longing",
+    timeOfDay: "Midnight",
+    explanation: "One of the finest modern film treatments of Darbari Kanada. Vidyasagar masterfully retains the heavy andolan on Komal Gandhara (G2) and Komal Dhaivata (D1) creating deep melancholic beauty.",
+  },
+  {
+    title: "Chinna Chinna Aasai",
+    aliases: ["Chinna Chinna Asai", "Dil Hai Chhota Sa", "Chinna Chinna Aasa"],
+    filmOrContext: "Roja (1992)",
+    composer: "A. R. Rahman",
+    singers: "Minmini",
+    language: "Tamil",
+    raga: "Harikambhoji / Shankarabharanam",
+    tradition: "Carnatic",
+    arohana: "S R2 G3 M1 P D2 N2 S'",
+    avarohana: "S' N2 D2 P M1 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M1", "P", "D2", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Shuddha Dha", "Komal Ni"],
+    melakartaNumber: 28,
+    thaat: "Khamaj",
+    parentRaga: "Harikambhoji (28th Melakarta)",
+    rasaOrMood: "Joyous Innocence, Playfulness, Freedom",
+    timeOfDay: "Anytime / Daytime",
+    explanation: "Built primarily on the upbeat, folk-infused intervals of Harikambhoji, radiating youthful innocence and celebration of nature.",
+  },
+  {
+    title: "Kannalane",
+    aliases: ["Kannalane Enadhu Kannai", "Kehna Hi Kya"],
+    filmOrContext: "Bombay (1995)",
+    composer: "A. R. Rahman",
+    singers: "K. S. Chithra",
+    language: "Tamil",
+    raga: "Keeravani",
+    tradition: "Both",
+    arohana: "S R2 G2 M1 P D1 N3 S'",
+    avarohana: "S' N3 D1 P M1 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D1", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Shuddha Ni"],
+    melakartaNumber: 21,
+    thaat: "Kirwani",
+    parentRaga: "Keeravani (21st Melakarta)",
+    rasaOrMood: "Intense Romantic Longing, Passion",
+    timeOfDay: "Night",
+    explanation: "A masterpiece in Keeravani / Harmonic Minor. The sharp tension between Komal Dhaivata (D1) and Kakali Nishada (N3) creates the signature passionate Arabic-Mediterranean flavored Indian classical romance.",
+  },
+  {
+    title: "Vaseegara",
+    aliases: ["Zara Zara Behakta Hai", "Zara Zara"],
+    filmOrContext: "Minnale (2001)",
+    composer: "Harris Jayaraj",
+    singers: "Bombay Jayashri",
+    language: "Tamil",
+    raga: "Natabhairavi",
+    tradition: "Carnatic",
+    arohana: "S R2 G2 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 20,
+    thaat: "Asavari",
+    parentRaga: "Natabhairavi (20th Melakarta)",
+    rasaOrMood: "Sensual Romance, Yearning, Intimacy",
+    timeOfDay: "Evening / Night",
+    explanation: "Rooted in Natabhairavi (Natural Minor scale). Bombay Jayashri's Carnatic vocal gamakas lend rich warmth to the modern acoustic arrangement.",
+  },
+  {
+    title: "Uyire Uyire",
+    aliases: ["Tu Hi Re", "Uyire"],
+    filmOrContext: "Bombay (1995)",
+    composer: "A. R. Rahman",
+    singers: "Hariharan, K. S. Chithra",
+    language: "Tamil",
+    raga: "Charukesi",
+    tradition: "Both",
+    arohana: "S R2 G3 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 26,
+    thaat: "Charukesi",
+    parentRaga: "Charukesi (26th Melakarta)",
+    rasaOrMood: "Despair, Karuna, Tragic Longing",
+    timeOfDay: "Late Evening",
+    explanation: "One of the greatest modern compositions in Charukesi. The bright major tetrachord (S R2 G3 M1) followed by the haunting minor tetrachord (P D1 N2 S') reflects heartbreak and desperate longing.",
+  },
+  {
+    title: "Nenjukkul Peidhidum",
+    aliases: ["Nenjukkul Peithidum"],
+    filmOrContext: "Vaaranam Aayiram (2008)",
+    composer: "Harris Jayaraj",
+    singers: "Hariharan, Devan Ekambaram",
+    language: "Tamil",
+    raga: "Natabhairavi / Kharaharapriya",
+    tradition: "Carnatic",
+    arohana: "S R2 G2 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 20,
+    thaat: "Asavari",
+    parentRaga: "Natabhairavi Janya",
+    rasaOrMood: "Intimate Romance, Tender Euphoria",
+    timeOfDay: "Rainy / Evening",
+    explanation: "Combines acoustic guitar chords with Natabhairavi minor melodies, evoking the sweet intoxication of first love.",
+  },
+  {
+    title: "Pookkalae Sattru Oyivedungal",
+    aliases: ["Pookkale Satru Oyivedungal", "Pookkale Satru"],
+    filmOrContext: "I (2015)",
+    composer: "A. R. Rahman",
+    singers: "Haricharan, Shreya Ghoshal",
+    language: "Tamil",
+    raga: "Suddha Dhanyasi",
+    tradition: "Carnatic",
+    arohana: "S G2 M1 P N2 S'",
+    avarohana: "S' N2 P M1 G2 S",
+    swarasCarnatic: ["S", "G2", "M1", "P", "N2"],
+    swarasHindustani: ["Sa", "Komal Ga", "Shuddha Ma", "Pa", "Komal Ni"],
+    melakartaNumber: 22,
+    thaat: "Kafi",
+    parentRaga: "Kharaharapriya Janya",
+    rasaOrMood: "Shringara, Bright Splendour, Joyous Harmony",
+    timeOfDay: "Anytime",
+    explanation: "Exquisitely tuned in the pentatonic raga Suddha Dhanyasi (equivalent to Hindustani Dhani). The pure five-note scale lends breathtaking clarity to the soaring vocals.",
+  },
+  {
+    title: "Sundari Kannal Oru Sethi",
+    aliases: ["Sundari Kannal"],
+    filmOrContext: "Thalapathi (1991)",
+    composer: "Ilaiyaraaja",
+    singers: "S. P. Balasubrahmanyam, S. Janaki",
+    language: "Tamil",
+    raga: "Kalyani",
+    tradition: "Both",
+    arohana: "S R2 G3 M2 P D2 N3 S'",
+    avarohana: "S' N3 D2 P M2 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M2", "P", "D2", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Teevra Ma", "Pa", "Shuddha Dha", "Shuddha Ni"],
+    melakartaNumber: 65,
+    thaat: "Kalyan",
+    parentRaga: "Mechakalyani (65th Melakarta)",
+    rasaOrMood: "Grandeur, Classical Love, Nobility",
+    timeOfDay: "Evening / Night",
+    explanation: "Ilaiyaraaja's symphonic orchestration meets pure Mechakalyani. The teevra madhyamam (M2) brings expansive brightness and royal grandeur.",
+  },
+  {
+    title: "Kanne Kalaimane",
+    aliases: ["Kanne Kalaimaane"],
+    filmOrContext: "Moondram Pirai (1982)",
+    composer: "Ilaiyaraaja",
+    singers: "K. J. Yesudas",
+    language: "Tamil",
+    raga: "Kapi",
+    tradition: "Carnatic",
+    arohana: "S R2 M1 P N3 S'",
+    avarohana: "S' N2 D2 N2 P M1 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D2", "N2", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Shuddha Dha", "Komal Ni", "Shuddha Ni"],
+    melakartaNumber: 22,
+    thaat: "Kafi",
+    parentRaga: "Kharaharapriya Janya (Bhashanga)",
+    rasaOrMood: "Vatsalya, Melancholic Lullaby, Tender Tearfulness",
+    timeOfDay: "Night",
+    explanation: "Poet Kannadasan's immortal final song. Sung with heartbreaking delicacy by Yesudas in Raga Kapi, using soft bhashanga notes to evoke unconditional protection and sorrow.",
+  },
+
+  // Malayalam Masterpieces
+  {
+    title: "Malare Ninne",
+    aliases: ["Malare Ninne Kaanathirunnal", "Malare", "Malare Ninne Kanathirunnal"],
+    filmOrContext: "Premam (2015)",
+    composer: "Rajesh Murugesan",
+    singers: "Vijay Yesudas",
+    language: "Malayalam",
+    raga: "Charukesi",
+    tradition: "Carnatic",
+    arohana: "S R2 G3 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 26,
+    parentRaga: "Charukesi (26th Melakarta)",
+    rasaOrMood: "Enchantment, Sweet Romantic Devotion",
+    timeOfDay: "Evening",
+    explanation: "Composed in Raga Charukesi. The melody contrasts the warm Shuddha Gandhara (G3) with the gentle melancholy of Komal Dhaivata (D1) and Komal Nishada (N2).",
+  },
+  {
+    title: "Kanneerppoovinte",
+    aliases: ["Kanneer Poovinte Kavilil Thalodi", "Kanneerpoovinte"],
+    filmOrContext: "Kireedam (1989)",
+    composer: "Johnson",
+    singers: "M. G. Sreekumar",
+    language: "Malayalam",
+    raga: "Natabhairavi",
+    tradition: "Carnatic",
+    arohana: "S R2 G2 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 20,
+    thaat: "Asavari",
+    parentRaga: "Natabhairavi (20th Melakarta)",
+    rasaOrMood: "Tragic Pathos (Karuna), Helpless Heartache",
+    timeOfDay: "Late Night",
+    explanation: "Master Johnson's defining tragedy melody in Malayalam cinema. The natural minor intervals of Natabhairavi accentuate Sethumadhavan's tragic destiny in Kireedam.",
+  },
+  {
+    title: "Pramadavanam",
+    aliases: ["Pramadhavanam", "Pramadavanam Veendum"],
+    filmOrContext: "His Highness Abdullah (1990)",
+    composer: "Raveendran",
+    singers: "K. J. Yesudas",
+    language: "Malayalam",
+    raga: "Jog / Jogeshwari",
+    tradition: "Both",
+    arohana: "S G3 M1 P N2 S'",
+    avarohana: "S' N2 P M1 G3 M1 G2 S",
+    swarasCarnatic: ["S", "G2", "G3", "M1", "P", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Ga", "Komal Ga", "Shuddha Ma", "Pa", "Komal Ni"],
+    melakartaNumber: 28,
+    thaat: "Kafi / Khamaj",
+    parentRaga: "Harikambhoji / Khamaj",
+    rasaOrMood: "Mystical Longing, Classical Majesty",
+    timeOfDay: "Midnight",
+    explanation: "Raveendran Master's historic classical opus. It employs Raga Jog featuring both Shuddha Gandhara (G3) on the ascent and Komal Gandhara (G2) on descent.",
+  },
+  {
+    title: "Harimuraleeravam",
+    aliases: ["Hari Muraleeravam", "Harimuraleeravam En Manam"],
+    filmOrContext: "Aaraam Thampuran (1997)",
+    composer: "Raveendran",
+    singers: "K. J. Yesudas",
+    language: "Malayalam",
+    raga: "Sindhu Bhairavi",
+    tradition: "Both",
+    arohana: "S R1 G2 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G2 R1 S",
+    swarasCarnatic: ["S", "R1", "G2", "M1", "P", "D1", "N2", "R2", "G3", "M2", "D2", "N3"],
+    swarasHindustani: ["Sa", "Komal Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 8,
+    thaat: "Bhairavi",
+    parentRaga: "Hanumatodi Janya (Bhashanga)",
+    rasaOrMood: "Divine Bhakti, Virtuosic Devotion, Ecstasy",
+    timeOfDay: "Morning / Anytime",
+    explanation: "A powerhouse Carnatic film vocal showcase in Sindhu Bhairavi, incorporating all twelve swarasthanam through dazzling sancharas and thillana kalpanaswaras.",
+  },
+  {
+    title: "Oru Murai Vanthu Parthaya",
+    aliases: ["Oru Murai Vanthu Paarthaya", "Varuvaanillarummee"],
+    filmOrContext: "Manichitrathazhu (1993)",
+    composer: "M. G. Radhakrishnan",
+    singers: "K. J. Yesudas, K. S. Chithra",
+    language: "Malayalam",
+    raga: "Mohanam / Vasantha",
+    tradition: "Carnatic",
+    arohana: "S R2 G3 P D2 S'",
+    avarohana: "S' D2 P G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "P", "D2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Pa", "Shuddha Dha"],
+    melakartaNumber: 28,
+    thaat: "Bilawal",
+    parentRaga: "Harikambhoji Janya",
+    rasaOrMood: "Seductive Splendour, Classical Nostalgia",
+    timeOfDay: "Evening / Night",
+    explanation: "Nagavalli's iconic court dance begins with the luminous pentatonic scale of Mohanam and transitions into the dramatic, supernatural tension of Vasantha.",
+  },
+
+  // Hindi Cinema Masterpieces
+  {
+    title: "Albela Sajan",
+    aliases: ["Albela Sajan Aayo Re", "Albela Sajan Aayo"],
+    filmOrContext: "Hum Dil De Chuke Sanam (1999) / Traditional Bandish",
+    composer: "Ismail Darbar / Ustad Sultan Khan",
+    singers: "Ustad Sultan Khan, Shankar Mahadevan, Kavita Krishnamurthy",
+    language: "Hindi",
+    raga: "Ahir Bhairav",
+    tradition: "Both",
+    arohana: "S R1 G3 M1 P D2 n2 S'",
+    avarohana: "S' n2 D2 P M1 G3 R1 S",
+    swarasCarnatic: ["S", "R1", "G3", "M1", "P", "D2", "N2"],
+    swarasHindustani: ["Sa", "Komal Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Shuddha Dha", "Komal Ni"],
+    melakartaNumber: 16,
+    thaat: "Bhairav",
+    parentRaga: "Chakravakam (16th Melakarta) / Bhairav Thaat",
+    rasaOrMood: "Joyous Welcome, Shringara, Morning Splendor",
+    timeOfDay: "First Prahar of Morning (Dawn)",
+    explanation: "A world-famous classical bandish in Raga Ahir Bhairav (Chakravakam). It marries the Komal Re of Bhairav with the major Dha and Komal Ni of Khamaj.",
+  },
+  {
+    title: "Tere Mere Milan Ki Yeh Raina",
+    aliases: ["Tere Mere Milan Ki", "Tere Mere Milan"],
+    filmOrContext: "Abhimaan (1973)",
+    composer: "S. D. Burman",
+    singers: "Kishore Kumar, Lata Mangeshkar",
+    language: "Hindi",
+    raga: "Yaman / Kalyani",
+    tradition: "Both",
+    arohana: "N3' R2 G3 M2 P D2 N3 S'",
+    avarohana: "S' N3 D2 P M2 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M2", "P", "D2", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Teevra Ma", "Pa", "Shuddha Dha", "Shuddha Ni"],
+    melakartaNumber: 65,
+    thaat: "Kalyan",
+    parentRaga: "Kalyani (Carnatic) / Yaman (Hindustani)",
+    rasaOrMood: "Peace, Devotional Romance, Reconnection",
+    timeOfDay: "First Prahar of Night (Evening)",
+    explanation: "Inspired by Rabindranath Tagore's composition 'Jodi Tare Nai Chini Go'. Pure Yaman Kalyan, emphasizing Teevra Ma (M2) and mandra Nishad.",
+  },
+  {
+    title: "Aaye Ho Meri Zindagi Mein",
+    aliases: ["Aaye Ho Meri Zindagi Me"],
+    filmOrContext: "Raja Hindustani (1996)",
+    composer: "Nadeem-Shravan",
+    singers: "Udit Narayan / Alka Yagnik",
+    language: "Hindi",
+    raga: "Charukesi",
+    tradition: "Both",
+    arohana: "S R2 G3 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 26,
+    thaat: "Charukesi",
+    parentRaga: "Charukesi (26th Melakarta)",
+    rasaOrMood: "Gratitude, Romantic Devotion, Warmth",
+    timeOfDay: "Evening",
+    explanation: "One of Bollywood's most beloved melodies based on Carnatic Melakarta Charukesi, transitioning gracefully across Komal Dha and Komal Ni.",
+  },
+  {
+    title: "Chura Liya Hai Tumne Jo Dil Ko",
+    aliases: ["Chura Liya Hai", "Chura Liya"],
+    filmOrContext: "Yaadon Ki Baaraat (1973)",
+    composer: "R. D. Burman",
+    singers: "Mohammad Rafi, Asha Bhosle",
+    language: "Hindi",
+    raga: "Natabhairavi / Asavari",
+    tradition: "Hindustani",
+    arohana: "S R2 G2 M1 P D1 N2 S'",
+    avarohana: "S' N2 D1 P M1 G2 R2 S",
+    swarasCarnatic: ["S", "R2", "G2", "M1", "P", "D1", "N2"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Komal Ga", "Shuddha Ma", "Pa", "Komal Dha", "Komal Ni"],
+    melakartaNumber: 20,
+    thaat: "Asavari",
+    parentRaga: "Asavari Thaat",
+    rasaOrMood: "Playful Romance, Alluring Charm",
+    timeOfDay: "Late Afternoon / Evening",
+    explanation: "R. D. Burman's acoustic gem woven around the notes of Asavari / Natabhairavi minor scale, balancing playful western strums with melodic hooks.",
+  },
+  {
+    title: "Kesariya",
+    aliases: ["Kesariya Tera Ishq Hai Piya", "Kesariya Tera"],
+    filmOrContext: "Brahmāstra (2022)",
+    composer: "Pritam",
+    singers: "Arijit Singh",
+    language: "Hindi",
+    raga: "Bilawal / Shankarabharanam",
+    tradition: "Both",
+    arohana: "S R2 G3 M1 P D2 N3 S'",
+    avarohana: "S' N3 D2 P M1 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M1", "P", "D2", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Shuddha Dha", "Shuddha Ni"],
+    melakartaNumber: 29,
+    thaat: "Bilawal",
+    parentRaga: "Bilawal Thaat / Dheerasankarabharanam",
+    rasaOrMood: "Vibrant Celebration, Romantic Elation",
+    timeOfDay: "Daytime / Pratah",
+    explanation: "Rooted in Shuddha Swara Bilawal / Major scale, conveying festive romantic warmth and brightness.",
+  },
+
+  // Telugu Cinema Masterpieces
+  {
+    title: "Omkara Nadanu",
+    aliases: ["Omkaara Naadaanu", "Omkara Nadanu Anusandhanamu"],
+    filmOrContext: "Sankarabharanam (1979)",
+    composer: "K. V. Mahadevan",
+    singers: "S. P. Balasubrahmanyam",
+    language: "Telugu",
+    raga: "Dheerasankarabharanam",
+    tradition: "Carnatic",
+    arohana: "S R2 G3 M1 P D2 N3 S'",
+    avarohana: "S' N3 D2 P M1 G3 R2 S",
+    swarasCarnatic: ["S", "R2", "G3", "M1", "P", "D2", "N3"],
+    swarasHindustani: ["Sa", "Shuddha Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Shuddha Dha", "Shuddha Ni"],
+    melakartaNumber: 29,
+    thaat: "Bilawal",
+    parentRaga: "Dheerasankarabharanam (29th Melakarta)",
+    rasaOrMood: "Divine Bhakti, Grand Musical Reverence, Shanta",
+    timeOfDay: "Morning",
+    explanation: "K. V. Mahadevan's magnum opus in Dheerasankarabharanam. Celebrates the primordial Nada Brahma and divine swaras of the 29th Melakarta.",
+  },
+  {
+    title: "Vidhatha Thalapuna",
+    aliases: ["Vidhata Thalapuna"],
+    filmOrContext: "Sirivennela (1986)",
+    composer: "K. V. Mahadevan",
+    singers: "S. P. Balasubrahmanyam, P. Susheela",
+    language: "Telugu",
+    raga: "Malayamarutham",
+    tradition: "Carnatic",
+    arohana: "S R1 G3 P D2 N2 S'",
+    avarohana: "S' N2 D2 P G3 R1 S",
+    swarasCarnatic: ["S", "R1", "G3", "P", "D2", "N2"],
+    swarasHindustani: ["Sa", "Komal Re", "Shuddha Ga", "Pa", "Shuddha Dha", "Komal Ni"],
+    melakartaNumber: 16,
+    parentRaga: "Chakravakam Janya",
+    rasaOrMood: "Spiritual Awakening, Dawn Splendour",
+    timeOfDay: "Dawn (Brahma Muhurta)",
+    explanation: "A breathtaking tribute to Saraswathi in Malayamarutham. Omitting Madhyamam allows the melody to evoke the stillness and sacredness of early dawn.",
+  },
+  {
+    title: "Brahmam Okkate",
+    aliases: ["Brahmamokate", "Brahmam Okate"],
+    filmOrContext: "Annamayya / Sankeertana",
+    composer: "Annamacharya",
+    singers: "S. P. Balasubrahmanyam / Garimella",
+    language: "Telugu",
+    raga: "Bowli",
+    tradition: "Carnatic",
+    arohana: "S R1 G3 P D1 S'",
+    avarohana: "S' N3 D1 P G3 R1 S",
+    swarasCarnatic: ["S", "R1", "G3", "P", "D1", "N3"],
+    swarasHindustani: ["Sa", "Komal Re", "Shuddha Ga", "Pa", "Komal Dha", "Shuddha Ni"],
+    melakartaNumber: 15,
+    parentRaga: "Mayamalavagowla Janya",
+    rasaOrMood: "Egalitarian Spiritual Oneness, Pure Bhakti",
+    timeOfDay: "Dawn",
+    explanation: "Saint Annamacharya's universal hymn declaring that the Supreme Soul is One for all humanity, sung in the auspicious dawn raga Bowli.",
+  }
+];
+
+// Heuristic matching against the AI knowledge base
+export function identifyWithAIMusicologist(query: string): IdentifyResponse | null {
+  if (!query || query.trim().length < 2) return null;
+
+  const rawQ = query.trim();
+  const normQ = normalizeSongQuery(rawQ);
+  const phonQ = phoneticKey(rawQ);
+
+  // 1. Check AI curated repository
+  let bestEntry: AIMusicKnowledge | null = null;
+  let highestScore = 0;
+
+  for (const entry of AI_MUSIC_KNOWLEDGE) {
+    const normTitle = normalizeSongQuery(entry.title);
+    const phonTitle = phoneticKey(entry.title);
+
+    let score = 0;
+
+    if (normTitle === normQ || (phonQ.length >= 3 && phonTitle === phonQ)) {
+      score = 100;
+    } else if (entry.aliases.some(alt => {
+      const nAlt = normalizeSongQuery(alt);
+      const pAlt = phoneticKey(alt);
+      return nAlt === normQ || (phonQ.length >= 3 && pAlt === phonQ);
+    })) {
+      score = 95;
+    } else if (normTitle.startsWith(normQ) || (normQ.length >= 4 && normQ.startsWith(normTitle))) {
+      score = 88;
+    } else if (normTitle.includes(normQ) && normQ.length >= 3) {
+      score = 80;
+    } else if (entry.aliases.some(alt => normalizeSongQuery(alt).includes(normQ) && normQ.length >= 3)) {
+      score = 78;
+    }
+
+    if (score > highestScore) {
+      highestScore = score;
+      bestEntry = entry;
+      if (score === 100) break;
+    }
+  }
+
+  if (bestEntry && highestScore >= 70) {
+    return {
+      success: true,
+      source: 'ai_musicologist',
+      confidence: highestScore >= 95 ? 'Exact Match' : 'High',
+      raga: {
+        name: bestEntry.raga,
+        alternateNames: [bestEntry.parentRaga || ''].filter(Boolean),
+        tradition: bestEntry.tradition,
+        melakartaNumber: bestEntry.melakartaNumber,
+        thaat: bestEntry.thaat,
+        parentRaga: bestEntry.parentRaga,
+        arohana: bestEntry.arohana,
+        avarohana: bestEntry.avarohana,
+        swarasCarnatic: bestEntry.swarasCarnatic,
+        swarasHindustani: bestEntry.swarasHindustani,
+        rasaOrMood: bestEntry.rasaOrMood,
+        timeOfDay: bestEntry.timeOfDay,
+        famousSongs: [
+          {
+            title: bestEntry.title,
+            composerOrFilm: `${bestEntry.filmOrContext} (${bestEntry.composer})`,
+            type: 'Film Song',
+          },
+        ],
+        explanation: `[Identified by AI Musicologist]: ${bestEntry.explanation}`,
+      },
+      matchedSong: {
+        title: bestEntry.title,
+        alternateTitles: bestEntry.aliases,
+        filmOrAlbum: bestEntry.filmOrContext,
+        composer: bestEntry.composer,
+        singers: bestEntry.singers,
+        language: bestEntry.language,
+        raga: bestEntry.raga,
+        source: 'AI Musicology Archive',
+      },
+      rawQuery: { mode: 'song', songQuery: query },
+    };
+  }
+
+  // 2. Check if the query is a recognized Raga name directly
+  const directRagaProfile = resolveRagaProfile(rawQ);
+  if (directRagaProfile && directRagaProfile.arohana !== 'Standard classical scale') {
+    return {
+      success: true,
+      source: 'ai_musicologist',
+      confidence: 'High',
+      raga: {
+        ...directRagaProfile,
+        explanation: `[Identified by AI Musicologist]: Evaluated "${rawQ}" directly as a classical Indian Raga scale. ${directRagaProfile.explanation || ''}`,
+      },
+      rawQuery: { mode: 'song', songQuery: query },
+    };
+  }
+
+  // 3. Fallback: Honest Unidentified Status (Never return Mayamalavagowla!)
+  return {
+    success: false,
+    source: 'ai_musicologist',
+    confidence: 'Low',
+    raga: {
+      name: 'Unidentified Composition',
+      alternateNames: [],
+      tradition: 'Both',
+      arohana: 'Scale not determined',
+      avarohana: 'Scale not determined',
+      swarasCarnatic: [],
+      swarasHindustani: [],
+      rasaOrMood: 'Undetermined',
+      timeOfDay: 'Undetermined',
+      famousSongs: [],
+      explanation: `The composition or query "${rawQ}" was not found in the verified song database. To identify rare compositions or obscure live recordings dynamically, configure your OPENAI_API_KEY or teach the AI this song via the Admin portal (/admin).`,
+    },
+    rawQuery: { mode: 'song', songQuery: query },
+  };
+}

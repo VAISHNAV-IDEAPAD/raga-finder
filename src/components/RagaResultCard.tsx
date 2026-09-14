@@ -67,6 +67,16 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                   <Sparkles className="w-3 h-3" /> OpenAI GPT
                 </span>
               )}
+              {source === 'ai_musicologist' && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> AI Musicologist
+                </span>
+              )}
+              {source === 'database' && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                  Verified Archive
+                </span>
+              )}
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mt-2">

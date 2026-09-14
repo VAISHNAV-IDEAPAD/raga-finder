@@ -247,23 +247,7 @@ const EXTENDED_RAGA_PROFILES: Record<string, any> = {
     timeOfDay: 'Evening / End of concert',
     explanation: 'One of the most ancient and sacred ragas in Indian music. Home of the final Pancharatna Kriti "Endaro Mahanubhavulu".',
   },
-  'yamunai aatrile': {
-    name: 'Yamuna Kalyani',
-    alternateNames: ['Yaman Kalyan'],
-    tradition: 'Both',
-    melakartaNumber: 65,
-    thaat: 'Kalyan',
-    parentRaga: 'Mechakalyani Janya',
-    arohana: "S R2 G3 P M2 P D2 S'",
-    avarohana: "S' N3 D2 P M2 P G3 M1 G3 R2 S",
-    swarasCarnatic: ['S', 'R2', 'G3', 'M1', 'M2', 'P', 'D2', 'N3'],
-    vadi: 'G3',
-    samvadi: 'N3',
-    pakadOrSignature: 'N3\' R2 G3, M2 P D2 P, M2 P G3 M1 G3 R2 S',
-    rasaOrMood: 'Devotion, Shringara, Blissful Serenity',
-    timeOfDay: 'Evening / First Prahar of Night',
-    explanation: 'A variation of Kalyani enriched by the inclusion of Shuddha Madhyamam (M1) as an ornamentation between Gandharas.',
-  },
+
   'yamuna kalyani': {
     name: 'Yamuna Kalyani',
     alternateNames: ['Yaman Kalyan'],
@@ -444,17 +428,19 @@ export function resolveRagaProfile(ragaName: string): any {
 
 // Check if query is directly a Raga name (e.g. "Mohanam", "Kalyani", "Darbari", "Sankarabharanam")
 export function isDirectRagaQuery(query: string): boolean {
-  if (!query) return false;
+  if (!query || query.trim().length < 3) return false;
   const norm = normalizeSongQuery(query);
-  if (SEED_RAGA_MAP.has(norm)) return true;
-  if (EXTENDED_RAGA_PROFILES[norm]) return true;
+  const phon = phoneticKey(query);
 
-  // Check partial key match
-  for (const k of Object.keys(EXTENDED_RAGA_PROFILES)) {
-    if (norm === k) return true;
-  }
-  for (const k of SEED_RAGA_MAP.keys()) {
-    if (norm === k) return true;
+  if (SEED_RAGA_MAP.has(norm) || EXTENDED_RAGA_PROFILES[norm]) return true;
+
+  if (phon.length >= 3) {
+    for (const k of SEED_RAGA_MAP.keys()) {
+      if (phoneticKey(k) === phon) return true;
+    }
+    for (const k of Object.keys(EXTENDED_RAGA_PROFILES)) {
+      if (phoneticKey(k) === phon) return true;
+    }
   }
   return false;
 }
@@ -468,10 +454,10 @@ export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry
   const phonQ = phoneticKey(rawQ);
 
   // 1. Direct Raga Disambiguation:
-  // If the user typed a raga name directly, return the raga directly with notable songs!
+  // If user typed an actual raga name, return the raga directly with notable songs!
   if (isDirectRagaQuery(rawQ)) {
     const profile = resolveRagaProfile(rawQ);
-    if (profile) {
+    if (profile && profile.arohana !== 'Standard classical scale') {
       return {
         ragaProfile: profile,
         isDirectRaga: true,
@@ -479,7 +465,6 @@ export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry
     }
   }
 
-  const qTokens = normQ.split(' ').filter(t => t.length > 1);
   const allSongs = songsData as SongRagaEntry[];
 
   let bestMatch: SongRagaEntry | null = null;
@@ -488,71 +473,45 @@ export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry
   for (const song of allSongs) {
     const normTitle = normalizeSongQuery(song.title);
     const phonTitle = phoneticKey(song.title);
-    const normFilm = normalizeSongQuery(song.filmOrAlbum || '');
-    const phonFilm = phoneticKey(song.filmOrAlbum || '');
-    const normComposer = normalizeSongQuery(song.composer || '');
-    const normSingers = normalizeSongQuery(song.singers || '');
-    const normRaga = normalizeSongQuery(song.raga || '');
+    if (!normTitle || normTitle.length < 2) continue;
 
     let score = 0;
 
     // A. Exact title match (highest priority)
-    if (normTitle === normQ || phonTitle === phonQ) {
+    if (normTitle === normQ) {
       score = 100;
+    } else if (phonQ.length >= 3 && phonTitle.length >= 3 && phonTitle === phonQ) {
+      score = 98;
     }
-    // B. Title starts with query or query starts with title
-    else if (normTitle.startsWith(normQ) || normQ.startsWith(normTitle)) {
-      score = 88;
-    }
-    else if (phonTitle.startsWith(phonQ) || phonQ.startsWith(phonTitle)) {
-      score = 82;
-    }
-    // C. Substring match in title
-    else if (normTitle.includes(normQ) && normQ.length >= 3) {
-      score = 78;
-    }
-    else if (normQ.includes(normTitle) && normTitle.length >= 3) {
-      score = 72;
-    }
-    else if (phonTitle.includes(phonQ) && phonQ.length >= 3) {
-      score = 68;
-    }
-    // D. Alternate titles match
+    // B. Alternate titles exact match
     else if (song.alternateTitles && song.alternateTitles.some(alt => {
       const nAlt = normalizeSongQuery(alt);
       const pAlt = phoneticKey(alt);
-      return nAlt === normQ || pAlt === phonQ || nAlt.includes(normQ) || normQ.includes(nAlt);
+      return nAlt === normQ || (phonQ.length >= 3 && pAlt.length >= 3 && pAlt === phonQ);
     })) {
+      score = 95;
+    }
+    // C. Word boundary / phrase prefix on Title (e.g. "Vatapi" -> "Vatapi Ganapatim")
+    else if (normTitle.startsWith(normQ + ' ') || (normQ.length >= 4 && normQ.startsWith(normTitle + ' '))) {
+      score = 88;
+    }
+    else if (phonQ.length >= 4 && phonTitle.length >= 4 && (phonTitle.startsWith(phonQ + ' ') || phonQ.startsWith(phonTitle + ' '))) {
+      score = 85;
+    }
+    // D. Title contains query as full word or major portion (>= 50% length)
+    else if (normTitle.includes(normQ) && normQ.length >= 4 && (normQ.length / normTitle.length >= 0.45 || normTitle.split(' ').includes(normQ))) {
       score = 80;
     }
-    // E. Film title match
-    else if (normFilm === normQ || phonFilm === phonQ) {
-      score = 75;
+    // E. Alternate titles word boundary match
+    else if (song.alternateTitles && song.alternateTitles.some(alt => {
+      const nAlt = normalizeSongQuery(alt);
+      return nAlt.startsWith(normQ + ' ') || (normQ.length >= 4 && nAlt.includes(normQ) && (normQ.length / nAlt.length >= 0.45 || nAlt.split(' ').includes(normQ)));
+    })) {
+      score = 78;
     }
-    else if (normFilm.includes(normQ) && normQ.length >= 4) {
-      score = 65;
-    }
-    // F. Composer match (e.g. "Tyagaraja", "Ilaiyaraaja", "Dikshitar", "Raveendran")
-    else if (normComposer.includes(normQ) && normQ.length >= 4) {
-      score = 55;
-    }
-    // G. Singers match (e.g. "Yesudas", "SPB", "Chithra")
-    else if (normSingers.includes(normQ) && normQ.length >= 4) {
-      score = 52;
-    }
-    // H. Token overlap matching across title, film, composer
-    else if (qTokens.length > 0) {
-      let matchedTokens = 0;
-      for (const token of qTokens) {
-        if (normTitle.includes(token) || normFilm.includes(token) || normComposer.includes(token)) {
-          matchedTokens++;
-        }
-      }
-      if (matchedTokens === qTokens.length) {
-        score = 62 + matchedTokens * 4;
-      } else if (matchedTokens >= 2 && matchedTokens >= qTokens.length * 0.6) {
-        score = 45 + matchedTokens * 4;
-      }
+    // F. Exact film title match (score 72)
+    else if (song.filmOrAlbum && normQ.length >= 4 && normalizeSongQuery(song.filmOrAlbum) === normQ) {
+      score = 72;
     }
 
     if (score > highestScore) {
@@ -562,8 +521,8 @@ export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry
     }
   }
 
-  // Threshold: must achieve at least 50 score
-  if (bestMatch && highestScore >= 50) {
+  // Threshold: must achieve at least 70 score to be considered a verified database match
+  if (bestMatch && highestScore >= 70) {
     const ragaProfile = resolveRagaProfile(bestMatch.raga);
     return {
       matchedSong: bestMatch,
@@ -571,18 +530,7 @@ export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry
     };
   }
 
-  // If still no song matched, check if query matched any raga name substring
-  for (const song of allSongs) {
-    const normRaga = normalizeSongQuery(song.raga);
-    if (normRaga === normQ || (normRaga.includes(normQ) && normQ.length >= 4)) {
-      const profile = resolveRagaProfile(song.raga);
-      return {
-        ragaProfile: profile,
-        isDirectRaga: true,
-      };
-    }
-  }
-
+  // If score is < 70, return null so it cleanly proceeds to AI identification!
   return null;
 }
 

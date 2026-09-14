@@ -49,8 +49,8 @@ export interface SongRagaEntry {
 
 export interface IdentifyResponse {
   success: boolean;
-  source: 'openai' | 'admin_rule' | 'database';
-  confidence: 'Exact Match' | 'High' | 'Moderate';
+  source: 'openai' | 'admin_rule' | 'database' | 'ai_musicologist';
+  confidence: 'Exact Match' | 'High' | 'Moderate' | 'Low';
   raga: {
     name: string;
     alternateNames?: string[];
