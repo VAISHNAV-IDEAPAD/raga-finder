@@ -4,6 +4,7 @@ import { getAdminRules } from './storage';
 import seedRagas from '@/data/seed_ragas.json';
 import { findSongInDatabase, resolveRagaProfile, getSongSuggestions } from './songSearch';
 import { identifyWithAIMusicologist } from './aiMusicologist';
+import { lookupSongOnMSIDB } from './msidbLookup';
 
 function getOpenAIClient(): OpenAI | null {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -55,7 +56,25 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
         rawQuery: request,
       };
     }
-    // If not found in database, continue to AI fallback!
+
+    // STAGE 1.5: Query live MSIDB real-time archive!
+    const msidbMatch = await lookupSongOnMSIDB(request.songQuery);
+    if (msidbMatch) {
+      return {
+        success: true,
+        source: 'database',
+        confidence: 'Exact Match',
+        raga: msidbMatch.ragaProfile,
+        matchedSong: msidbMatch.matchedSong,
+        appliedAdminRule: matchedRule ? {
+          id: matchedRule.id,
+          title: matchedRule.title,
+          reason: matchedRule.ruleInstruction,
+        } : undefined,
+        rawQuery: request,
+      };
+    }
+    // If not found in database or MSIDB, continue to AI fallback!
   }
 
   const openai = getOpenAIClient();

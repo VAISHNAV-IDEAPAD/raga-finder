@@ -23662,5 +23662,341 @@
     "language": "Carnatic Classical",
     "raga": "Amritavarshini",
     "source": "Classical Archive"
+  },
+  {
+    "title": "Gange thudiyil",
+    "alternateTitles": [
+      "Gange Thudiyil",
+      "Gange Thudiyil Unarum",
+      "ഗംഗേ തുടിയിൽ",
+      "Gange"
+    ],
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Madhyamaadi Saarang",
+    "source": "MSIDB"
+  },
+  {
+    "title": "Gange Thudiyil (F)",
+    "alternateTitles": [
+      "Gange Thudiyil Female",
+      "ഗംഗേ തുടിയിൽ"
+    ],
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "KS Chithra",
+    "language": "Malayalam Film Song",
+    "raga": "Madhyamaadi Saarang",
+    "source": "MSIDB"
+  },
+  {
+    "title": "Kalabham Tharaam",
+    "alternateTitles": [
+      "Kalabham Tharam",
+      "കളഭം തരാം",
+      "Kalabham Tharaam Baghavane",
+      "Kalabham Tharaam (M)"
+    ],
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "KS Chithra / Biju Narayanan",
+    "language": "Malayalam Film Song",
+    "raga": "Pushpalathika",
+    "source": "MSIDB"
+  },
+  {
+    "title": "Oru kili Paattu Moolave",
+    "alternateTitles": [
+      "Oru Kili Paattu Moolave",
+      "Oru Kili Pattu Moolave",
+      "ഒരു കിളി പാട്ടു മൂളവേ",
+      "Oru Kili Paattu Moolave [F]"
+    ],
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "KJ Yesudas, KS Chithra",
+    "language": "Malayalam Film Song",
+    "raga": "Jog",
+    "source": "MSIDB"
+  },
+  {
+    "title": "Paahi paramporule",
+    "alternateTitles": [
+      "Pahi Paramporule",
+      "പാഹി പരമ്പൊരുളേ"
+    ],
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "Manjari, Sindhu Premkumar, Raveendran",
+    "language": "Malayalam Film Song",
+    "raga": "Hamsadhwani",
+    "source": "MSIDB"
+  },
+  {
+    "title": "Saarasamukhee Sakhee",
+    "alternateTitles": [
+      "Sarasamukhee Sakhee",
+      "സാരസമുഖീ സഖീ"
+    ],
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "MG Sreekumar",
+    "language": "Malayalam Film Song",
+    "raga": "Hamsadhwani",
+    "source": "MSIDB"
+  },
+  {
+    "title": "Neentidam churundanin",
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "Sankaran Namboothiri",
+    "language": "Malayalam Film Song",
+    "raga": "Thodi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Rajani Janithaguru",
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "Govind Vivek",
+    "language": "Malayalam Film Song",
+    "raga": "Aabheri",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kalabham tharaam (M)",
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "Biju Narayanan",
+    "language": "Malayalam Film Song",
+    "raga": "Pushpalathika",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Thathaka thathaka",
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "MG Sreekumar",
+    "language": "Malayalam Film Song",
+    "raga": "Kaapi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kalabham Tharaam [D]",
+    "filmOrAlbum": "Vadakkumnathan (2006)",
+    "composer": "Raveendran",
+    "singers": "Biju Narayanan",
+    "language": "Malayalam Film Song",
+    "raga": "Pushpalathika",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Swargamenna Kaananathil",
+    "filmOrAlbum": "Chandrakaantham (1974)",
+    "composer": "MS Viswanathan",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Chakravaakam",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Raajeevanayane",
+    "filmOrAlbum": "Chandrakaantham (1974)",
+    "composer": "MS Viswanathan",
+    "singers": "P Jayachandran",
+    "language": "Malayalam Film Song",
+    "raga": "Kaapi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Aa Nimishathinte",
+    "filmOrAlbum": "Chandrakaantham (1974)",
+    "composer": "MS Viswanathan",
+    "singers": "S Janaki",
+    "language": "Malayalam Film Song",
+    "raga": "Kalyani",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Pushpabharanam",
+    "filmOrAlbum": "Chandrakaantham (1974)",
+    "composer": "MS Viswanathan",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Hamsadhwani",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Aayiram poo vidarnnu",
+    "filmOrAlbum": "Kadamattathachan (1984)",
+    "composer": "AT Ummer",
+    "singers": "Vani Jairam",
+    "language": "Malayalam Film Song",
+    "raga": "Bhagesri",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Pulariyude Pallakku",
+    "filmOrAlbum": "Makkalmaahaathmyam (1992)",
+    "composer": "Alex Paul",
+    "singers": "MG Sreekumar",
+    "language": "Malayalam Film Song",
+    "raga": "Mohanam",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Raajaadhi Raaja",
+    "filmOrAlbum": "Sreeraama Pattaabhishekam (1962)",
+    "composer": "Br Lakshmanan",
+    "singers": "Jikki Krishnaveni",
+    "language": "Malayalam Film Song",
+    "raga": "Neelambari",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Pokunnitha",
+    "filmOrAlbum": "Sreeraama Pattaabhishekam (1962)",
+    "composer": "Br Lakshmanan",
+    "singers": "PB Sreenivas",
+    "language": "Malayalam Film Song",
+    "raga": "Sivaranjani",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Parannu Parannu",
+    "filmOrAlbum": "Sreeraama Pattaabhishekam (1962)",
+    "composer": "Br Lakshmanan",
+    "singers": "Kamukara Purushothaman",
+    "language": "Malayalam Film Song",
+    "raga": "Mohanam",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Unmaadam karalilorunmaadam",
+    "filmOrAlbum": "Ormacheppu (1998)",
+    "composer": "Johnson",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Pahadi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Aaramadevathamaare",
+    "filmOrAlbum": "Prabhu (1979)",
+    "composer": "Shankar Ganesh",
+    "singers": "S Janaki",
+    "language": "Malayalam Film Song",
+    "raga": "Mohanam",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Mele vellithingal",
+    "filmOrAlbum": "Thanmaathra (2005)",
+    "composer": "Mohan Sithara",
+    "singers": "Karthik",
+    "language": "Malayalam Film Song",
+    "raga": "Maand",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Ithaloornu veena",
+    "filmOrAlbum": "Thanmaathra (2005)",
+    "composer": "Mohan Sithara",
+    "singers": "P Jayachandran",
+    "language": "Malayalam Film Song",
+    "raga": "Kalyani",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kaattru Veliyidai Kannamma",
+    "filmOrAlbum": "Thanmaathra (2005)",
+    "composer": "Mohan Sithara",
+    "singers": "Vidhu Prathap",
+    "language": "Malayalam Film Song",
+    "raga": "Valachi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Ellupaadam [Neelamizhiyaal ]",
+    "filmOrAlbum": "Vidhichathum Kothichathum (Kasthoori) (1982)",
+    "composer": "Raveendran",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Reethigowla",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Olam Maatti Mumbe Poyi",
+    "filmOrAlbum": "Vidhichathum Kothichathum (Kasthoori) (1982)",
+    "composer": "Raveendran",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Chakravaakam",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Thaamarakkumbilallo",
+    "filmOrAlbum": "Anweshichu Kandethiyilla (1967)",
+    "composer": "MS Baburaj",
+    "singers": "S Janaki",
+    "language": "Malayalam Film Song",
+    "raga": "Bheemplaas",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kavilathe Kanneer Kandu",
+    "filmOrAlbum": "Anweshichu Kandethiyilla (1967)",
+    "composer": "MS Baburaj",
+    "singers": "S Janaki",
+    "language": "Malayalam Film Song",
+    "raga": "Kedar",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Innale Mayangumbol",
+    "filmOrAlbum": "Anweshichu Kandethiyilla (1967)",
+    "composer": "MS Baburaj",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Yamuna Kalyani",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kannil umma",
+    "filmOrAlbum": "Alice In Wonderland (2005)",
+    "composer": "Vidyasagar",
+    "singers": "Vidhu Prathap",
+    "language": "Malayalam Film Song",
+    "raga": "Nalinakanthi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kukku kukku",
+    "filmOrAlbum": "Alice In Wonderland (2005)",
+    "composer": "Vidyasagar",
+    "singers": "V Devanand",
+    "language": "Malayalam Film Song",
+    "raga": "Subha Panthuvarali",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Kaattil Thekkannam Kaattil",
+    "filmOrAlbum": "Aaravam (1978)",
+    "composer": "MG Radhakrishnan",
+    "singers": "S Janaki",
+    "language": "Malayalam Film Song",
+    "raga": "Valachi",
+    "source": "MSIDB Verified"
+  },
+  {
+    "title": "Poornendu Raathripol",
+    "filmOrAlbum": "College Beauty (1979)",
+    "composer": "MS Baburaj",
+    "singers": "KJ Yesudas",
+    "language": "Malayalam Film Song",
+    "raga": "Aarabhi",
+    "source": "MSIDB Verified"
   }
 ]
