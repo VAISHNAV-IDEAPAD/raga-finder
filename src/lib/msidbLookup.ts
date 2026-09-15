@@ -1,17 +1,61 @@
-import dns from 'dns';
+import { request as httpsRequest } from 'https';
 import { SongRagaEntry } from '@/types/raga';
 import { resolveRagaProfile, normalizeSongQuery, phoneticKey } from './songSearch';
 
-// Ensure IPv4 is prioritized on Windows/Node to avoid IPv6 connect timeouts and disable strict TLS rejection for MSIDB
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-try {
-  dns.setDefaultResultOrder('ipv4first');
-} catch (e) {
-  // Ignore in environments where not supported
-}
-
 // In-memory cache for live MSIDB queries
 const MSIDB_CACHE = new Map<string, { matchedSong: SongRagaEntry; ragaProfile: any } | null>();
+
+/**
+ * MSIDB's certificate chain is currently incomplete. Keep the compatibility
+ * exception tightly scoped to these public, read-only catalogue requests;
+ * never change TLS verification for the rest of the Next.js server.
+ */
+function fetchMSIDBHtml(url: string): Promise<{ ok: boolean; status: number; html: string }> {
+  return new Promise((resolve, reject) => {
+    const request = httpsRequest(
+      url,
+      {
+        headers: {
+          'User-Agent': 'RagaFinder/1.0 (+https://raga-finder-ideapad.vercel.app)',
+          Accept: 'text/html,application/xhtml+xml',
+        },
+        rejectUnauthorized: false,
+        timeout: 4500,
+      },
+      response => {
+        const chunks: Buffer[] = [];
+        response.on('data', chunk => chunks.push(Buffer.from(chunk)));
+        response.on('end', () => {
+          resolve({
+            ok: Boolean(response.statusCode && response.statusCode >= 200 && response.statusCode < 300),
+            status: response.statusCode || 0,
+            html: Buffer.concat(chunks).toString('utf8'),
+          });
+        });
+      }
+    );
+
+    request.once('timeout', () => request.destroy(new Error('MSIDB request timed out')));
+    request.once('error', reject);
+    request.end();
+  });
+}
+
+function titleMatchScore(query: string, title: string): number {
+  const normalizedQuery = normalizeSongQuery(query);
+  const normalizedTitle = normalizeSongQuery(title);
+  const queryPhonetic = phoneticKey(query);
+  const titlePhonetic = phoneticKey(title);
+
+  if (normalizedQuery === normalizedTitle) return 100;
+  if (queryPhonetic.length >= 3 && queryPhonetic === titlePhonetic) return 98;
+  if (normalizedTitle.startsWith(`${normalizedQuery} `) || normalizedQuery.startsWith(`${normalizedTitle} `)) return 90;
+
+  const queryWords = new Set(normalizedQuery.split(' ').filter(Boolean));
+  const titleWords = new Set(normalizedTitle.split(' ').filter(Boolean));
+  const overlap = [...queryWords].filter(word => titleWords.has(word)).length;
+  return queryWords.size ? Math.round((overlap / queryWords.size) * 80) : 0;
+}
 
 function cleanHtml(str: string): string {
   if (!str) return '';
@@ -39,18 +83,12 @@ export async function lookupSongOnMSIDB(
 
   try {
     const searchUrl = `https://en.msidb.org/songs.php?tag=Search&song=${encodeURIComponent(rawQuery.trim())}`;
-    const searchRes = await fetch(searchUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)',
-        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9',
-      },
-      signal: AbortSignal.timeout(4500),
-    });
+    const searchRes = await fetchMSIDBHtml(searchUrl);
 
     if (!searchRes.ok) return null;
 
-    const html = await searchRes.text();
-    const rows = html.match(/<tr\s+class=ptableslist[\s\S]*?<\/tr>/gi) || [];
+    const html = searchRes.html;
+    const rows = html.match(/<tr\b[^>]*\bclass\s*=\s*["']?[^"'>]*\bptableslist\b[^"'>]*["']?[^>]*>[\s\S]*?<\/tr>/gi) || [];
 
     if (rows.length === 0) {
       MSIDB_CACHE.set(cacheKey, null);
@@ -58,7 +96,7 @@ export async function lookupSongOnMSIDB(
     }
 
     // Find the best row matching the song query
-    let bestRow = rows[0];
+    let bestScore = 0;
     let bestSongId = '';
     let bestTitle = '';
     let bestFilm = '';
@@ -77,21 +115,9 @@ export async function lookupSongOnMSIDB(
         const composer = tds[3] || '';
         const singers = tds[5] || '';
 
-        const normTitle = normalizeSongQuery(title);
-        const phonTitle = phoneticKey(title);
-        const phonQ = phoneticKey(rawQuery);
-
-        if (normTitle === qNorm || (phonQ.length >= 3 && phonTitle === phonQ)) {
-          bestSongId = idMatch[1];
-          bestTitle = title;
-          bestFilm = film;
-          bestYear = year;
-          bestComposer = composer;
-          bestSingers = singers;
-          break;
-        }
-
-        if (!bestSongId) {
+        const score = titleMatchScore(rawQuery, title);
+        if (score > bestScore) {
+          bestScore = score;
           bestSongId = idMatch[1];
           bestTitle = title;
           bestFilm = film;
@@ -102,31 +128,26 @@ export async function lookupSongOnMSIDB(
       }
     }
 
-    if (!bestSongId) {
+    // Never present MSIDB's first result as an answer for a different composition.
+    if (!bestSongId || bestScore < 70) {
       MSIDB_CACHE.set(cacheKey, null);
       return null;
     }
 
     // Fetch individual song details to extract Raga
     const songUrl = `https://en.msidb.org/s.php?${bestSongId}`;
-    const songRes = await fetch(songUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-        Accept: 'text/html,application/xhtml+xml',
-      },
-      signal: AbortSignal.timeout(4500),
-    });
+    const songRes = await fetchMSIDBHtml(songUrl);
 
     if (!songRes.ok) return null;
 
-    const songHtml = await songRes.text();
+    const songHtml = songRes.html;
 
     // Extract Raga
     let raga = '';
     const ragaMatch =
-      songHtml.match(/category=raga&(?:amp;)?artist=([^"&>]+)/i) ||
-      songHtml.match(/Raga[\s\S]{1,150}?artist=([^"&>]+)/i) ||
-      songHtml.match(/Raga[\s\S]{1,150}?>([^<]+)<\/a>/i);
+      songHtml.match(/(?:Ragas?\.php|category=raga)[^"']*(?:artist|raga)=([^"'&>]+)/i) ||
+      songHtml.match(/<t[dh][^>]*>\s*Raga\s*<\/t[dh]>\s*<t[dh][^>]*>[\s\S]*?<a[^>]*>([^<]+)<\/a>/i) ||
+      songHtml.match(/\bRaga\b[\s\S]{0,250}?<a[^>]*>([^<]+)<\/a>/i);
 
     if (ragaMatch && ragaMatch[1]) {
       try {
