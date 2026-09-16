@@ -1,6 +1,7 @@
 import songsData from '@/data/song_ragas_db.json';
 import seedRagas from '@/data/seed_ragas.json';
-import { SongRagaEntry, Tradition } from '@/types/raga';
+import msidbRagasProfiles from '@/data/msidb_ragas_profiles.json';
+import { SongRagaEntry, Tradition, RagaProfile } from '@/types/raga';
 
 // Normalization helper: strips accents, symbols, and standardizes transliteration
 export function normalizeSongQuery(str: string): string {
@@ -558,7 +559,26 @@ export function resolveRagaProfile(ragaName: string): any {
     }
   }
 
-  // 2. Check seed ragas map
+  // 2. Check MSIDB generated raga profiles dictionary
+  if (!profile) {
+    const msidbDict = msidbRagasProfiles as Record<string, any>;
+    for (const [k, prof] of Object.entries(msidbDict)) {
+      const kNorm = normalizeSongQuery(k);
+      if (kNorm === lookupName || kNorm === cleanName) {
+        profile = { ...prof };
+        break;
+      }
+      if (prof.alternateNames && prof.alternateNames.some((alt: string) => {
+        const altNorm = normalizeSongQuery(alt);
+        return altNorm === lookupName || altNorm === cleanName;
+      })) {
+        profile = { ...prof };
+        break;
+      }
+    }
+  }
+
+  // 3. Check seed ragas map
   if (!profile && SEED_RAGA_MAP.has(lookupName)) {
     const s = SEED_RAGA_MAP.get(lookupName);
     profile = {
@@ -582,7 +602,19 @@ export function resolveRagaProfile(ragaName: string): any {
     };
   }
 
-  // 3. Fallback generic profile
+  // 4. Fuzzy check in MSIDB dictionary
+  if (!profile) {
+    const msidbDict = msidbRagasProfiles as Record<string, any>;
+    for (const [k, prof] of Object.entries(msidbDict)) {
+      const kNorm = normalizeSongQuery(k);
+      if (kNorm.includes(cleanName) || cleanName.includes(kNorm)) {
+        profile = { ...prof };
+        break;
+      }
+    }
+  }
+
+  // 5. Fallback generic profile
   if (!profile) {
     profile = {
       name: ragaName.trim(),
@@ -599,7 +631,7 @@ export function resolveRagaProfile(ragaName: string): any {
     };
   }
 
-  // Enrich profile with notable songs from our 1,905 song database!
+  // Enrich profile with notable songs from our database
   const allSongs = songsData as SongRagaEntry[];
   const ragaNorm = normalizeSongQuery(profile.name);
   const matchingSongs = allSongs
@@ -618,7 +650,7 @@ export function resolveRagaProfile(ragaName: string): any {
     profile.famousSongs = matchingSongs;
   }
 
-  return profile;
+  return profile as RagaProfile;
 }
 
 // Check if query is directly a Raga name (e.g. "Mohanam", "Kalyani", "Darbari", "Sankarabharanam")
@@ -627,7 +659,12 @@ export function isDirectRagaQuery(query: string): boolean {
   const norm = normalizeSongQuery(query);
   const phon = phoneticKey(query);
 
-  if (SEED_RAGA_MAP.has(norm) || EXTENDED_RAGA_PROFILES[norm]) return true;
+  const msidbDict = msidbRagasProfiles as Record<string, any>;
+  if (SEED_RAGA_MAP.has(norm) || EXTENDED_RAGA_PROFILES[norm] || msidbDict[norm]) return true;
+
+  for (const k of Object.keys(msidbDict)) {
+    if (normalizeSongQuery(k) === norm) return true;
+  }
 
   if (phon.length >= 3) {
     for (const k of SEED_RAGA_MAP.keys()) {
@@ -636,12 +673,21 @@ export function isDirectRagaQuery(query: string): boolean {
     for (const k of Object.keys(EXTENDED_RAGA_PROFILES)) {
       if (phoneticKey(k) === phon) return true;
     }
+    for (const k of Object.keys(msidbDict)) {
+      if (phoneticKey(k) === phon) return true;
+    }
   }
   return false;
 }
 
 // Main Search Algorithm for finding songs or direct ragas in our database
-export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry; ragaProfile: any; isDirectRaga?: boolean } | null {
+export function findSongInDatabase(query: string): {
+  matchedSong?: SongRagaEntry;
+  ragaProfile: RagaProfile;
+  allRagaProfiles?: RagaProfile[];
+  isMultiRaga?: boolean;
+  isDirectRaga?: boolean;
+} | null {
   if (!query || query.trim().length < 2) return null;
 
   const rawQ = query.trim();
@@ -718,10 +764,32 @@ export function findSongInDatabase(query: string): { matchedSong?: SongRagaEntry
 
   // Threshold: must achieve at least 70 score to be considered a verified database match
   if (bestMatch && highestScore >= 70) {
-    const ragaProfile = resolveRagaProfile(bestMatch.raga);
+    const rawRagas = bestMatch.ragas && bestMatch.ragas.length > 0
+      ? bestMatch.ragas
+      : bestMatch.raga.split(/[\/,]+/).map(r => r.trim()).filter(Boolean);
+
+    const allProfiles: RagaProfile[] = [];
+    const seenNames = new Set<string>();
+
+    for (const rName of rawRagas) {
+      const prof = resolveRagaProfile(rName);
+      if (prof) {
+        const lowerName = prof.name.toLowerCase();
+        if (!seenNames.has(lowerName)) {
+          seenNames.add(lowerName);
+          allProfiles.push(prof);
+        }
+      }
+    }
+
+    const primaryProfile = allProfiles.length > 0 ? allProfiles[0] : resolveRagaProfile(bestMatch.raga);
+    const isMulti = rawRagas.length > 1 && allProfiles.length > 1;
+
     return {
       matchedSong: bestMatch,
-      ragaProfile,
+      ragaProfile: primaryProfile,
+      allRagaProfiles: allProfiles,
+      isMultiRaga: isMulti,
     };
   }
 

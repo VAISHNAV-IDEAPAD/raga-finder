@@ -1,0 +1,4740 @@
+{
+  "Aabhogi": {
+    "name": "Aabhogi",
+    "alternateNames": [
+      "Abhogi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 G2 M1 D2 S'",
+    "avarohana": "S' D2 M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "D2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Shuddha Dha"
+    ],
+    "rasaOrMood": "Joy, Sweet Yearning, Uplifting Devotion",
+    "timeOfDay": "Morning / Evening",
+    "explanation": "An Audava-Audava pentatonic raga omitting Pa and Ni. Known for its symmetrical, pleasing structure."
+  },
+  "Aahiri": {
+    "name": "Aahiri",
+    "alternateNames": [
+      "Ahiri"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 8,
+    "parentRaga": "Hanumatodi (8th Melakarta Janya)",
+    "arohana": "S R1 S G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Intense Karuna (Pathos), Grief, Tender Yearning",
+    "timeOfDay": "Morning",
+    "explanation": "A rare, profoundly melancholic vakra bhashanga raga capable of inducing deep sadness and catharsis."
+  },
+  "Aanandhaambari": {
+    "name": "Aanandhaambari",
+    "alternateNames": [
+      "Anandambari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Bliss, Joyful Devotion",
+    "timeOfDay": "Evening",
+    "explanation": "Melodious janya evoking serene bliss and devotional warmth."
+  },
+  "Aandholika": {
+    "name": "Aandholika",
+    "alternateNames": [
+      "Andolika"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 D2 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Gentle Swaying, Calming Serenity",
+    "timeOfDay": "Afternoon / Evening",
+    "explanation": "Named after the swinging motion (andolika / palanquin), omitting Gandhara in ascent."
+  },
+  "Aarabhi": {
+    "name": "Aarabhi",
+    "alternateNames": [
+      "Arabhi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Veera (Valour), Radiant Devotion, Vibrant Energy",
+    "timeOfDay": "Morning",
+    "explanation": "One of the five major Ghana ragas of Carnatic music. Featured in Saint Thyagaraja's Pancharatna Kriti 'Sadhinchane'."
+  },
+  "Ahir Bhairavi": {
+    "name": "Ahir Bhairavi",
+    "alternateNames": [
+      "Ahir Bhairav"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 16,
+    "thaat": "Bhairav",
+    "parentRaga": "Chakravakam (Carnatic) / Bhairav Thaat (Hindustani)",
+    "arohana": "S R1 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Dawn Awakening, Serious Devotion, Meditative Calm",
+    "timeOfDay": "Early Morning (Dawn)",
+    "explanation": "A compound scale blending Bhairav in the lower tetrachord and Kafi in the upper tetrachord."
+  },
+  "Airavathi": {
+    "name": "Airavathi",
+    "alternateNames": [
+      "Airavati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 45,
+    "parentRaga": "Shubhapantuvarali Janya",
+    "arohana": "S R1 G2 M2 P D1 S'",
+    "avarohana": "S' D1 P M2 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M2",
+      "P",
+      "D1"
+    ],
+    "rasaOrMood": "Solemn, Majestic Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "Named after Indra's divine elephant, an evocative pentatonic janya with Prati Madhyamam."
+  },
+  "Amrithavarshini": {
+    "name": "Amrithavarshini",
+    "alternateNames": [
+      "Amritavarshini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 65,
+    "thaat": "Kalyan",
+    "parentRaga": "Mechakalyani (65th Melakarta Janya)",
+    "arohana": "S R2 G3 M2 P N3 S'",
+    "avarohana": "S' N3 P M2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M2",
+      "P",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Varsha (Rain-inducing), Ecstatic Bhakti, Divine Joy",
+    "timeOfDay": "Anytime (associated with rain prayer)",
+    "explanation": "Famous for the legend of Muthuswami Dikshitar bringing rain at Ettayapuram with his kriti 'Anandamrutakarshini'."
+  },
+  "Ananda Bhairavi": {
+    "name": "Ananda Bhairavi",
+    "alternateNames": [
+      "Anandabhairavi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi (20th Melakarta Janya)",
+    "arohana": "S G2 R2 G2 M1 P D2 P S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Joy, Maternal Tenderness, Devotional Peace",
+    "timeOfDay": "Anytime",
+    "explanation": "An ancient, highly auspicious vakra bhashanga raga featuring distinct ornamentation on Gandhara and Nishada."
+  },
+  "Atana": {
+    "name": "Atana",
+    "alternateNames": [
+      "Athana"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N3 D2 P M1 P G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Veera (Courage), Dramatic Splendour, Striking Joy",
+    "timeOfDay": "Anytime",
+    "explanation": "Celebrated for its sparkling phrases in the high octave and assertive, spirited character."
+  },
+  "Bahudhari": {
+    "name": "Bahudhari",
+    "alternateNames": [
+      "Bahudari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 S",
+    "swarasCarnatic": [
+      "S",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Joyful Bhakti, Uplifting Radiance",
+    "timeOfDay": "Morning / Daytime",
+    "explanation": "A sparkling Shadava-Audava raga omitting Rishabham, famous for G.N. Balasubramaniam's 'Brova Barama'."
+  },
+  "Bahumarini": {
+    "name": "Bahumarini",
+    "alternateNames": [
+      "Bahumarini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Playful Romance, Folk Elegance",
+    "timeOfDay": "Evening",
+    "explanation": "Rare melodic scale popularized by Berny Ignatius in the movie Chess for 'Chandam Kaalindi'."
+  },
+  "Basanth Bahar": {
+    "name": "Basanth Bahar",
+    "alternateNames": [
+      "Basant Bahar"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Poorvi / Kafi",
+    "parentRaga": "Basant + Bahar composite",
+    "arohana": "S G3 M2 P D1 N3 S'",
+    "avarohana": "S' N2 D2 P M1 G2 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D1",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Spring Ecstasy (Vasant), Vibrant Color",
+    "timeOfDay": "Night (Spring Season)",
+    "explanation": "A celebrated Hindustani jod (compound) raga uniting the joyful spring moods of Raga Basant and Raga Bahar."
+  },
+  "Begada": {
+    "name": "Begada",
+    "alternateNames": [
+      "Begade"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S G3 R2 G3 M1 P D2 P S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Shringara, Regal Majestic Devotion, Argumentative Wit",
+    "timeOfDay": "Anytime",
+    "explanation": "Known as the 'King of ragas' for intellectual mastery, featuring unique characteristic oscillation on Madhyamam."
+  },
+  "Bhaathiyaar": {
+    "name": "Bhaathiyaar",
+    "alternateNames": [
+      "Bhatiyar"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Marwa",
+    "parentRaga": "Marwa Thaat",
+    "arohana": "S D1 P, M2 D1 S'",
+    "avarohana": "S' r1 N3 D1 P, M2 P G3, M1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Morning Devotion, Royal Awakening",
+    "timeOfDay": "Dawn (4 AM - 7 AM)",
+    "explanation": "A profound early-morning Hindustani melody incorporating both Madhyamas and Komal Rishabh."
+  },
+  "Bhagesri": {
+    "name": "Bhagesri",
+    "alternateNames": [
+      "Bageshri",
+      "Bageshree"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S G2 M1 D2 N2 S'",
+    "avarohana": "S' N2 D2 M1 P D2 G2 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Viraha Shringara (Tender Yearning in Separation)",
+    "timeOfDay": "Midnight (Late Night)",
+    "explanation": "Deep, soothing late-night raga expressing intimate romantic longing."
+  },
+  "Bhairavi": {
+    "name": "Bhairavi",
+    "alternateNames": [
+      "Natabhairavi Janya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi (20th Melakarta Janya)",
+    "arohana": "S G2 R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Supreme Bhakti, Karuna, Majesty",
+    "timeOfDay": "Anytime",
+    "explanation": "The queen of Carnatic ragas, a Bhashanga scale using both Chatusruti Dhaivata and Suddha Dhaivata."
+  },
+  "Bheem Plaasi": {
+    "name": "Bheem Plaasi",
+    "alternateNames": [
+      "Bhimpalasi",
+      "Bheemplaas",
+      "Abheri"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya / Kafi Thaat",
+    "arohana": "n2' S G2 M1 P n2 S'",
+    "avarohana": "S' n2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Poignant Love, Melancholy, Yearning",
+    "timeOfDay": "Late Afternoon (3 PM - 6 PM)",
+    "explanation": "A sublime afternoon raga with deep resonance on Shuddha Ma and Komal Ga."
+  },
+  "Bheemplaas": {
+    "name": "Bheemplaas",
+    "alternateNames": [
+      "Bhimpalasi",
+      "Bheem Plaasi",
+      "Abheri"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya / Kafi Thaat",
+    "arohana": "S G2 M1 P N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Tender Romance, Devotional Sweetness",
+    "timeOfDay": "Late Afternoon",
+    "explanation": "Common spelling variation of Bhimpalasi extensively documented in cinema music archives."
+  },
+  "Bhoopalam": {
+    "name": "Bhoopalam",
+    "alternateNames": [
+      "Bhupalam",
+      "Bhupali (Carnatic orientation)"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 8,
+    "parentRaga": "Hanumatodi (8th Melakarta Janya)",
+    "arohana": "S R1 G2 P D1 S'",
+    "avarohana": "S' D1 P G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "P",
+      "D1"
+    ],
+    "rasaOrMood": "Peaceful Awakening, Dawn Prayer",
+    "timeOfDay": "Dawn (Brahma Muhurta)",
+    "explanation": "Sacred dawn raga sung in temples during Nirmalya Darshanam to awaken the deity."
+  },
+  "Bihag": {
+    "name": "Bihag",
+    "alternateNames": [
+      "Behag"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam / Bilawal Thaat",
+    "arohana": "S G3 M1 P N3 S'",
+    "avarohana": "S' N3 D2 P M2 G3 M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Shringara (Romantic Love), Joy, Tender Nostalgia",
+    "timeOfDay": "Second Quarter of Night (9 PM - 12 AM)",
+    "explanation": "Celebrated romantic raga that introduces Teevra Ma delicately in descent."
+  },
+  "Bilahari": {
+    "name": "Bilahari",
+    "alternateNames": [
+      "Bilawal Janya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 G3 P D2 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Joy, Ujjvala, Celebration, Brightness",
+    "timeOfDay": "Morning (Pratah Kala)",
+    "explanation": "Audava-Sampoorna scale with Mohanam ascent and Sankarabharanam descent. Evokes vibrant optimism."
+  },
+  "Bilawal": {
+    "name": "Bilawal",
+    "alternateNames": [
+      "Alhaiya Bilawal",
+      "Dheerasankarabharanam equivalent"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Bilawal",
+    "parentRaga": "Bilawal Thaat Parent",
+    "arohana": "S R2 G3 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Majesty, Contentment, Morning Brightness",
+    "timeOfDay": "Morning",
+    "explanation": "The shuddha scale of modern Hindustani classical music corresponding to Western Major Scale."
+  },
+  "Bindumaalini": {
+    "name": "Bindumaalini",
+    "alternateNames": [
+      "Bindumalini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 16,
+    "parentRaga": "Chakravakam (16th Melakarta Janya)",
+    "arohana": "S G3 R1 G3 M1 P N2 S'",
+    "avarohana": "S' N2 S' D2 P G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Sweet Devotion, Meditative Yearning",
+    "timeOfDay": "Evening",
+    "explanation": "Popularized by Saint Thyagaraja's immortal kriti 'Entha Muddo Enta Sogaso'."
+  },
+  "Bowli": {
+    "name": "Bowli",
+    "alternateNames": [
+      "Bauli"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 G3 P D1 S'",
+    "avarohana": "S' N3 D1 P G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Bhakti, Morning Prayer, Awakening",
+    "timeOfDay": "Dawn / Early Morning",
+    "explanation": "A morning raga omitting Madhyamam, famously chosen for Annamacharya's 'Brahmam Okkate'."
+  },
+  "Chalanaatta": {
+    "name": "Chalanaatta",
+    "alternateNames": [
+      "Chalanata"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 36,
+    "parentRaga": "Janaka (36th Melakarta)",
+    "arohana": "S R3 G3 M1 P D3 N3 S'",
+    "avarohana": "S' N3 D3 P M1 G3 R3 S",
+    "swarasCarnatic": [
+      "S",
+      "R3",
+      "G3",
+      "M1",
+      "P",
+      "D3",
+      "N3"
+    ],
+    "rasaOrMood": "Veera (Heroism), Dynamic Vigor",
+    "timeOfDay": "Anytime",
+    "explanation": "The 36th and final Suddha Madhyama Melakarta with Shatsruti Rishabha and Shatsruti Dhaivata."
+  },
+  "Chandra Kouns": {
+    "name": "Chandra Kouns",
+    "alternateNames": [
+      "Chandrakauns"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 21,
+    "thaat": "Kafi / Bhairavi",
+    "parentRaga": "Keeravani Janya / Chandrakauns",
+    "arohana": "S G2 M1 D1 N3 S'",
+    "avarohana": "S' N3 D1 M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "M1",
+      "D1",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Komal Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Nocturnal Mysticism, Introspective Beauty",
+    "timeOfDay": "Late Night (Midnight)",
+    "explanation": "Formed by replacing Kaisiki Nishadha in Malkauns with Kakali Nishadha (N3), creating a sparkling glow."
+  },
+  "Chenchurutti": {
+    "name": "Chenchurutti",
+    "alternateNames": [
+      "Senchuruti"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "D2 S R2 G3 M1 P D2 N2",
+    "avarohana": "N2 D2 P M1 G3 R2 S N2 D2",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Folk Bhakti, Pastoral Sweetness",
+    "timeOfDay": "Anytime",
+    "explanation": "A folk-origin scale usually sung in Mandra/Madhya stayi, famous for javalis, bhajans and Kavadi Chindu."
+  },
+  "Chitta Ranjini": {
+    "name": "Chitta Ranjini",
+    "alternateNames": [
+      "Chittaranjani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 19,
+    "parentRaga": "Jhankharadhwani Janya",
+    "arohana": "S R2 G2 M1 P D1 N1 S'",
+    "avarohana": "S' N1 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N1"
+    ],
+    "rasaOrMood": "Charming the Mind (Chitta-Ranjani), Sweet Devotion",
+    "timeOfDay": "Anytime",
+    "explanation": "Thyagaraja's gem 'Nada Thanumanisam' is immortalized in this scale."
+  },
+  "Darbari Kaanada": {
+    "name": "Darbari Kaanada",
+    "alternateNames": [
+      "Darbari",
+      "Darbari Kanada"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 20,
+    "thaat": "Asavari",
+    "parentRaga": "Natabhairavi / Asavari Thaat",
+    "arohana": "S R2 G2 M1 P D1 N2 S'",
+    "avarohana": "S' D1 N2 P M1 P G2 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Grave, Regal, Deep Pathos (Karuna)",
+    "timeOfDay": "Midnight / Late Night",
+    "explanation": "Emperor Akbar's royal court raga, characterized by slow andolans on Komal Ga and Komal Dha."
+  },
+  "Desh": {
+    "name": "Desh",
+    "alternateNames": [
+      "Des"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Khamaj",
+    "parentRaga": "Harikambhoji / Khamaj Thaat",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Patriotism (Desh Bhakti), Romantic Joy",
+    "timeOfDay": "Late Evening / Second Prahar of Night",
+    "explanation": "Famous national melody of 'Vande Mataram', featuring Kakali Ni in ascent and Kaisiki Ni in descent."
+  },
+  "Devagandhari": {
+    "name": "Devagandhari",
+    "alternateNames": [
+      "Devagandhara"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Karuna, Soft Humility, Devotional Surrender",
+    "timeOfDay": "Morning",
+    "explanation": "Allied with Arabhi but distinguished by slower tempo, prolonged Gandhara with kampita gamaka."
+  },
+  "Devamanohari": {
+    "name": "Devamanohari",
+    "alternateNames": [
+      "Deva Manohari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 N2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Charming, Uplifting Bhakti",
+    "timeOfDay": "Afternoon / Evening",
+    "explanation": "Pleasing Janya omitting Gandhara, noted for its vakra descent N2 D2 N2 P M1."
+  },
+  "Dhanakaapi": {
+    "name": "Dhanakaapi",
+    "alternateNames": [
+      "Dhanakapi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kapi variation",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Pathos, Sweet Yearning",
+    "timeOfDay": "Night",
+    "explanation": "A melodic shade of Raga Kapi with heightened tender appeal."
+  },
+  "Dhanasri": {
+    "name": "Dhanasri",
+    "alternateNames": [
+      "Dhanashree"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S G2 M1 P N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Tender Bhakti, Joyous Devotion",
+    "timeOfDay": "Afternoon",
+    "explanation": "Swathi Thirunal composed his famous Thillana 'Geeta Dhuniku Taka' in Dhanashree."
+  },
+  "Dhanyasi": {
+    "name": "Dhanyasi",
+    "alternateNames": [
+      "Dhanyasree"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 8,
+    "parentRaga": "Hanumatodi (8th Melakarta Janya)",
+    "arohana": "S G2 M1 P N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Supplication, Deep Bhakti, Compassion",
+    "timeOfDay": "Morning",
+    "explanation": "Audava-Sampoorna morning raga omitting Ri and Dha in ascent."
+  },
+  "Dharmavathi": {
+    "name": "Dharmavathi",
+    "alternateNames": [
+      "Dharmavati",
+      "Madhuvanti equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 59,
+    "thaat": "Madhuvanti",
+    "parentRaga": "Janaka (59th Melakarta)",
+    "arohana": "S R2 G2 M2 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Righteousness (Dharma), Courage, Sweet Melancholy",
+    "timeOfDay": "Late Afternoon / Evening",
+    "explanation": "The 59th Melakarta raga with Prati Madhyamam, closely related to Hindustani Madhuvanti."
+  },
+  "Dhenuka": {
+    "name": "Dhenuka",
+    "alternateNames": [
+      "Dhenukam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 9,
+    "parentRaga": "Janaka (9th Melakarta)",
+    "arohana": "S R1 G2 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Karuna (Pathos), Introspection",
+    "timeOfDay": "Morning",
+    "explanation": "The 9th Melakarta raga characterized by Kakali Nishadha alongside Suddha Dhaivata."
+  },
+  "Durga": {
+    "name": "Durga",
+    "alternateNames": [
+      "Shuddha Saveri (Carnatic equivalent)"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Bilawal",
+    "parentRaga": "Bilawal Thaat",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' D2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "D2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha"
+    ],
+    "rasaOrMood": "Innocent Joy, Serene Splendour, Motherly Grace",
+    "timeOfDay": "Second Prahar of Night (9 PM - Midnight)",
+    "explanation": "Pentatonic scale omitting Ga and Ni, evoking pristine purity and courage."
+  },
+  "Dwijavanthi": {
+    "name": "Dwijavanthi",
+    "alternateNames": [
+      "Dwijavanti",
+      "Jaijaiwanti equivalent"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Khamaj",
+    "parentRaga": "Harikambhoji / Khamaj Thaat",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 M1 R2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Royal Grace, Peaceful Pathos, Romance",
+    "timeOfDay": "Night (9 PM - 12 AM)",
+    "explanation": "Exquisite Bhashanga raga employing both Gandharas (G2 and G3)."
+  },
+  "Gambheera Naatta": {
+    "name": "Gambheera Naatta",
+    "alternateNames": [
+      "Gambhiranatta",
+      "Shuddha Nata"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 36,
+    "parentRaga": "Chalanata (36th Melakarta Janya)",
+    "arohana": "S G3 M1 P N3 S'",
+    "avarohana": "S' N3 P M1 G3 S",
+    "swarasCarnatic": [
+      "S",
+      "G3",
+      "M1",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Majestic, Grandeur (Gambheera), Auspicious Vigor",
+    "timeOfDay": "Anytime",
+    "explanation": "Pentatonic scale omitting Ri and Dha, celebrated for majestic temple procession compositions."
+  },
+  "Gara": {
+    "name": "Gara",
+    "alternateNames": [
+      "Ghara"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S G3 M1 P D2 N3 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Sweet Romance, Thumri Lightness",
+    "timeOfDay": "Late Night",
+    "explanation": "Light classical Hindustani raga frequently used in semi-classical Ghazals and Thumris."
+  },
+  "Gavathi": {
+    "name": "Gavathi",
+    "alternateNames": [
+      "Gawati"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Khamaj",
+    "parentRaga": "Khamaj Thaat",
+    "arohana": "S G3 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Joyful Romance, Spring Celebration",
+    "timeOfDay": "Late Night",
+    "explanation": "Modern Hindustani scale omitting Rishabh in ascent."
+  },
+  "Gowla": {
+    "name": "Gowla",
+    "alternateNames": [
+      "Gaula"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 M1 P N3 S'",
+    "avarohana": "S' N3 P M1 R1 G3 M1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Veera (Majesty), Ghana Weight, Sombre Prayer",
+    "timeOfDay": "Morning",
+    "explanation": "One of the sacred Ghana Panchaka ragas, famous for Thyagaraja's 'Duduku Gala'."
+  },
+  "Gowli Panthu": {
+    "name": "Gowli Panthu",
+    "alternateNames": [
+      "Gowlipantu"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 M1 P N3 S'",
+    "avarohana": "S' N3 D1 P M1 D1 M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Melancholic Devotion, Intense Supplication",
+    "timeOfDay": "Morning",
+    "explanation": "Thyagaraja's poignant 'Tera Teeyagarada' is immortalized in this scale."
+  },
+  "Gowri Manohari": {
+    "name": "Gowri Manohari",
+    "alternateNames": [
+      "Gourimanohari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 23,
+    "thaat": "Melodic Minor equivalent",
+    "parentRaga": "Janaka (23rd Melakarta)",
+    "arohana": "S R2 G2 M1 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Shringara, Enchantment, Poignant Grace",
+    "timeOfDay": "Evening / Night",
+    "explanation": "The 23rd Melakarta raga, corresponding to the Western Melodic Minor scale in ascent."
+  },
+  "Gunji Kaanada": {
+    "name": "Gunji Kaanada",
+    "alternateNames": [
+      "Gunji Kanada"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 20,
+    "parentRaga": "Kanada Anga Janya",
+    "arohana": "S R2 G2 M1 P D1 N2 S'",
+    "avarohana": "S' D1 N2 P M1 P G2 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Introspective Calm, Poetic Contemplation",
+    "timeOfDay": "Night",
+    "explanation": "A rare and tender variation of the Kanada family."
+  },
+  "Hamsanaadam": {
+    "name": "Hamsanaadam",
+    "alternateNames": [
+      "Hamsanadam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 65,
+    "parentRaga": "Mechakalyani (65th Melakarta Janya)",
+    "arohana": "S R2 M2 P N3 S'",
+    "avarohana": "S' N3 P M2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M2",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Spiritual Elevation, Swan-like Grace, Tranquility",
+    "timeOfDay": "Night",
+    "explanation": "Pentatonic scale omitting Ga and Dha, immortalized in Thyagaraja's 'Bantureethi Koluvu'."
+  },
+  "Hamsanadam": {
+    "name": "Hamsanadam",
+    "alternateNames": [
+      "Hamsanaadam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 65,
+    "parentRaga": "Mechakalyani Janya",
+    "arohana": "S R2 M2 P N3 S'",
+    "avarohana": "S' N3 P M2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M2",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Elevated Bhakti",
+    "timeOfDay": "Night",
+    "explanation": "Standard alternate spelling of Hamsanaadam."
+  },
+  "Hamsanandi": {
+    "name": "Hamsanandi",
+    "alternateNames": [
+      "Marwa equivalent",
+      "Puriya"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 53,
+    "thaat": "Marwa",
+    "parentRaga": "Gamanashrama (53rd Melakarta Janya)",
+    "arohana": "S R1 G3 M2 D2 N3 S'",
+    "avarohana": "S' N3 D2 M2 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M2",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Re",
+      "Shuddha Ga",
+      "Teevra Ma",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Dusk Mystery, Poignant Yearning, Spiritual Calm",
+    "timeOfDay": "Sunset / Sandhya (Dusk)",
+    "explanation": "Hexatonic raga omitting Panchama, casting an enchanting, mystical twilight hue."
+  },
+  "Harikamboji": {
+    "name": "Harikamboji",
+    "alternateNames": [
+      "Harikambhoji",
+      "Khamaj Thaat equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "thaat": "Khamaj",
+    "parentRaga": "Janaka (28th Melakarta)",
+    "arohana": "S R2 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Affection, Warm Shringara, Devotional Tenderness",
+    "timeOfDay": "Evening",
+    "explanation": "The 28th Melakarta raga and the fountainhead of numerous beloved ragas including Mohanam, Kamboji, and Sahana."
+  },
+  "Hemavathi": {
+    "name": "Hemavathi",
+    "alternateNames": [
+      "Hemavati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 58,
+    "parentRaga": "Janaka (58th Melakarta)",
+    "arohana": "S R2 G2 M2 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Meditative Calm, Compassion, Noble Devotion",
+    "timeOfDay": "Evening",
+    "explanation": "The 58th Melakarta raga, symmetrical and highly expressive with Prati Madhyamam."
+  },
+  "Jaganmohini": {
+    "name": "Jaganmohini",
+    "alternateNames": [
+      "Jagan-mohini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S G3 M1 P N3 S'",
+    "avarohana": "S' N3 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Enchanting the Universe (Jagan-Mohini), Awe, Divine Splendour",
+    "timeOfDay": "Morning",
+    "explanation": "Famous for Thyagaraja's 'Sobhillu Saptaswara', omitting Rishabha in ascent."
+  },
+  "Jaijaiwanti": {
+    "name": "Jaijaiwanti",
+    "alternateNames": [
+      "Dwijavanthi equivalent"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Khamaj",
+    "parentRaga": "Khamaj Thaat",
+    "arohana": "R2 G2 R2 S, N3' S D2' N2' P' R2, G3 M1 P",
+    "avarohana": "S' N2 D2 P M1 G3 M1 R2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Romantic Nostalgia, Noble Elegance",
+    "timeOfDay": "Night (9 PM - Midnight)",
+    "explanation": "Celebrated romantic Hindustani classical raga with subtle transitions between both Gandharas."
+  },
+  "Jana Ranjini": {
+    "name": "Jana Ranjini",
+    "alternateNames": [
+      "Janaranjani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 G3 M1 P D2 P N3 S'",
+    "avarohana": "S' D2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Delighting the People (Jana-Ranjini), Festive Joy",
+    "timeOfDay": "Anytime",
+    "explanation": "Famous for Muthuswami Dikshitar's 'Pahimam Sri Rajarajeswari'."
+  },
+  "Janasammodini": {
+    "name": "Janasammodini",
+    "alternateNames": [
+      "Jana Sammodini"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji / Khamaj",
+    "arohana": "S R2 G3 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Charming Warmth, Light Devotional Joy",
+    "timeOfDay": "Evening",
+    "explanation": "Omits Madhyamam, providing a sweet blend of Mohanam and Harikambhoji."
+  },
+  "Japaniya": {
+    "name": "Japaniya",
+    "alternateNames": [
+      "Japanese Scale / Insen Scale"
+    ],
+    "tradition": "Both",
+    "parentRaga": "Exotic World Scale Janya",
+    "arohana": "S R1 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "rasaOrMood": "Exotic Charm, Gentle Oriental Mystery",
+    "timeOfDay": "Anytime",
+    "explanation": "Pentatonic scale with East Asian nuances adapted into cinema music by Raveendran Master."
+  },
+  "Jayanthasri": {
+    "name": "Jayanthasri",
+    "alternateNames": [
+      "Jayantasri"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi (20th Melakarta Janya)",
+    "arohana": "S G2 M1 D1 N2 S'",
+    "avarohana": "S' N2 D1 M1 P M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Karuna, Pathos, Heartfelt Supplication",
+    "timeOfDay": "Evening",
+    "explanation": "Immortalized in Thyagaraja's 'Marugelara O Raghava', omitting Rishabham."
+  },
+  "Jonpuri": {
+    "name": "Jonpuri",
+    "alternateNames": [
+      "Jaunpuri"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 20,
+    "thaat": "Asavari",
+    "parentRaga": "Natabhairavi / Asavari Thaat",
+    "arohana": "S R2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Devotional Splendour, Noble Compassion",
+    "timeOfDay": "Late Morning (9 AM - 12 PM)",
+    "explanation": "Created by Sultan Hussain Sharqi of Jaunpur, very popular in classical recitals and cinema."
+  },
+  "Kadana Kudoohalam": {
+    "name": "Kadana Kudoohalam",
+    "alternateNames": [
+      "Kadanakuthuhalam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 M1 D2 N3 G3 P S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Exhilaration (Kudoohalam), Playful Excitement",
+    "timeOfDay": "Anytime",
+    "explanation": "Invented by Patnam Subramania Iyer, celebrated for its buoyant, leaping ascent."
+  },
+  "Kalavathi": {
+    "name": "Kalavathi",
+    "alternateNames": [
+      "Kalavati"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 16,
+    "thaat": "Khamaj",
+    "parentRaga": "Chakravakam Janya",
+    "arohana": "S R1 G3 P D2 S'",
+    "avarohana": "S' D2 P G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Artistic Elegance (Kala-Vati), Bright Shringara",
+    "timeOfDay": "Midnight",
+    "explanation": "A sweet pentatonic scale omitting Madhyamam and Nishadam."
+  },
+  "Kalyana Vasantham": {
+    "name": "Kalyana Vasantham",
+    "alternateNames": [
+      "Kalyanavasantam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 21,
+    "parentRaga": "Keeravani (21st Melakarta Janya)",
+    "arohana": "S G2 M1 D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Auspicious Spring (Kalyana Vasantham), Delicate Longing",
+    "timeOfDay": "Night",
+    "explanation": "Famous for Thyagaraja's 'Nadale Leda', combining Keeravani notes with Chandrakauns ascent."
+  },
+  "Kamboji": {
+    "name": "Kamboji",
+    "alternateNames": [
+      "Kambhoji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 G3 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Majesty, Royal Romance, Expansive Bhakti",
+    "timeOfDay": "Night",
+    "explanation": "One of the grandest ragas of Carnatic music, capable of endless elaboration."
+  },
+  "Kanakaangi": {
+    "name": "Kanakaangi",
+    "alternateNames": [
+      "Kanakangi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 1,
+    "parentRaga": "Janaka (1st Melakarta)",
+    "arohana": "S R1 G1 M1 P D1 N1 S'",
+    "avarohana": "S' N1 D1 P M1 G1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G1",
+      "M1",
+      "P",
+      "D1",
+      "N1"
+    ],
+    "rasaOrMood": "Ascetic Serenity, Ancient Austerity",
+    "timeOfDay": "Morning",
+    "explanation": "The very first Melakarta of the 72-Melakarta scheme, using pure shuddha swaras throughout."
+  },
+  "Kannada Gowla": {
+    "name": "Kannada Gowla",
+    "alternateNames": [
+      "Kannadagowla"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Tender Yearning, Deep Prayer",
+    "timeOfDay": "Anytime",
+    "explanation": "Thyagaraja's 'Ora Jupuju' is famously composed in this scale."
+  },
+  "Kapi Narayani": {
+    "name": "Kapi Narayani",
+    "alternateNames": [
+      "Kapinarayani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Joyful Bhakti, Flowing Grace",
+    "timeOfDay": "Morning",
+    "explanation": "Audava-Sampoorna raga omitting Gandhara in ascent."
+  },
+  "Karnaranjani": {
+    "name": "Karnaranjani",
+    "alternateNames": [
+      "Karna Ranjani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Pleasing to the Ear (Karna-Ranjani), Tender Beauty",
+    "timeOfDay": "Evening",
+    "explanation": "Created by Muthiah Bhagavathar, famous for 'Om Namo Narayana'."
+  },
+  "Karnataka Bihag": {
+    "name": "Karnataka Bihag",
+    "alternateNames": [
+      "Karnataka Behag"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Romantic Warmth, Dignified Joy",
+    "timeOfDay": "Night",
+    "explanation": "Carnatic traditional adaptation of Bihag with regional characteristics."
+  },
+  "Karnataka Devagandhari": {
+    "name": "Karnataka Devagandhari",
+    "alternateNames": [
+      "Karnataka Devagandhari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S G2 M1 P N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Supplication, Solemn Prayer",
+    "timeOfDay": "Morning",
+    "explanation": "Often treated identically or very close to Raga Abheri."
+  },
+  "Karnataka Kaapi": {
+    "name": "Karnataka Kaapi",
+    "alternateNames": [
+      "Karnataka Kapi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Viraha, Devotional Yearning",
+    "timeOfDay": "Night",
+    "explanation": "The traditional Carnatic form of Kapi before North Indian influences were integrated."
+  },
+  "Karnataka Khamas": {
+    "name": "Karnataka Khamas",
+    "alternateNames": [
+      "Shuddha Khamas"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S M1 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Romantic Shringara, Affection",
+    "timeOfDay": "Night",
+    "explanation": "Traditional Carnatic treatment of Khamas without Kakali Nishadha."
+  },
+  "Kedar": {
+    "name": "Kedar",
+    "alternateNames": [
+      "Kedara (Hindustani)"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kalyan",
+    "parentRaga": "Kalyan Thaat",
+    "arohana": "S M1, M1 P, D2 P S'",
+    "avarohana": "S' N3 D2 P, M2 P D2 P M1, S R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Devotion, Peaceful Majesty, Lord Shiva's Grace",
+    "timeOfDay": "Late Night (9 PM - Midnight)",
+    "explanation": "Named after Lord Shiva (Kedarnath), distinctive for its striking leap from Sa to Shuddha Ma."
+  },
+  "Kedara Gowla": {
+    "name": "Kedara Gowla",
+    "alternateNames": [
+      "Kedaragaula"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Bhakti, Serene Calm, Dignity",
+    "timeOfDay": "Night",
+    "explanation": "Features Kakali Ni in ascent and Kaisiki Ni in descent, creating a tranquil, reverent atmosphere."
+  },
+  "Kedaram": {
+    "name": "Kedaram",
+    "alternateNames": [
+      "Kedara"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S M1 G3 M1 P N3 S'",
+    "avarohana": "S' N3 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Auspicious Joy, Sacred Elevation",
+    "timeOfDay": "Night",
+    "explanation": "Features vakra phrase S M1 G3 M1 P and omits Dhaivatam, producing sweet spiritual elevation."
+  },
+  "Khamas": {
+    "name": "Khamas",
+    "alternateNames": [
+      "Khamaj",
+      "Kamach"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Khamaj",
+    "parentRaga": "Harikambhoji / Khamaj Thaat",
+    "arohana": "S M1 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Shringara (Romantic Romance), Tender Charm, Playful Joy",
+    "timeOfDay": "Second Prahar of Night (9 PM - Midnight)",
+    "explanation": "Immortalized in Javadis, Padams, and classic film songs like 'Brochevarevarura'."
+  },
+  "Kharahara Priya": {
+    "name": "Kharahara Priya",
+    "alternateNames": [
+      "Kharaharapriya",
+      "Kafi Thaat equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Janaka (22nd Melakarta)",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Karuna (Compassion), Bhakti, Soulful Introspection",
+    "timeOfDay": "Evening / Night",
+    "explanation": "One of the most profound Major Melakarta ragas, parent to Abheri, Darbari Kanada, Kapi, and Madhyamavathi."
+  },
+  "Kunthalavarali": {
+    "name": "Kunthalavarali",
+    "alternateNames": [
+      "Kuntalavarali"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S M1 P D2 N2 D2 S'",
+    "avarohana": "S' N2 D2 P M1 S",
+    "swarasCarnatic": [
+      "S",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Exhilarating Joy, Rhythmic Vigor",
+    "timeOfDay": "Anytime",
+    "explanation": "Pentatonic scale omitting Ri and Ga, famous in fast-paced thillanas and dance numbers like 'Oru Murai Vanthu'."
+  },
+  "Lathaangi": {
+    "name": "Lathaangi",
+    "alternateNames": [
+      "Latangi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 63,
+    "parentRaga": "Janaka (63rd Melakarta)",
+    "arohana": "S R2 G3 M2 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Karuna, Poignant Yearning, Spiritual Solemnity",
+    "timeOfDay": "Evening",
+    "explanation": "The 63rd Melakarta raga, combining Kalyani's purvanga with Kamavardhini's uttaranga."
+  },
+  "Lavangi": {
+    "name": "Lavangi",
+    "alternateNames": [
+      "Lavangi"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla Janya",
+    "arohana": "S R1 M1 D1 S'",
+    "avarohana": "S' D1 M1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "M1",
+      "D1"
+    ],
+    "rasaOrMood": "Meditative Asceticism, Mystic Stillness",
+    "timeOfDay": "Midnight",
+    "explanation": "An extremely rare 4-note (Swarantara) raga created by Dr. M. Balamuralikrishna omitting Ga, Pa, and Ni."
+  },
+  "Maanji": {
+    "name": "Maanji",
+    "alternateNames": [
+      "Manji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi Janya",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Heart-wrenching Sorrow (Shoka), Deep Pleading",
+    "timeOfDay": "Anytime",
+    "explanation": "Close relative of Bhairavi, celebrated in Syama Sastri's 'Brovavamma' for its deeply moving lament."
+  },
+  "Madhuvanthi": {
+    "name": "Madhuvanthi",
+    "alternateNames": [
+      "Madhuvanti"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 59,
+    "thaat": "Todi / Kafi hybrid",
+    "parentRaga": "Dharmavathi Janya (59th Melakarta)",
+    "arohana": "S G2 M2 P N3 S'",
+    "avarohana": "S' N3 D2 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Honeyed Melancholy, Sweet Yearning, Shringara",
+    "timeOfDay": "Late Afternoon (3 PM - 6 PM)",
+    "explanation": "Literally 'Sweet as Honey', utilizing Teevra Ma alongside Komal Ga to produce mesmerizing romantic poignancy."
+  },
+  "Madhyamavarali": {
+    "name": "Madhyamavarali",
+    "alternateNames": [
+      "Madhyamavati shade"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "rasaOrMood": "Auspicious Peace, Devotion",
+    "timeOfDay": "Afternoon",
+    "explanation": "Allied variation of Madhyamavathi used in traditional theatre and sopana sangeetham."
+  },
+  "Malahari": {
+    "name": "Malahari",
+    "alternateNames": [
+      "Mallahari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 M1 P D1 S'",
+    "avarohana": "S' D1 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1"
+    ],
+    "rasaOrMood": "Dispeller of Dirt (Mala-Hari), Morning Purity, Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "Purandara Dasa chose this raga for foundational beginner Geethams like 'Sri Gananatha'."
+  },
+  "Manavathi": {
+    "name": "Manavathi",
+    "alternateNames": [
+      "Manavati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 5,
+    "parentRaga": "Janaka (5th Melakarta)",
+    "arohana": "S R1 G1 M1 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M1 G1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G1",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Dignified Supplication",
+    "timeOfDay": "Morning",
+    "explanation": "The 5th Melakarta raga in the Venkatamakhin scheme."
+  },
+  "Manirang": {
+    "name": "Manirang",
+    "alternateNames": [
+      "Manirangu"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "rasaOrMood": "Bhakti, Solemn Prayer, Auspiciousness",
+    "timeOfDay": "Afternoon / Evening",
+    "explanation": "Audava-Shadava raga allied with Madhyamavathi, adding Sadharana Gandharam in descent."
+  },
+  "Manolayam": {
+    "name": "Manolayam",
+    "alternateNames": [
+      "Manolayam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 S'",
+    "avarohana": "S' D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Mental Absorption (Mano-Layam), Deep Peace",
+    "timeOfDay": "Night",
+    "explanation": "Rare peaceful scale evoking deep mental stillness."
+  },
+  "Marga Hindolam": {
+    "name": "Marga Hindolam",
+    "alternateNames": [
+      "Margahindolam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi (20th Melakarta Janya)",
+    "arohana": "S R2 G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 M1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Introspective Calm, Contemplation",
+    "timeOfDay": "Night",
+    "explanation": "Thyagaraja's 'Chalamelara' is immortalized in this scale."
+  },
+  "Mayashree": {
+    "name": "Mayashree",
+    "alternateNames": [
+      "Mayasri"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla Janya",
+    "arohana": "S R1 G3 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Mystical Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "A melodic derivative of Mayamalavagowla."
+  },
+  "Megh": {
+    "name": "Megh",
+    "alternateNames": [
+      "Megh Malhar",
+      "Madhyamavathi equivalent"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Monsoon Thunder, Rain Joy, Divine Majesty",
+    "timeOfDay": "Monsoon Season / Late Night",
+    "explanation": "Ancient seasonal rain raga closely corresponding to Carnatic Madhyamavathi."
+  },
+  "Misra Keeravani": {
+    "name": "Misra Keeravani",
+    "alternateNames": [
+      "Mishra Kirwani"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 21,
+    "thaat": "Kirwani",
+    "parentRaga": "Keeravani with accidental notes",
+    "arohana": "S R2 G2 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Romantic Yearning, Bittersweet Longing",
+    "timeOfDay": "Night",
+    "explanation": "Keeravani embellished with touches of Komal Ni or Shuddha Dha in light classical expression."
+  },
+  "Misra Khamas": {
+    "name": "Misra Khamas",
+    "alternateNames": [
+      "Mishra Khamaj"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Khamaj",
+    "parentRaga": "Khamas with foreign notes",
+    "arohana": "S M1 G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Romantic Playfulness, Seductive Charm",
+    "timeOfDay": "Night",
+    "explanation": "Embellished form of Khamas incorporating both Nishadhas in expressive semi-classical thumri songs."
+  },
+  "Misra Peelu": {
+    "name": "Misra Peelu",
+    "alternateNames": [
+      "Mishra Pilu"
+    ],
+    "tradition": "Both",
+    "thaat": "Kafi",
+    "parentRaga": "Pilu with all 12 notes used playfully",
+    "arohana": "S G3 M1 P N3 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "R2",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Lyrical Sweetness, Bittersweet Yearning, Tenderness",
+    "timeOfDay": "Afternoon / Evening",
+    "explanation": "One of the most versatile and beloved light-classical scales in Indian music."
+  },
+  "Misra Sivaranjani": {
+    "name": "Misra Sivaranjani",
+    "alternateNames": [
+      "Mishra Shivaranjani"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Sivaranjani with accidental notes",
+    "arohana": "S R2 G2 P D2 S'",
+    "avarohana": "S' D2 P G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "G3",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Intense Pathos with Romantic Hope",
+    "timeOfDay": "Midnight",
+    "explanation": "Sivaranjani heightened with subtle foreign swara touches (like Shuddha Ga or Kakali Ni)."
+  },
+  "Miyan Ki Malhar": {
+    "name": "Miyan Ki Malhar",
+    "alternateNames": [
+      "Miyan Malhar"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S R2 P, M1 P, N3 D2 N3 S'",
+    "avarohana": "S' N2 P, M1 P, G2 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Majestic Rain, Torrential Downpour, Grandeur",
+    "timeOfDay": "Monsoon Season / Midnight",
+    "explanation": "Legendary rain raga composed by Miyan Tansen, celebrated for heavy oscillations on Komal Gandhar."
+  },
+  "Mohana Kalyani": {
+    "name": "Mohana Kalyani",
+    "alternateNames": [
+      "Mohanakalyani",
+      "Bhoop Kalyan equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 65,
+    "thaat": "Kalyan",
+    "parentRaga": "Mechakalyani (65th Melakarta Janya)",
+    "arohana": "S R2 G3 P D2 S'",
+    "avarohana": "S' N3 D2 P M2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Splendour, Romantic Delight, Jubilant Bhakti",
+    "timeOfDay": "Evening",
+    "explanation": "A glorious fusion of Mohanam in ascent and Kalyani with Prati Madhyamam in descent."
+  },
+  "Mukhari": {
+    "name": "Mukhari",
+    "alternateNames": [
+      "Mukhari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Shoka (Profound Sorrow), Grief, Pleading Surrender",
+    "timeOfDay": "Anytime",
+    "explanation": "The historic symbol of tragedy and pathos in Carnatic music, capable of evoking tears."
+  },
+  "Multani": {
+    "name": "Multani",
+    "alternateNames": [
+      "Multani"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Todi",
+    "parentRaga": "Todi Thaat",
+    "arohana": "N3' S G2 M2 P N3 S'",
+    "avarohana": "S' N3 D1 P M2 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Re",
+      "Komal Ga",
+      "Teevra Ma",
+      "Pa",
+      "Komal Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Quiet Anguish, Spiritual Yearning, Intense Heat",
+    "timeOfDay": "Late Afternoon (3 PM - 6 PM)",
+    "explanation": "A quintessential late afternoon Hindustani raga creating solemn introspective gravity."
+  },
+  "Naatta Kurinji": {
+    "name": "Naatta Kurinji",
+    "alternateNames": [
+      "Natakurinji",
+      "Nattakurinji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 G3 M1 N3 D2 N3 P D2 N3 S'",
+    "avarohana": "S' N3 D2 M1 G3 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Shringara (Romantic Romance), Royal Radiance, Tenderness",
+    "timeOfDay": "Evening / Night",
+    "explanation": "Celebrated for its intricate, meandering vakra phrases and alluring, sensual charm."
+  },
+  "Nadanamakriya": {
+    "name": "Nadanamakriya",
+    "alternateNames": [
+      "Nadanamakriya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 G3 M1 P D1 N3",
+    "avarohana": "N3 D1 P M1 G3 R1 S N3'",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Deep Contrition, Karuna, Spiritual Longing",
+    "timeOfDay": "Anytime",
+    "explanation": "A Nishadantya raga (scales do not exceed the upper Nishadha), sung for philosophical songs."
+  },
+  "Nagagandhari": {
+    "name": "Nagagandhari",
+    "alternateNames": [
+      "Nagagandhari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi Janya",
+    "arohana": "S R2 M1 G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Mystical Devotion, Meditative Reverie",
+    "timeOfDay": "Night",
+    "explanation": "Rare Janya of Natabhairavi with subtle vakra movements."
+  },
+  "Naganandini": {
+    "name": "Naganandini",
+    "alternateNames": [
+      "Naganandini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 30,
+    "parentRaga": "Janaka (30th Melakarta)",
+    "arohana": "S R3 G3 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G3 R3 S",
+    "swarasCarnatic": [
+      "S",
+      "R3",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Awe, Majestic Wonder",
+    "timeOfDay": "Anytime",
+    "explanation": "The 30th Melakarta raga featuring Shatsruti Rishabha."
+  },
+  "Nalinakanthi": {
+    "name": "Nalinakanthi",
+    "alternateNames": [
+      "Nalinakanti"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 27,
+    "parentRaga": "Sarasangi (27th Melakarta Janya)",
+    "arohana": "S G3 R2 M1 P N3 S'",
+    "avarohana": "S' N3 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "N3"
+    ],
+    "rasaOrMood": "Sparkling Joy, Lotus-like Radiance (Nalina-Kanthi)",
+    "timeOfDay": "Morning / Daytime",
+    "explanation": "A sparkling, lively raga omitting Dhaivatam, famous for Thyagaraja's 'Manavyalakim'."
+  },
+  "Narayani": {
+    "name": "Narayani",
+    "alternateNames": [
+      "Narayani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Bhakti, Maternal Warmth",
+    "timeOfDay": "Daytime",
+    "explanation": "Audava-Sampoorna raga omitting Gandhara and Nishada in ascent."
+  },
+  "Narthaki": {
+    "name": "Narthaki",
+    "alternateNames": [
+      "Narthaki"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Dance Elegance, Kinetic Grace",
+    "timeOfDay": "Evening",
+    "explanation": "Named after the classical dancer (Narthaki), featured in Devarajan Master compositions."
+  },
+  "Nasikabhushani": {
+    "name": "Nasikabhushani",
+    "alternateNames": [
+      "Nasikabhushani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 70,
+    "parentRaga": "Janaka (70th Melakarta)",
+    "arohana": "S R1 G3 M2 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M2 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Awe, Heroic Wonder",
+    "timeOfDay": "Night",
+    "explanation": "The 70th Melakarta raga in the Carnatic system."
+  },
+  "Natabhairavi": {
+    "name": "Natabhairavi",
+    "alternateNames": [
+      "Asavari Thaat equivalent",
+      "Natural Minor"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "thaat": "Asavari",
+    "parentRaga": "Janaka (20th Melakarta)",
+    "arohana": "S R2 G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Sorrow, Karuna, Serious Devotion",
+    "timeOfDay": "Late Morning / Night",
+    "explanation": "The 20th Melakarta raga and the natural minor scale of world music, parent to Bhairavi, Hindolam, and Darbari."
+  },
+  "Nawakouns": {
+    "name": "Nawakouns",
+    "alternateNames": [
+      "Navakauns"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Bhairavi",
+    "parentRaga": "Kauns Anga",
+    "arohana": "S G2 M1 D1 N2 S'",
+    "avarohana": "S' N2 D1 M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "M1",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Contemplative Depth, Modern Lyricism",
+    "timeOfDay": "Midnight",
+    "explanation": "A modern modification of Malkauns popularized in Malayalam cinema by M. Jayachandran."
+  },
+  "Niroshta": {
+    "name": "Niroshta",
+    "alternateNames": [
+      "Niroshtha"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam Janya",
+    "arohana": "S R2 G3 D2 N3 S'",
+    "avarohana": "S' N3 D2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Awe, Astonishing Virtuosity",
+    "timeOfDay": "Anytime",
+    "explanation": "Literally 'Without Lips' (Nir-Oshta) created by Muthiah Bhagavathar; sung without lips touching as Ma and Pa are omitted!"
+  },
+  "Panthuvarali": {
+    "name": "Panthuvarali",
+    "alternateNames": [
+      "Kamavardhini",
+      "Pantuvarali",
+      "Purvi Thaat equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 51,
+    "thaat": "Poorvi",
+    "parentRaga": "Janaka (51st Melakarta)",
+    "arohana": "S R1 G3 M2 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M2 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Re",
+      "Shuddha Ga",
+      "Teevra Ma",
+      "Pa",
+      "Komal Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Supreme Bhakti, Karuna, Profound Supplication",
+    "timeOfDay": "Sunset / Evening",
+    "explanation": "The 51st Melakarta raga, highly venerated for saintly prayer and temple rituals."
+  },
+  "Patdeep": {
+    "name": "Patdeep",
+    "alternateNames": [
+      "Patdip"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S G2 M1 P N3 S'",
+    "avarohana": "S' N3 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Deep Passion, Tender Longing, Bright Joy",
+    "timeOfDay": "Late Afternoon (3 PM - 6 PM)",
+    "explanation": "Resembles Bhimpalasi but features Shuddha Nishad, giving it an unmistakable glowing brightness."
+  },
+  "Peelu": {
+    "name": "Peelu",
+    "alternateNames": [
+      "Pilu"
+    ],
+    "tradition": "Both",
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S G3 M1 P N3 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Sweet Romance, Thumri Lyricism, Yearning",
+    "timeOfDay": "Evening / Night",
+    "explanation": "One of the most expressive, free-flowing folk scales in Indian cinema and light music."
+  },
+  "Poorvi Kalyani": {
+    "name": "Poorvi Kalyani",
+    "alternateNames": [
+      "Purvikalyani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 53,
+    "parentRaga": "Gamanashrama (53rd Melakarta Janya)",
+    "arohana": "S R1 G3 M2 P D2 P S'",
+    "avarohana": "S' N3 D2 P M2 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Profound Bhakti, Intimate Supplication",
+    "timeOfDay": "Dusk / Sunset",
+    "explanation": "Celebrated Carnatic raga featuring Prati Madhyamam with a vakra ascent on Panchama."
+  },
+  "Poorvi Kamboji": {
+    "name": "Poorvi Kamboji",
+    "alternateNames": [
+      "Purvi Kambhoji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 G3 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Shringara, Regal Grandeur",
+    "timeOfDay": "Night",
+    "explanation": "Traditional Kathakali and classical dance padam scale."
+  },
+  "Punnagavaraali": {
+    "name": "Punnagavaraali",
+    "alternateNames": [
+      "Punnagavarali"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 8,
+    "parentRaga": "Hanumatodi (8th Melakarta Janya)",
+    "arohana": "N2' S R1 G2 M1 P D1 N2",
+    "avarohana": "N2 D1 P M1 G2 R1 S N2'",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Snake Charmer Mystique, Sorrow, Intoxication",
+    "timeOfDay": "Anytime",
+    "explanation": "Classic Nishadantya raga historically associated with snake charmers (Magudi) and deep sorrow."
+  },
+  "Ranjani": {
+    "name": "Ranjani",
+    "alternateNames": [
+      "Ranjini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 59,
+    "parentRaga": "Dharmavathi (59th Melakarta Janya)",
+    "arohana": "S R2 G2 M2 D2 S'",
+    "avarohana": "S' N3 D2 M2 G2 S R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Pleasure, Captivating Aesthetic Beauty",
+    "timeOfDay": "Night",
+    "explanation": "An enchanting Shadava-Audava raga omitting Panchamam, famous for G.N.B's 'Durmarga Chara'."
+  },
+  "Rasikapriya": {
+    "name": "Rasikapriya",
+    "alternateNames": [
+      "Rasikapriya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 72,
+    "parentRaga": "Janaka (72nd Melakarta)",
+    "arohana": "S R3 G3 M2 P D3 N3 S'",
+    "avarohana": "S' N3 D3 P M2 G3 R3 S",
+    "swarasCarnatic": [
+      "S",
+      "R3",
+      "G3",
+      "M2",
+      "P",
+      "D3",
+      "N3"
+    ],
+    "rasaOrMood": "Crown of Ragas, Supreme Wonder",
+    "timeOfDay": "Night",
+    "explanation": "The 72nd and final Melakarta in the Carnatic system with all sharpest swara variants."
+  },
+  "Rasikaranjani": {
+    "name": "Rasikaranjani",
+    "alternateNames": [
+      "Rasika Ranjani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 16,
+    "parentRaga": "Chakravakam (16th Melakarta Janya)",
+    "arohana": "S R2 G3 P D2 S'",
+    "avarohana": "S' D2 P G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Delighting the Connoisseur, Sweet Warmth",
+    "timeOfDay": "Morning",
+    "explanation": "Pentatonic janya omitting Madhyamam and Nishadam."
+  },
+  "Rathipathipriya": {
+    "name": "Rathipathipriya",
+    "alternateNames": [
+      "Ratipathipriya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 56,
+    "parentRaga": "Shanmukhapriya (56th Melakarta Janya)",
+    "arohana": "S R2 G2 M2 P N2 S'",
+    "avarohana": "S' N2 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "N2"
+    ],
+    "rasaOrMood": "Cupid's Romance (Rathipathi), Sensual Yearning",
+    "timeOfDay": "Night",
+    "explanation": "Audava-Audava scale omitting Dhaivatam, used by Ilayaraja for 'Varna Vrindavanam'."
+  },
+  "Ravichandrika": {
+    "name": "Ravichandrika",
+    "alternateNames": [
+      "Ravichandrika"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 G3 M1 D2 S'",
+    "avarohana": "S' N2 D2 M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Sun and Moonlight Splendour, Joy",
+    "timeOfDay": "Morning / Evening",
+    "explanation": "Thyagaraja's 'Niravadhi Sukhada' is famously composed in Ravichandrika."
+  },
+  "Revagupthi": {
+    "name": "Revagupthi",
+    "alternateNames": [
+      "Revagupti",
+      "Bhoopalam allied"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 G3 P D1 S'",
+    "avarohana": "S' D1 P G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "P",
+      "D1"
+    ],
+    "rasaOrMood": "Sacred Dawn, Temple Awakening",
+    "timeOfDay": "Early Morning (Dawn)",
+    "explanation": "Identical notes to Bowli in ascent and descent, beloved in Malayalam temple classics."
+  },
+  "Revathi": {
+    "name": "Revathi",
+    "alternateNames": [
+      "Revati",
+      "Bairagi Bhairav equivalent"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 2,
+    "parentRaga": "Ratnangi / Bhairav Thaat",
+    "arohana": "S R1 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "rasaOrMood": "Vairagya (Renunciation), Mystic Power, Trance",
+    "timeOfDay": "Night / Anytime",
+    "explanation": "A deeply spiritual, austere pentatonic scale used for chants and cosmic hymns."
+  },
+  "Rishabapriya": {
+    "name": "Rishabapriya",
+    "alternateNames": [
+      "Rishabhapriya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 62,
+    "parentRaga": "Janaka (62nd Melakarta)",
+    "arohana": "S R2 G2 M2 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Solemn Devotion, Majesty",
+    "timeOfDay": "Evening",
+    "explanation": "The 62nd Melakarta raga with Prati Madhyamam and Suddha Dhaivatam."
+  },
+  "Rishivani": {
+    "name": "Rishivani",
+    "alternateNames": [
+      "Rishivani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 65,
+    "parentRaga": "Mechakalyani Janya",
+    "arohana": "S R2 G3 M2 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Sage's Voice (Rishi-Vani), Heroic Splendour",
+    "timeOfDay": "Morning",
+    "explanation": "Epic raga featured in Pazhassi Raja's 'Aadiyushassandhya' composed by Ilayaraja."
+  },
+  "Rudrapriya": {
+    "name": "Rudrapriya",
+    "alternateNames": [
+      "Rudra Priya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Beloved of Shiva (Rudra-Priya), Fierce Devotion",
+    "timeOfDay": "Night",
+    "explanation": "Thyagaraja's 'Lavanya Rama' is immortalized in this scale."
+  },
+  "Rugmambari": {
+    "name": "Rugmambari",
+    "alternateNames": [
+      "Rugmambari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 52,
+    "parentRaga": "Ramapriya Janya",
+    "arohana": "S R1 G3 M2 P D2 S'",
+    "avarohana": "S' D2 P M2 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M2",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Heroic Majesty, Cinematic Grandeur",
+    "timeOfDay": "Evening",
+    "explanation": "Popularized by Raveendran Master in Lal Salaam for 'Aadi druthapada thaalam'."
+  },
+  "Saaramathi": {
+    "name": "Saaramathi",
+    "alternateNames": [
+      "Saramati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi (20th Melakarta Janya)",
+    "arohana": "S R2 G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Deep Melancholy, Yearning, Karuna",
+    "timeOfDay": "Late Night",
+    "explanation": "Thyagaraja's 'Mokshamu Galada' immortalized this hauntingly beautiful raga."
+  },
+  "Saaranga": {
+    "name": "Saaranga",
+    "alternateNames": [
+      "Saranga"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 65,
+    "parentRaga": "Mechakalyani (65th Melakarta Janya)",
+    "arohana": "S R2 G3 M2 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M2 R2 G3 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Joy, Radiant Devotion, Royal Romance",
+    "timeOfDay": "Evening",
+    "explanation": "A beloved bhashanga raga featuring both Shuddha Ma and Prati Ma."
+  },
+  "Sahana": {
+    "name": "Sahana",
+    "alternateNames": [
+      "Shahana"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 G3 M1 P M1 D2 N2 S'",
+    "avarohana": "S' N2 S' D2 P M1 G3 M1 R2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Compassion, Tender Pathos, Peaceful Surrender",
+    "timeOfDay": "Night",
+    "explanation": "One of the most delicate and moving ragas in Carnatic music with characteristic andolan on Gandhara."
+  },
+  "Samanthamalahari": {
+    "name": "Samanthamalahari",
+    "alternateNames": [
+      "Samanta Malahari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 20,
+    "parentRaga": "Natabhairavi Janya",
+    "arohana": "S R2 M1 P D1 S'",
+    "avarohana": "S' D1 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "D1"
+    ],
+    "rasaOrMood": "Mystical Devotion, Folk Mystery",
+    "timeOfDay": "Anytime",
+    "explanation": "Immortalized in Devaasuram's 'Vande Mukunda' and G. Aravindan's Kummatti."
+  },
+  "Sarasangi": {
+    "name": "Sarasangi",
+    "alternateNames": [
+      "Sarasamgi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 27,
+    "parentRaga": "Janaka (27th Melakarta)",
+    "arohana": "S R2 G3 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Shringara, Graceful Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "The 27th Melakarta raga, combining Sankarabharanam's purvanga with Mayamalavagowla's uttaranga."
+  },
+  "Saraswathi": {
+    "name": "Saraswathi",
+    "alternateNames": [
+      "Saraswati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 64,
+    "parentRaga": "Vachaspati (64th Melakarta Janya)",
+    "arohana": "S R2 M2 P D2 S'",
+    "avarohana": "S' N2 D2 P M2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M2",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Wisdom, Intellect, Reverent Praise",
+    "timeOfDay": "Evening",
+    "explanation": "Dedicated to the Goddess of Learning and Music, omitting Gandharam."
+  },
+  "Saveri": {
+    "name": "Saveri",
+    "alternateNames": [
+      "Saveree"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 15,
+    "parentRaga": "Mayamalavagowla (15th Melakarta Janya)",
+    "arohana": "S R1 M1 P D1 S'",
+    "avarohana": "S' N3 D1 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Pleading, Compassion (Karuna), Tearful Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "A major morning raga expressing deep surrender and heartfelt prayer."
+  },
+  "Savithri": {
+    "name": "Savithri",
+    "alternateNames": [
+      "Savitri"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S G3 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 S",
+    "swarasCarnatic": [
+      "S",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Devotional Tenderness",
+    "timeOfDay": "Evening",
+    "explanation": "Melodious Janya scale of the Harikambhoji family."
+  },
+  "Shanmukhapriya": {
+    "name": "Shanmukhapriya",
+    "alternateNames": [
+      "Shanmugapriya",
+      "Chamaram"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 56,
+    "parentRaga": "Janaka (56th Melakarta)",
+    "arohana": "S R2 G2 M2 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Supreme Lord Muruga's Grace, Spiritual Yearning, Majesty",
+    "timeOfDay": "Evening",
+    "explanation": "The 56th Melakarta, one of the most widely used and majestic Prati Madhyama ragas in South India."
+  },
+  "Shudh Sarang": {
+    "name": "Shudh Sarang",
+    "alternateNames": [
+      "Shuddha Sarang"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N3 D2 P M2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Noon Sunlight, Peaceful Contentment",
+    "timeOfDay": "Midday (12 PM - 3 PM)",
+    "explanation": "Classic afternoon raga using both Shuddha Ma and Teevra Ma in graceful alternation."
+  },
+  "Shyam Kalyan": {
+    "name": "Shyam Kalyan",
+    "alternateNames": [
+      "Sham Kalyan"
+    ],
+    "tradition": "Hindustani",
+    "thaat": "Kalyan",
+    "parentRaga": "Kalyan Thaat",
+    "arohana": "S R2 M2 P N3 S'",
+    "avarohana": "S' N3 D2 P M2 P G3 M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Romantic Elegance, Devotion",
+    "timeOfDay": "Early Night (7 PM - 10 PM)",
+    "explanation": "A regal Hindustani evening melody merging Kalyan with delicate Shuddha Ma."
+  },
+  "Shyama": {
+    "name": "Shyama",
+    "alternateNames": [
+      "Sama"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Shanta (Supreme Peace), Serenity, Calming Prayer",
+    "timeOfDay": "Anytime",
+    "explanation": "Celebrated for its tranquilizing, sedative melody; capable of soothing troubled minds."
+  },
+  "Simhendra Madhyamam": {
+    "name": "Simhendra Madhyamam",
+    "alternateNames": [
+      "Simhendramadhyamam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 57,
+    "parentRaga": "Janaka (57th Melakarta)",
+    "arohana": "S R2 G2 M2 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Deep Mystery, Heroic Pathos, Royal Grace",
+    "timeOfDay": "Evening / Night",
+    "explanation": "The 57th Melakarta raga, famous for its lion-like grandeur and intense emotional scope."
+  },
+  "Sourashtram": {
+    "name": "Sourashtram",
+    "alternateNames": [
+      "Saurashtra"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 17,
+    "parentRaga": "Suryakantam (17th Melakarta Janya)",
+    "arohana": "S R1 G3 M1 P M1 D2 N3 S'",
+    "avarohana": "S' N3 D2 N2 D1 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "rasaOrMood": "Mangalam (Auspiciousness), Joyful Benediction",
+    "timeOfDay": "End of Concert / Midnight",
+    "explanation": "A revered auspicious bhashanga raga traditionally sung at mangalams and temple weddings."
+  },
+  "Sreeranjini": {
+    "name": "Sreeranjini",
+    "alternateNames": [
+      "Sriranjani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 G2 M1 D2 N2 S'",
+    "avarohana": "S' N2 D2 M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Delight of Wealth (Sri-Ranjani), Joyous Bhakti",
+    "timeOfDay": "Evening",
+    "explanation": "Shadava-Shadava raga omitting Panchamam, famous for Thyagaraja's 'Marubalka Kuntevira'."
+  },
+  "Sudha Bangala": {
+    "name": "Sudha Bangala",
+    "alternateNames": [
+      "Shuddha Bangala"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' D2 P M1 R2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Veera, Energetic Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "Thyagaraja's 'Ramabhakti Samrajyam' is immortalized in this vibrant scale."
+  },
+  "Sudha Dhanyasi": {
+    "name": "Sudha Dhanyasi",
+    "alternateNames": [
+      "Suddha Dhanyasi",
+      "Shuddha Dhanyasi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S G2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Soothing Shringara, Tender Devotion, Melodic Peace",
+    "timeOfDay": "Evening / Anytime",
+    "explanation": "One of the most beloved pentatonic ragas in Indian music, omitting Ri and Dha."
+  },
+  "Sumaneesha Ranjani": {
+    "name": "Sumaneesha Ranjani",
+    "alternateNames": [
+      "Sumanesharanjani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Refined Delight, Gentle Romance",
+    "timeOfDay": "Night",
+    "explanation": "Invented/popularized in Malayalam cinema music by Sharreth and Raveendran Master."
+  },
+  "Surutti": {
+    "name": "Surutti",
+    "alternateNames": [
+      "Surati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Mangalam, Tender Shringara, Auspicious Peace",
+    "timeOfDay": "Night / End of Concert",
+    "explanation": "An ancient, highly auspicious vakra raga frequently used for padams, javalis, and concluding prayers."
+  },
+  "Swarabhooshini": {
+    "name": "Swarabhooshini",
+    "alternateNames": [
+      "Swarabhushani"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Ornamented Joy (Swara-Bhushani)",
+    "timeOfDay": "Afternoon",
+    "explanation": "Thyagaraja's 'Varadaraja Ninnu' is composed in this scale."
+  },
+  "Thodi": {
+    "name": "Thodi",
+    "alternateNames": [
+      "Hanumatodi",
+      "Todi (Carnatic)"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 8,
+    "parentRaga": "Janaka (8th Melakarta)",
+    "arohana": "S R1 G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Majestic Bhakti, Karuna, Supreme Gravity",
+    "timeOfDay": "Morning",
+    "explanation": "The grandest morning raga of Carnatic music, capable of immense, hours-long classical elaboration."
+  },
+  "Ushaanipadam": {
+    "name": "Ushaanipadam",
+    "alternateNames": [
+      "Ushanipadam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "parentRaga": "Kharaharapriya Janya",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Dawn Mystery, Contemplation",
+    "timeOfDay": "Early Morning",
+    "explanation": "Historic scale documented in 1950s Malayalam cinema compositions."
+  },
+  "Vachaspathi": {
+    "name": "Vachaspathi",
+    "alternateNames": [
+      "Vachaspati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 64,
+    "parentRaga": "Janaka (64th Melakarta)",
+    "arohana": "S R2 G3 M2 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M2",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Lord of Speech (Vachas-Pati), Eloquence, Majesty",
+    "timeOfDay": "Evening",
+    "explanation": "The 64th Melakarta raga, corresponding to the Acoustic scale (Lydian Dominant)."
+  },
+  "Vakulaabharanam": {
+    "name": "Vakulaabharanam",
+    "alternateNames": [
+      "Vakulabharanam",
+      "Ahir Bhairav equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 14,
+    "parentRaga": "Janaka (14th Melakarta)",
+    "arohana": "S R1 G3 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Deep Mysticism, Karuna, Contemplation",
+    "timeOfDay": "Morning",
+    "explanation": "The 14th Melakarta raga with Suddha Rishabham and Kaisiki Nishadham."
+  },
+  "Vanaspathi": {
+    "name": "Vanaspathi",
+    "alternateNames": [
+      "Vanaspati"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 4,
+    "parentRaga": "Janaka (4th Melakarta)",
+    "arohana": "S R1 G1 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G1 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G1",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Forest Tranquility (Vanaspathi), Mystical Gravity",
+    "timeOfDay": "Morning",
+    "explanation": "The 4th Melakarta raga in the Carnatic system."
+  },
+  "Vasantha": {
+    "name": "Vasantha",
+    "alternateNames": [
+      "Vasanta"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 17,
+    "parentRaga": "Suryakantam (17th Melakarta Janya)",
+    "arohana": "S M1 G3 M1 D2 N3 S'",
+    "avarohana": "S' N3 D2 M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Spring Blossom, Auspicious Joy, Festive Evening",
+    "timeOfDay": "Evening / Night",
+    "explanation": "One of the most joyous evening ragas of Carnatic music, omitting Panchama."
+  },
+  "Vasanthabhairavi": {
+    "name": "Vasanthabhairavi",
+    "alternateNames": [
+      "Vasantabhairavi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 14,
+    "parentRaga": "Vakulabharanam (14th Melakarta Janya)",
+    "arohana": "S R1 G3 M1 D1 N2 S'",
+    "avarohana": "S' N2 D1 M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Pathos, Intense Supplication, Ascetic Calm",
+    "timeOfDay": "Morning",
+    "explanation": "Famous for Thyagaraja's 'Nee Dayarada', omitting Panchamam."
+  },
+  "Vasanthasree": {
+    "name": "Vasanthasree",
+    "alternateNames": [
+      "Vasantasree"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 17,
+    "parentRaga": "Vasantha shade",
+    "arohana": "S M1 G3 M1 D2 N3 S'",
+    "avarohana": "S' N3 D2 M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Delightful Spring",
+    "timeOfDay": "Evening",
+    "explanation": "A melodic variant of Vasantha featured in Raveendran Master's Abhimanyu classical bit."
+  },
+  "Vasanthi": {
+    "name": "Vasanthi",
+    "alternateNames": [
+      "Vasanti"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 27,
+    "parentRaga": "Sarasangi Janya",
+    "arohana": "S R2 G3 M1 P D1 S'",
+    "avarohana": "S' D1 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D1"
+    ],
+    "rasaOrMood": "Sweet Romance, Tender Nostalgia",
+    "timeOfDay": "Evening",
+    "explanation": "Shadava-Shadava raga omitting Nishadam, heavily featured in Malayalam film songs."
+  },
+  "Velavali": {
+    "name": "Velavali",
+    "alternateNames": [
+      "Velavali"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 23,
+    "parentRaga": "Gowrimanohari Janya",
+    "arohana": "S R2 G2 M1 P D2 S'",
+    "avarohana": "S' D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Romantic Yearning, Serene Warmth",
+    "timeOfDay": "Late Afternoon",
+    "explanation": "Used by Naushad Ali in Dhwani for 'Anuraagalola'."
+  },
+  "Vijayanaagari": {
+    "name": "Vijayanaagari",
+    "alternateNames": [
+      "Vijayanagari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 58,
+    "parentRaga": "Hemavathi (58th Melakarta Janya)",
+    "arohana": "S R2 G2 M2 P D2 S'",
+    "avarohana": "S' D2 P M2 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M2",
+      "P",
+      "D2"
+    ],
+    "rasaOrMood": "Royal Victory (Vijaya), Majestic Energy",
+    "timeOfDay": "Evening",
+    "explanation": "A spirited pentatonic raga with Prati Madhyamam, omitting Nishadam."
+  },
+  "Vilasini": {
+    "name": "Vilasini",
+    "alternateNames": [
+      "Vilasini"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji Janya",
+    "arohana": "S R2 G3 P D2 S'",
+    "avarohana": "S' N2 D2 P G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Charm, Seductive Playfulness",
+    "timeOfDay": "Evening",
+    "explanation": "Featured in M.G. Radhakrishnan's 'Vallithirumanam'."
+  },
+  "Vrindavana Saranga": {
+    "name": "Vrindavana Saranga",
+    "alternateNames": [
+      "Brindavani Sarang",
+      "Brindavana Saranga"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya / Kafi Thaat",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "N2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Ni",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Joyous Love, Krishna's Flute, Pastoral Romance",
+    "timeOfDay": "Midday / Afternoon (12 PM - 3 PM)",
+    "explanation": "Associated with Lord Krishna in Vrindavan; employs Kakali Ni in ascent and Kaisiki Ni in descent."
+  },
+  "Yadukula Kamboji": {
+    "name": "Yadukula Kamboji",
+    "alternateNames": [
+      "Yadukulakambhoji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' N2 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Deep Compassion, Tender Pleading, Folk Warmth",
+    "timeOfDay": "Anytime",
+    "explanation": "Beloved ancient folk and classical scale with serene oscillations on Rishabham and Dhaivatam."
+  },
+  "Kaapi": {
+    "name": "Kaapi",
+    "alternateNames": [
+      "Kapi",
+      "Kharaharapriya Janya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya Janya (Bhashanga)",
+    "arohana": "S R2 M1 P N3 S'",
+    "avarohana": "S' N2 D2 N2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Bhakti, Viraha, Deep Pathos & Yearning",
+    "timeOfDay": "Evening / Night",
+    "explanation": "A highly expressive vakra bhashanga raga capable of inducing deep devotion and melancholy."
+  },
+  "Kharaharapriya": {
+    "name": "Kharaharapriya",
+    "alternateNames": [
+      "Kafi Thaat equivalent",
+      "Kharahara Priya"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Janaka (22nd Melakarta)",
+    "arohana": "S R2 G2 M1 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Karuna (Compassion), Bhakti, Soulful Introspection",
+    "timeOfDay": "Evening / Night",
+    "explanation": "One of the grandest Major Melakartas of Carnatic music, mother of Abheri, Kapi, and Darbari Kanada."
+  },
+  "Mohanam": {
+    "name": "Mohanam",
+    "alternateNames": [
+      "Bhoopali",
+      "Bhoop",
+      "Mohana"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Kalyan / Bilawal",
+    "parentRaga": "Harikambhoji (Carnatic) / Kalyan Thaat (Hindustani)",
+    "arohana": "S R2 G3 P D2 S'",
+    "avarohana": "S' D2 P G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "P",
+      "D2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Pa",
+      "Shuddha Dha"
+    ],
+    "rasaOrMood": "Shringara (Enchantment), Joy, Peace (Mohana = Enchanting)",
+    "timeOfDay": "Evening / First Prahar of Night",
+    "explanation": "The quintessential Audava-Audava pentatonic scale omitting Ma and Ni, universally known and loved."
+  },
+  "Kalyani": {
+    "name": "Kalyani",
+    "alternateNames": [
+      "Mechakalyani",
+      "Yaman"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 65,
+    "thaat": "Kalyan",
+    "parentRaga": "Janaka (65th Melakarta)",
+    "arohana": "S R2 G3 M2 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M2 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Teevra Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Auspiciousness (Kalyana), Majestic Grace, Romance",
+    "timeOfDay": "Evening (Pradosha Kala)",
+    "explanation": "One of the most celebrated and royal ragas of Indian music, employing Teevra/Prati Madhyamam."
+  },
+  "Sankarabharanam": {
+    "name": "Sankarabharanam",
+    "alternateNames": [
+      "Dheerasankarabharanam",
+      "Bilawal"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Janaka (29th Melakarta)",
+    "arohana": "S R2 G3 M1 P D2 N3 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Majesty, Wonder (Adbhuta), Supreme Devotion",
+    "timeOfDay": "Morning / Anytime",
+    "explanation": "Major scale of Indian music named after Lord Shiva ('Ornament of Sankara')."
+  },
+  "Hindolam": {
+    "name": "Hindolam",
+    "alternateNames": [
+      "Malkauns (Hindustani equivalent)"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 20,
+    "thaat": "Bhairavi",
+    "parentRaga": "Natabhairavi (Carnatic) / Bhairavi Thaat (Hindustani)",
+    "arohana": "S G2 M1 D1 N2 S'",
+    "avarohana": "S' N2 D1 M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "M1",
+      "D1",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Komal Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Mystical Serenity, Devotional Swing (Hindola = Swing)",
+    "timeOfDay": "Late Night (Midnight)",
+    "explanation": "Ancient pentatonic raga omitting Ri and Pa, known as Malkauns in the North."
+  },
+  "Sudha Saveri": {
+    "name": "Sudha Saveri",
+    "alternateNames": [
+      "Suddha Saveri",
+      "Shuddha Saveri",
+      "Durga equivalent"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' D2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "D2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha"
+    ],
+    "rasaOrMood": "Veera, Joyous Energy, Pristine Devotion",
+    "timeOfDay": "Morning",
+    "explanation": "Audava-Audava pentatonic scale omitting Ga and Ni, equivalent to Hindustani Durga."
+  },
+  "Madhyamavathi": {
+    "name": "Madhyamavathi",
+    "alternateNames": [
+      "Madhyamavati",
+      "Megh equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Auspiciousness, Mangalam, Calming Surrender",
+    "timeOfDay": "Afternoon / Closing of Concert",
+    "explanation": "An auspicious pentatonic raga traditionally performed at the conclusion of Carnatic concerts."
+  },
+  "Sindhu Bhairavi": {
+    "name": "Sindhu Bhairavi",
+    "alternateNames": [
+      "Sindhubhairavi",
+      "Bhairavi (Hindustani)"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 20,
+    "thaat": "Asavari / Bhairavi",
+    "parentRaga": "Natabhairavi Janya",
+    "arohana": "S R2 G2 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "D2",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Dha",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Karuna, Pathos, Heartfelt Supplication",
+    "timeOfDay": "Morning / Closing of Concert",
+    "explanation": "A versatile bhashanga scale incorporating all 12 notes in semi-classical bhajans and cinema melodies."
+  },
+  "Sivaranjani": {
+    "name": "Sivaranjani",
+    "alternateNames": [
+      "Shivaranjani"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 G2 P D2 S'",
+    "avarohana": "S' D2 P G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "P",
+      "D2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Pa",
+      "Shuddha Dha"
+    ],
+    "rasaOrMood": "Deep Pathos, Heartbreak (Karuna), Soulful Melancholy",
+    "timeOfDay": "Midnight / Anytime",
+    "explanation": "Five-note pentatonic scale identical to Mohanam except with Sadharana Gandharam (G2 / Komal Ga)."
+  },
+  "Charukesi": {
+    "name": "Charukesi",
+    "alternateNames": [
+      "Charukeshi"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 26,
+    "parentRaga": "Janaka (26th Melakarta)",
+    "arohana": "S R2 G3 M1 P D1 N2 S'",
+    "avarohana": "S' N2 D1 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N2"
+    ],
+    "rasaOrMood": "Compassion, Yearning, Bittersweet Romance",
+    "timeOfDay": "Evening",
+    "explanation": "The 26th Melakarta uniting Sankarabharanam's lower half with Natabhairavi's upper half."
+  },
+  "Hamsadhwani": {
+    "name": "Hamsadhwani",
+    "alternateNames": [
+      "Hansadhwani"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam (Carnatic) / Bilawal (Hindustani)",
+    "arohana": "S R2 G3 P N3 S'",
+    "avarohana": "S' N3 P G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "P",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Pa",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Joy, Radiant Vigor, Sacred Invocation (Vatapi Ganapatim)",
+    "timeOfDay": "Concert Opening / Night",
+    "explanation": "Created by Ramaswami Dikshitar, the sound of the divine swan (Hamsa-Dhwani)."
+  },
+  "Malayamarutham": {
+    "name": "Malayamarutham",
+    "alternateNames": [
+      "Malayamarutam"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 16,
+    "parentRaga": "Chakravakam (16th Melakarta Janya)",
+    "arohana": "S R1 G3 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Dawn Elegance, Morning Prayer, Freshness",
+    "timeOfDay": "Early Morning (Dawn)",
+    "explanation": "Named after the soothing southern mountain breeze (Malaya-Marutham), omitting Madhyamam."
+  },
+  "Jog": {
+    "name": "Jog",
+    "alternateNames": [
+      "Jogeshwari"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S G3 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 G3 M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Ga",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Mystical, Contemplative, Late-night Introspection",
+    "timeOfDay": "Midnight",
+    "explanation": "Masterpiece raga popularized in Kerala cinema by Raveendran Master in 'Pramadavanam'."
+  },
+  "Subha Panthuvarali": {
+    "name": "Subha Panthuvarali",
+    "alternateNames": [
+      "Shubhapantuvarali"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 45,
+    "thaat": "Todi",
+    "parentRaga": "Janaka (45th Melakarta)",
+    "arohana": "S R1 G2 M2 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M2 G2 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G2",
+      "M2",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "rasaOrMood": "Karuna, Pathos, Sacred Yearning",
+    "timeOfDay": "Morning",
+    "explanation": "Major Prati Madhyama Melakarta with deep spiritual gravity."
+  },
+  "Arabhi": {
+    "name": "Aarabhi",
+    "alternateNames": [
+      "Arabhi"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "thaat": "Bilawal",
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 M1 P D2 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Shuddha Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Veera (Valour), Radiant Devotion, Vibrant Energy",
+    "timeOfDay": "Morning",
+    "explanation": "One of the five major Ghana ragas of Carnatic music. Featured in Saint Thyagaraja's Pancharatna Kriti 'Sadhinchane'."
+  },
+  "Keeravani": {
+    "name": "Keeravani",
+    "alternateNames": [
+      "Kirvani",
+      "Harmonic Minor equivalent"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 21,
+    "thaat": "Kirwani",
+    "parentRaga": "Janaka (21st Melakarta)",
+    "arohana": "S R2 G2 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Deep Melancholy, Yearning, Intimate Pathos",
+    "timeOfDay": "Night",
+    "explanation": "The 21st Melakarta corresponding to the Harmonic Minor scale in Western classical music."
+  },
+  "Kurinji": {
+    "name": "Kurinji",
+    "alternateNames": [
+      "Kurunji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S N3 S R2 G3 M1 P D2",
+    "avarohana": "D2 P M1 G3 R2 S N3 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Vatsalya (Lullaby), Parental Love",
+    "timeOfDay": "Night",
+    "explanation": "Classic lullaby raga characterized by peaceful, comforting notes."
+  },
+  "Maand": {
+    "name": "Maand",
+    "alternateNames": [
+      "Mand"
+    ],
+    "tradition": "Both",
+    "thaat": "Bilawal",
+    "parentRaga": "Bilawal Thaat",
+    "arohana": "S G3 M1 P D2 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Celebration, Folk Warmth",
+    "timeOfDay": "Evening / Anytime",
+    "explanation": "Celebrated Rajasthani folk scale popular in semi-classical thumri and cinema."
+  },
+  "Madhyamaadi Saarang": {
+    "name": "Madhyamavathi",
+    "alternateNames": [
+      "Madhyamavati",
+      "Megh equivalent"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Re",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Auspiciousness, Mangalam, Calming Surrender",
+    "timeOfDay": "Afternoon / Closing of Concert",
+    "explanation": "An auspicious pentatonic raga traditionally performed at the conclusion of Carnatic concerts."
+  },
+  "Mayamalava Gowla": {
+    "name": "Mayamalava Gowla",
+    "alternateNames": [
+      "Mayamalavagowla",
+      "Bhairav (Hindustani equivalent)"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 15,
+    "thaat": "Bhairav",
+    "parentRaga": "Janaka (15th Melakarta)",
+    "arohana": "S R1 G3 M1 P D1 N3 S'",
+    "avarohana": "S' N3 D1 P M1 G3 R1 S",
+    "swarasCarnatic": [
+      "S",
+      "R1",
+      "G3",
+      "M1",
+      "P",
+      "D1",
+      "N3"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Komal Re",
+      "Shuddha Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Dha",
+      "Shuddha Ni"
+    ],
+    "rasaOrMood": "Bhakti, Shanta, Dawn Awakening",
+    "timeOfDay": "Dawn / Early Morning",
+    "explanation": "The foundation scale of beginner Carnatic music formulated by Purandara Dasa."
+  },
+  "Neelambari": {
+    "name": "Neelambari",
+    "alternateNames": [
+      "Nilambari"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 29,
+    "parentRaga": "Dheerasankarabharanam (29th Melakarta Janya)",
+    "arohana": "S R2 G3 M1 P D2 P N3 S'",
+    "avarohana": "S' N3 P M1 G3 R2 G3 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Vatsalya (Lullaby), Deep Peace, Rest",
+    "timeOfDay": "Night",
+    "explanation": "The queen of lullabies in Indian music."
+  },
+  "Pahadi": {
+    "name": "Pahadi",
+    "alternateNames": [
+      "Pahari"
+    ],
+    "tradition": "Both",
+    "thaat": "Bilawal",
+    "parentRaga": "Bilawal Thaat",
+    "arohana": "S R2 G3 P D2 S'",
+    "avarohana": "S' N3 D2 P M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Pastoral Romance, Mountain Freshness",
+    "timeOfDay": "Evening / Anytime",
+    "explanation": "Himalayan folk melody famous for romantic and serene cinema songs."
+  },
+  "Pushpalathika": {
+    "name": "Pushpalathika",
+    "alternateNames": [
+      "Pushpalatika"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S R2 G2 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "rasaOrMood": "Tender Yearning, Fragrant Melancholy",
+    "timeOfDay": "Evening",
+    "explanation": "Shadava-Shadava scale omitting Dhaivata, celebrated in 'Kalabham Tharaam'."
+  },
+  "Reethigowla": {
+    "name": "Reethigowla",
+    "alternateNames": [
+      "Ritigowla"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 22,
+    "thaat": "Kafi",
+    "parentRaga": "Kharaharapriya (22nd Melakarta Janya)",
+    "arohana": "S G2 R2 G2 M1 N2 D2 M1 N2 N2 S'",
+    "avarohana": "S' N2 D2 M1 G2 M1 P M1 G2 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G2",
+      "M1",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Devotion, Tenderness, Introspective Calm",
+    "timeOfDay": "Night",
+    "explanation": "Intricate vakra raga with unmistakable oscillations on Gandhara and Nishada."
+  },
+  "Valachi": {
+    "name": "Valachi",
+    "alternateNames": [
+      "Valaji"
+    ],
+    "tradition": "Carnatic",
+    "melakartaNumber": 28,
+    "parentRaga": "Harikambhoji (28th Melakarta Janya)",
+    "arohana": "S G3 P D2 N2 S'",
+    "avarohana": "S' N2 D2 P G3 S",
+    "swarasCarnatic": [
+      "S",
+      "G3",
+      "P",
+      "D2",
+      "N2"
+    ],
+    "rasaOrMood": "Shringara, Tender Affection",
+    "timeOfDay": "Night",
+    "explanation": "Pentatonic raga omitting Ri and Ma, very popular in Malayalam cinema."
+  },
+  "Yamuna Kalyani": {
+    "name": "Yamuna Kalyani",
+    "alternateNames": [
+      "Yaman Kalyan"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 65,
+    "thaat": "Kalyan",
+    "parentRaga": "Mechakalyani Janya",
+    "arohana": "S R2 G3 P M2 P D2 S'",
+    "avarohana": "S' D2 P M2 P G3 M1 G3 R2 S",
+    "swarasCarnatic": [
+      "S",
+      "R2",
+      "G3",
+      "M1",
+      "M2",
+      "P",
+      "D2",
+      "N3"
+    ],
+    "rasaOrMood": "Devotion, Shringara, Blissful Serenity",
+    "timeOfDay": "Evening",
+    "explanation": "A variation of Kalyani enriched by the inclusion of Shuddha Madhyamam."
+  },
+  "Jogeshwari": {
+    "name": "Jogeshwari",
+    "alternateNames": [
+      "Jogeshwari"
+    ],
+    "tradition": "Both",
+    "melakartaNumber": 28,
+    "thaat": "Kafi",
+    "parentRaga": "Kafi Thaat",
+    "arohana": "S G3 M1 P N2 S'",
+    "avarohana": "S' N2 P M1 G3 M1 G2 S",
+    "swarasCarnatic": [
+      "S",
+      "G2",
+      "G3",
+      "M1",
+      "P",
+      "N2"
+    ],
+    "swarasHindustani": [
+      "Sa",
+      "Shuddha Ga",
+      "Komal Ga",
+      "Shuddha Ma",
+      "Pa",
+      "Komal Ni"
+    ],
+    "rasaOrMood": "Mystical, Contemplative, Late-night Introspection",
+    "timeOfDay": "Midnight",
+    "explanation": "Masterpiece raga popularized in Kerala cinema by Raveendran Master in 'Pramadavanam'."
+  }
+}

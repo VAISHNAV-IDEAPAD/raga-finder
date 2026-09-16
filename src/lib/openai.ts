@@ -39,7 +39,7 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
       rule.triggerKeywords?.some(k => q.includes(k.toLowerCase()))
     );
 
-    // STAGE 1: Check verified ground-truth Song/Kriti Database first!
+    // STAGE 1: Check verified song and raga database (now bundling complete MSIDB + classical archives)
     const dbMatch = findSongInDatabase(request.songQuery);
     if (dbMatch) {
       return {
@@ -47,6 +47,8 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
         source: 'database',
         confidence: 'Exact Match',
         raga: dbMatch.ragaProfile,
+        isMultiRaga: dbMatch.isMultiRaga,
+        ragas: dbMatch.allRagaProfiles,
         matchedSong: dbMatch.matchedSong,
         appliedAdminRule: matchedRule ? {
           id: matchedRule.id,
@@ -57,7 +59,7 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
       };
     }
 
-    // STAGE 1.5: Query live MSIDB real-time archive!
+    // STAGE 1.5: Query live MSIDB real-time archive for any newly released songs not in the bundled database
     const msidbMatch = await lookupSongOnMSIDB(request.songQuery);
     if (msidbMatch) {
       return {
@@ -74,7 +76,7 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
         rawQuery: request,
       };
     }
-    // If not found in database or MSIDB, continue to AI fallback!
+    // If neither MSIDB nor the local catalogue has it, continue to AI fallback.
   }
 
   const openai = getOpenAIClient();

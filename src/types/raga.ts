@@ -41,40 +41,48 @@ export interface SongRagaEntry {
   alternateTitles?: string[];
   filmOrAlbum?: string;
   composer?: string;
+  lyricist?: string;
   singers?: string;
+  year?: string;
   language: string;
   raga: string;
+  ragas?: string[];
+  songUrl?: string;
   source: string;
+}
+
+export interface RagaProfile {
+  name: string;
+  alternateNames?: string[];
+  tradition: Tradition;
+  melakartaNumber?: number;
+  thaat?: string;
+  parentRaga?: string;
+  arohana: string;
+  avarohana: string;
+  swarasCarnatic: string[];
+  swarasHindustani: string[];
+  vadi?: string;
+  samvadi?: string;
+  pakadOrSignature?: string;
+  rasaOrMood: string;
+  timeOfDay: string;
+  famousSongs: Array<{
+    title: string;
+    composerOrFilm?: string;
+    type: string;
+  }>;
+  explanation: string;
+  closelyRelatedRagas?: string[];
 }
 
 export interface IdentifyResponse {
   success: boolean;
   source: 'openai' | 'admin_rule' | 'database' | 'ai_musicologist';
   confidence: 'Exact Match' | 'High' | 'Moderate' | 'Low';
-  raga: {
-    name: string;
-    alternateNames?: string[];
-    tradition: Tradition;
-    melakartaNumber?: number;
-    thaat?: string;
-    parentRaga?: string;
-    arohana: string;
-    avarohana: string;
-    swarasCarnatic: string[];
-    swarasHindustani: string[];
-    vadi?: string;
-    samvadi?: string;
-    pakadOrSignature?: string;
-    rasaOrMood: string;
-    timeOfDay: string;
-    famousSongs: Array<{
-      title: string;
-      composerOrFilm?: string;
-      type: string;
-    }>;
-    explanation: string;
-    closelyRelatedRagas?: string[];
-  };
+  raga: RagaProfile;
+  isMultiRaga?: boolean;
+  ragas?: RagaProfile[];
   matchedSong?: SongRagaEntry;
   appliedAdminRule?: {
     id: string;

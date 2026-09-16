@@ -207,26 +207,26 @@ export default function HomePage() {
                 <span className="text-xs text-stone-500 font-medium mr-2">Try searching:</span>
                 <div className="inline-flex flex-wrap gap-1.5 mt-1">
                   {[
-                    'Omkaaram Omkaaram',
-                    'Vatapi Ganapatim',
-                    'Idhayam Oru Kovil',
-                    'Pramadavanam',
-                    'Albela Sajan',
-                    'Samaja Vara Gamana',
-                    'Kalyana Then Nila',
-                    'Kannodu Kaanbadhellam',
-                    'Endaro Mahanubhavulu',
-                    'Mohanam',
-                  ].map((s) => (
+                    { label: 'Aadiparaashakthi (6 Ragas)', query: 'Aadiparaashakthi' },
+                    { label: 'Devasabhaathalam (8 Ragas)', query: 'Devasabhaathalam' },
+                    { label: 'Aananda Nadanam (4 Ragas)', query: 'Aananda Nadanam' },
+                    { label: 'Pramadavanam', query: 'Pramadavanam' },
+                    { label: 'A.E.I.O.U', query: 'A.E.I.O.U' },
+                    { label: 'Vatapi Ganapatim', query: 'Vatapi Ganapatim' },
+                    { label: 'Omkaaram Omkaaram', query: 'Omkaaram Omkaaram' },
+                    { label: 'Albela Sajan', query: 'Albela Sajan' },
+                    { label: 'Samaja Vara Gamana', query: 'Samaja Vara Gamana' },
+                    { label: 'Harivaraasanam', query: 'Harivaraasanam' },
+                  ].map((item) => (
                     <button
-                      key={s}
+                      key={item.query}
                       type="button"
                       onClick={() => {
-                        setSongQuery(s);
+                        setSongQuery(item.query);
                       }}
                       className="px-2.5 py-1 text-xs rounded-lg bg-stone-100 hover:bg-amber-100 text-stone-700 border border-stone-200 transition-colors font-medium"
                     >
-                      {s}
+                      {item.label}
                     </button>
                   ))}
                 </div>
