@@ -10,7 +10,6 @@ import {
   Heart,
   BookOpen,
   AlertCircle,
-  ExternalLink,
 } from 'lucide-react';
 import { IdentifyResponse } from '@/types/raga';
 import { playSwaraSequence } from '@/lib/audioSynth';
@@ -170,22 +169,6 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                 <Music className="w-4 h-4 text-amber-400" />
                 Matched Composition: {result.matchedSong.title}
               </span>
-              <div className="flex items-center gap-2">
-                {result.matchedSong.songUrl && (
-                  <a
-                    href={result.matchedSong.songUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 flex items-center gap-1 transition-colors"
-                  >
-                    <span>MSIDB Archive</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                )}
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-200 border border-amber-400/30">
-                  {result.matchedSong.source || 'Verified Database'}
-                </span>
-              </div>
             </div>
 
             <div className="text-xs text-stone-200 flex flex-wrap gap-x-5 gap-y-1.5 mt-2">
