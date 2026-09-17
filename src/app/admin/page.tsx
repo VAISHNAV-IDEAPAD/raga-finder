@@ -249,6 +249,14 @@ export default function AdminPage() {
       payload.description = testQuery;
     }
 
+    // Attach stored AI key if available
+    const storedAiKey = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_key') : null;
+    const storedAiProvider = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_provider') : null;
+    if (storedAiKey) {
+      payload.aiApiKey = storedAiKey;
+      if (storedAiProvider) payload.aiProvider = storedAiProvider;
+    }
+
     try {
       const res = await fetch('/api/identify-raga', {
         method: 'POST',

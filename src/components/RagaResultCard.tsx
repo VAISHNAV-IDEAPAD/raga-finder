@@ -78,6 +78,11 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                   <Sparkles className="w-3 h-3" /> Ragamalika ({ragasList.length} Ragas)
                 </span>
               )}
+              {source === 'gemini' && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-cyan-300" /> Google Gemini AI
+                </span>
+              )}
               {source === 'openai' && (
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> OpenAI GPT

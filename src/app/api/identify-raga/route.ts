@@ -27,6 +27,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Support client-supplied AI credentials via headers or body
+    const headerAiKey = req.headers.get('x-ai-key');
+    const headerAiProvider = req.headers.get('x-ai-provider') as 'gemini' | 'openai' | null;
+    const headerAiModel = req.headers.get('x-ai-model');
+
+    if (headerAiKey && !body.aiApiKey) {
+      body.aiApiKey = headerAiKey;
+    }
+    if (headerAiProvider && !body.aiProvider) {
+      body.aiProvider = headerAiProvider;
+    }
+    if (headerAiModel && !body.aiModel) {
+      body.aiModel = headerAiModel;
+    }
+
     const result = await identifyRaga(body);
     return NextResponse.json(result);
   } catch (error: any) {

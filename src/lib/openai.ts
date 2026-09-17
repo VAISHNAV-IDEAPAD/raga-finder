@@ -1,18 +1,10 @@
-import OpenAI from 'openai';
 import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition } from '@/types/raga';
 import { getAdminRules } from './storage';
 import seedRagas from '@/data/seed_ragas.json';
-import { findSongInDatabase, resolveRagaProfile, getSongSuggestions } from './songSearch';
+import { findSongInDatabase, resolveRagaProfile } from './songSearch';
 import { identifyWithAIMusicologist } from './aiMusicologist';
 import { lookupSongOnMSIDB } from './msidbLookup';
-
-function getOpenAIClient(): OpenAI | null {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey || apiKey.trim() === '' || apiKey === 'your_openai_api_key_here') {
-    return null;
-  }
-  return new OpenAI({ apiKey });
-}
+import { executeAIEngine, getAIAvailability } from './aiEngine';
 
 export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyResponse> {
   const adminRules = await getAdminRules();
@@ -76,144 +68,87 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
         rawQuery: request,
       };
     }
-    // If neither MSIDB nor the local catalogue has it, continue to AI fallback.
+    // If neither MSIDB nor the local catalogue has it, proceed to AI engine.
   }
 
-  const openai = getOpenAIClient();
+  // Check if AI is active (either via client key or server environment)
+  const aiAvailability = getAIAvailability(request);
 
-  // STAGE 2: If OpenAI is available, call it to dynamically identify the composition
-  if (openai) {
+  // STAGE 2: If AI is active, invoke AI Musicologist (Gemini or OpenAI)
+  if (aiAvailability.available) {
     try {
-      const response = await callOpenAIWithAdminRules(openai, request, activeRules, matchedRule);
-      return response;
-    } catch (err) {
-      console.error('OpenAI API call failed, falling back to AI Musicologist engine:', err);
+      const aiResponse = await executeAIEngine(request, activeRules, matchedRule);
+      return aiResponse;
+    } catch (err: any) {
+      console.error('[AI Engine Execution Failed]:', err);
+      // If client explicitly passed a key that failed, report error
+      if (aiAvailability.source === 'client') {
+        return {
+          success: false,
+          source: aiAvailability.provider || 'gemini',
+          confidence: 'Low',
+          needsAiActivation: true,
+          unindexedSongTitle: request.songQuery,
+          raga: {
+            name: 'AI Identification Error',
+            alternateNames: [],
+            tradition: 'Both',
+            arohana: '',
+            avarohana: '',
+            swarasCarnatic: [],
+            swarasHindustani: [],
+            rasaOrMood: '',
+            timeOfDay: '',
+            famousSongs: [],
+            explanation: `AI identification failed: ${err.message || 'Please check your API key and try again.'}`,
+          },
+          rawQuery: request,
+        };
+      }
     }
   }
 
-  // STAGE 3: Route unindexed song / composition to AI Musicologist
+  // STAGE 3: Offline AI Musicologist Knowledge Base
   if (request.mode === 'song' && request.songQuery) {
-    const aiResult = identifyWithAIMusicologist(request.songQuery);
-    if (aiResult) {
-      if (matchedRule && aiResult.success) {
-        aiResult.appliedAdminRule = {
+    const offlineResult = identifyWithAIMusicologist(request.songQuery);
+    if (offlineResult && offlineResult.success) {
+      if (matchedRule) {
+        offlineResult.appliedAdminRule = {
           id: matchedRule.id,
           title: matchedRule.title,
           reason: matchedRule.ruleInstruction,
         };
       }
-      return aiResult;
+      return offlineResult;
     }
+
+    // Song is truly not in offline DB and AI is not active: Prompt user to activate AI!
+    return {
+      success: false,
+      source: 'ai_musicologist',
+      confidence: 'Low',
+      needsAiActivation: true,
+      unindexedSongTitle: request.songQuery,
+      aiProvider: 'none',
+      raga: {
+        name: 'Song Not In Offline Database',
+        alternateNames: [],
+        tradition: 'Both',
+        arohana: 'Scale not determined yet',
+        avarohana: 'Scale not determined yet',
+        swarasCarnatic: [],
+        swarasHindustani: [],
+        rasaOrMood: 'Activate AI to analyze',
+        timeOfDay: 'Anytime',
+        famousSongs: [],
+        explanation: `"${request.songQuery}" is not in our offline database yet. Activate AI (Google Gemini or OpenAI) to instantly identify this song's raga, notes, and musicology!`,
+      },
+      rawQuery: request,
+    };
   }
 
   // Fallback to local database + rule resolution (for swaras / description)
   return resolveFromDatabaseAndRules(request, activeRules, matchedRule);
-}
-
-async function callOpenAIWithAdminRules(
-  openai: OpenAI,
-  request: IdentifyRequest,
-  activeRules: AdminRule[],
-  matchedRule?: AdminRule
-): Promise<IdentifyResponse> {
-  const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
-
-  // Format admin teaching rules into prompt
-  const adminKnowledgeBlock = activeRules.length > 0
-    ? `### VERIFIED GROUND-TRUTH RULES & CORRECTIONS TAUGHT BY MUSICOLOGIST ADMIN:
-You MUST follow these rules with HIGHEST PRIORITY. If any condition here applies, obey the rule instruction strictly without hallucination:
-${activeRules.map((r, i) => `
-[Rule #${i + 1}: ${r.title}]
-- Pattern: ${r.patternType} ${r.swaraPattern ? `[${r.swaraPattern.join(', ')}]` : ''}
-- Trigger keywords: ${r.triggerKeywords?.join(', ') || 'N/A'}
-- Correct Raga: ${r.correctRaga}
-- Tradition: ${r.tradition}
-- Instruction: ${r.ruleInstruction}
-- Severity: ${r.severity}
-`).join('\n')}
-`
-    : 'No custom admin rules configured yet.';
-
-  const systemPrompt = `You are a world-class Indian Classical Musicologist with encyclopedic knowledge of both Carnatic (72 Melakarta system, Janya, Vakra, Upanga, Bhashanga) and Hindustani (10 Thaats, Ragas, Vadi, Samvadi, Pakad, Samay/Prahar) music traditions.
-
-Your duty is to accurately identify ragas based on Swaras/Notes, Song titles/lyrics, or Western notes / descriptions.
-
-${adminKnowledgeBlock}
-
-CRITICAL RULES:
-1. When notes are provided, precisely analyze the Arohana, Avarohana, and Swara varieties (e.g. R1 vs R2 vs R3, G1 vs G2 vs G3, M1 vs M2, D1 vs D2 vs D3, N1 vs N2 vs N3).
-2. If only 5 notes are present without Ma or Ni (S R2 G3 P D2), identify as Mohanam (Carnatic) / Bhoopali (Hindustani).
-3. Distinguish between Carnatic Thodi (8th Melakarta, M1) and Hindustani Miyan ki Todi (Teevra Ma M2).
-4. If an Admin Rule applies to the query, explicitly incorporate its insight in the 'explanation' and ensure the identification complies 100%.
-
-RESPONSE FORMAT:
-You MUST respond with valid JSON ONLY matching this structure:
-{
-  "name": "Raga Name",
-  "alternateNames": ["Equivalent in other tradition or alternative spellings"],
-  "tradition": "Carnatic" | "Hindustani" | "Both",
-  "melakartaNumber": 15, // if applicable (1-72) or null
-  "thaat": "Bhairav", // if applicable or null
-  "parentRaga": "Janaka / Melakarta name or Thaat",
-  "arohana": "S R1 G3 M1 P D1 N3 S'",
-  "avarohana": "S' N3 D1 P M1 G3 R1 S",
-  "swarasCarnatic": ["S", "R1", "G3", "M1", "P", "D1", "N3"],
-  "swarasHindustani": ["Sa", "Komal Re", "Shuddha Ga", "Shuddha Ma", "Pa", "Komal Dha", "Shuddha Ni"],
-  "vadi": "D1",
-  "samvadi": "R1",
-  "pakadOrSignature": "Key phrase / Chalan",
-  "rasaOrMood": "Bhakti, Shanta, etc.",
-  "timeOfDay": "Early Morning / Brahma Muhurta",
-  "famousSongs": [
-    { "title": "Song / Kriti Title", "composerOrFilm": "Composer or Movie", "type": "Carnatic Kriti / Film Song" }
-  ],
-  "closelyRelatedRagas": ["List 2-3 similar ragas and how they differ"],
-  "explanation": "Clear musicological breakdown of why this query matches this raga, notes analysis, and any disambiguation applied."
-}`;
-
-  let userQueryText = '';
-  if (request.mode === 'swaras') {
-    userQueryText = `Identify the raga for these Swaras/Notes:\nSwaras: ${request.swaras?.join(' ') || ''}\nArohana: ${request.arohana || 'Not specified'}\nAvarohana: ${request.avarohana || 'Not specified'}\nPreferred Tradition: ${request.traditionPreference || 'Any'}`;
-  } else if (request.mode === 'song') {
-    userQueryText = `The user is asking to identify the raga of this song, kriti, bandish, or film track: "${request.songQuery}".
-Please accurately determine:
-1. The exact Raga name (and equivalents in Carnatic / Hindustani traditions).
-2. The film title and music director if it is a film song (e.g. Malayalam, Tamil, Hindi, Telugu, Kannada), or the classical composer if it is a Carnatic kriti (e.g. Tyagaraja, Dikshitar, Purandara Dasa, Swathi Thirunal) or Hindustani bandish.
-3. The exact Arohana and Avarohana scales and Carnatic / Hindustani swara notes.
-4. A clear musicological explanation of how the song's melody and signature phrases reflect this raga.`;
-  } else {
-    userQueryText = `Identify the raga based on this description or Western notes: "${request.description}".`;
-  }
-
-  const completion = await openai.chat.completions.create({
-    model,
-    temperature: 0.1, // Low temperature for high accuracy & deterministic music theory
-    response_format: { type: 'json_object' },
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: userQueryText },
-    ],
-  });
-
-  const content = completion.choices[0].message.content;
-  if (!content) {
-    throw new Error('Empty response from OpenAI');
-  }
-
-  const parsed = JSON.parse(content);
-
-  return {
-    success: true,
-    source: 'openai',
-    confidence: matchedRule ? 'Exact Match' : 'High',
-    raga: parsed,
-    appliedAdminRule: matchedRule ? {
-      id: matchedRule.id,
-      title: matchedRule.title,
-      reason: matchedRule.ruleInstruction,
-    } : undefined,
-    rawQuery: request,
-  };
 }
 
 function resolveFromDatabaseAndRules(

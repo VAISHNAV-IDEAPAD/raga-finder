@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Music,
   Search,
@@ -10,9 +10,11 @@ import {
   SlidersHorizontal,
   Info,
   CheckCircle,
+  Zap,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
+import ActivateAiModal from '@/components/ActivateAiModal';
 import { IdentifyRequest, IdentifyResponse, Tradition } from '@/types/raga';
 
 export default function HomePage() {
@@ -25,6 +27,43 @@ export default function HomePage() {
   const [errorMsg, setErrorMsg] = useState('');
   const [searchResult, setSearchResult] = useState<IdentifyResponse | null>(null);
 
+  // AI Activation states
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [needsAiActivationFor, setNeedsAiActivationFor] = useState<string | null>(null);
+  const [aiStatus, setAiStatus] = useState<{ active: boolean; provider: string }>({
+    active: false,
+    provider: '',
+  });
+
+  const checkAiStatus = () => {
+    const key = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_key') : null;
+    const provider = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_provider') || 'gemini' : 'gemini';
+    if (key && key.trim().length > 5) {
+      setAiStatus({ active: true, provider: provider === 'gemini' ? 'Gemini' : 'OpenAI' });
+      return;
+    }
+
+    fetch('/api/ai/status')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.serverHasKey) {
+          setAiStatus({
+            active: true,
+            provider: data.provider === 'gemini' ? 'Gemini' : 'OpenAI',
+          });
+        } else {
+          setAiStatus({ active: false, provider: '' });
+        }
+      })
+      .catch(() => setAiStatus({ active: false, provider: '' }));
+  };
+
+  useEffect(() => {
+    checkAiStatus();
+    window.addEventListener('raga_ai_updated', checkAiStatus);
+    return () => window.removeEventListener('raga_ai_updated', checkAiStatus);
+  }, []);
+
   const handleSearch = async () => {
     setErrorMsg('');
     setIsLoading(true);
@@ -33,6 +72,17 @@ export default function HomePage() {
       mode: searchMode,
       traditionPreference,
     };
+
+    // Attach active AI credentials from localStorage if present
+    const storedAiKey = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_key') : null;
+    const storedAiProvider = typeof window !== 'undefined' ? (localStorage.getItem('raga_ai_provider') as 'gemini' | 'openai') || 'gemini' : 'gemini';
+    const storedAiModel = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_model') : null;
+
+    if (storedAiKey) {
+      payload.aiApiKey = storedAiKey;
+      payload.aiProvider = storedAiProvider;
+      if (storedAiModel) payload.aiModel = storedAiModel;
+    }
 
     if (searchMode === 'swaras') {
       if (selectedSwaras.length < 3) {
@@ -65,10 +115,23 @@ export default function HomePage() {
       });
 
       const data = await res.json();
-      if (!res.ok || (!data.success && !data.raga)) {
+      if (!res.ok || (!data.success && !data.raga && !data.needsAiActivation)) {
         throw new Error(data.error || 'Failed to identify raga');
       }
 
+      // If song not in database and AI needs activation, prompt user
+      if (data.needsAiActivation) {
+        setNeedsAiActivationFor(data.unindexedSongTitle || songQuery);
+        setSearchResult(null);
+        setErrorMsg('');
+        setTimeout(() => {
+          const el = document.getElementById('ai-activation-prompt-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        return;
+      }
+
+      setNeedsAiActivationFor(null);
       setSearchResult(data);
       if (!data.success && data.raga?.explanation) {
         setErrorMsg(data.raga.explanation);
@@ -91,7 +154,7 @@ export default function HomePage() {
       <section className="pt-10 pb-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/80 border border-amber-300 text-amber-900 text-xs font-semibold mb-4 shadow-sm">
           <Sparkles className="w-3.5 h-3.5 text-raga-600" />
-          <span>Powered by OpenAI & Continuous Admin Ground-Truth Teaching</span>
+          <span>Powered by Google Gemini & OpenAI &bull; Continuous Admin Ground-Truth Teaching</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-tight">
@@ -241,12 +304,12 @@ export default function HomePage() {
                 {isLoading ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Searching Verified Movie & Classical Database...</span>
+                    <span>{aiStatus.active ? `Consulting ${aiStatus.provider} AI & Music Database...` : 'Searching Verified Movie & Classical Database...'}</span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-5 h-5" />
-                    <span>Find Raga of this Song / Kriti</span>
+                    <span>{aiStatus.active ? `Find Raga with ${aiStatus.provider} AI & Database` : 'Find Raga of this Song / Kriti'}</span>
                   </>
                 )}
               </button>
@@ -321,6 +384,47 @@ export default function HomePage() {
           )}
         </div>
 
+        {/* Unindexed Song AI Activation Prompt Card */}
+        {needsAiActivationFor && (
+          <div
+            id="ai-activation-prompt-section"
+            className="mt-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-amber-50 via-orange-50/50 to-stone-50 border-2 border-amber-300 shadow-xl space-y-4 animate-fadeIn"
+          >
+            <div className="flex items-start gap-3.5">
+              <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-500 to-raga-600 text-white shadow-md shrink-0">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-200 text-amber-900 border border-amber-300">
+                    Unindexed Song Detected
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-stone-900 mt-1.5">
+                  &ldquo;{needsAiActivationFor}&rdquo; is not in the offline database
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-xl leading-relaxed">
+                  Activate the AI Musicologist with 1 click to dynamically identify this song&apos;s classical Raga, Arohana, Avarohana, swaras, and musical director analysis using Google Gemini (100% Free) or OpenAI.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setIsAiModalOpen(true)}
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-raga-600 to-amber-600 hover:from-raga-700 hover:to-amber-700 text-white font-black text-sm shadow-lg shadow-raga-500/25 transition-all flex items-center gap-2 hover:scale-[1.02]"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Activate AI & Identify &ldquo;{needsAiActivationFor}&rdquo;</span>
+              </button>
+              <span className="text-xs text-stone-500 font-medium">
+                (Takes 30 seconds &bull; Free with Google Gemini)
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Results Area */}
         {searchResult && (
           <div id="raga-result-section" className="mt-12 animate-fadeIn">
@@ -328,6 +432,16 @@ export default function HomePage() {
           </div>
         )}
       </main>
+
+      <ActivateAiModal
+        isOpen={isAiModalOpen}
+        onClose={() => setIsAiModalOpen(false)}
+        initialSongQuery={needsAiActivationFor || songQuery}
+        onActivated={() => {
+          setNeedsAiActivationFor(null);
+          handleSearch();
+        }}
+      />
     </div>
   );
 }

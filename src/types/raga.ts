@@ -34,6 +34,9 @@ export interface IdentifyRequest {
   songQuery?: string;
   description?: string;
   traditionPreference?: Tradition;
+  aiApiKey?: string;
+  aiProvider?: 'gemini' | 'openai';
+  aiModel?: string;
 }
 
 export interface SongRagaEntry {
@@ -78,7 +81,7 @@ export interface RagaProfile {
 
 export interface IdentifyResponse {
   success: boolean;
-  source: 'openai' | 'admin_rule' | 'database' | 'ai_musicologist';
+  source: 'openai' | 'gemini' | 'admin_rule' | 'database' | 'ai_musicologist';
   confidence: 'Exact Match' | 'High' | 'Moderate' | 'Low';
   raga: RagaProfile;
   isMultiRaga?: boolean;
@@ -90,6 +93,9 @@ export interface IdentifyResponse {
     reason: string;
   };
   rawQuery: any;
+  needsAiActivation?: boolean;
+  aiProvider?: 'gemini' | 'openai' | 'none';
+  unindexedSongTitle?: string;
 }
 
 export interface AdminRule {
