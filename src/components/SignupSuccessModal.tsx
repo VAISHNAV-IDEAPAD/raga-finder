@@ -56,22 +56,38 @@ export default function SignupSuccessModal({
         {/* Details & Notification Delivery Card */}
         <div className="p-6 sm:p-8 space-y-5">
           {/* Notification Dispatch Banner */}
-          <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-left flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-emerald-500 text-white shrink-0 mt-0.5 shadow-sm">
-              {isEmail ? <Mail className="w-5 h-5" /> : <Phone className="w-5 h-5" />}
+          {user.welcomeNotificationSent ? (
+            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-left flex items-start gap-3">
+              <div className="p-2 rounded-xl bg-emerald-500 text-white shrink-0 mt-0.5 shadow-sm">
+                {isEmail ? <Mail className="w-5 h-5" /> : <Phone className="w-5 h-5" />}
+              </div>
+              <div className="text-xs sm:text-sm">
+                <span className="font-bold text-emerald-950 block">
+                  {isEmail ? 'Confirmation Email Sent!' : 'SMS Notification Dispatched!'}
+                </span>
+                <p className="text-emerald-800 text-xs mt-0.5 leading-relaxed">
+                  {notificationMessage || (isEmail
+                    ? `A welcome confirmation email has been sent to ${user.email}. Please check your inbox and spam folder.`
+                    : `A welcome SMS notification has been sent to ${user.mobile}.`
+                  )}
+                </p>
+              </div>
             </div>
-            <div className="text-xs sm:text-sm">
-              <span className="font-bold text-emerald-950 block">
-                {isEmail ? 'Confirmation Email Dispatched!' : 'SMS Notification Dispatched!'}
-              </span>
-              <p className="text-emerald-800 text-xs mt-0.5 leading-relaxed">
-                {notificationMessage || (isEmail
-                  ? `A welcome confirmation message has been sent to ${user.email}.`
-                  : `A welcome SMS notification has been sent to ${user.mobile}.`
-                )}
-              </p>
+          ) : (
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-left flex items-start gap-3">
+              <div className="p-2 rounded-xl bg-amber-500 text-white shrink-0 mt-0.5 shadow-sm">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div className="text-xs sm:text-sm">
+                <span className="font-bold text-amber-950 block">
+                  Account Created Successfully!
+                </span>
+                <p className="text-amber-800 text-xs mt-0.5 leading-relaxed">
+                  {notificationMessage || `Account activated. Email delivery is pending admin SMTP/Gmail configuration in /admin.`}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Member Card Summary */}
           <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 text-left flex items-center justify-between gap-4">

@@ -46,15 +46,18 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
       lastLoginAt: new Date().toISOString(),
       status: 'active',
-      welcomeNotificationSent: true,
+      welcomeNotificationSent: false,
       notificationType: email ? 'email' : 'sms',
-      notificationDetails: email ? 'Welcome email sent to ' + email.trim() : 'Welcome SMS sent to ' + mobile.trim(),
+      notificationDetails: email ? 'Pending delivery to ' + email.trim() : 'SMS confirmation',
     };
 
-    await saveUser(newUser);
-
-    // Dispatch welcome notification
+    // Dispatch real welcome notification
     const notificationResult = await sendWelcomeNotification(newUser);
+    newUser.welcomeNotificationSent = notificationResult.success;
+    newUser.notificationDetails = notificationResult.message;
+
+    // Save user with true notification status
+    await saveUser(newUser);
 
     return NextResponse.json({
       success: true,

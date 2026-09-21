@@ -82,6 +82,8 @@ export async function getUsers(): Promise<UserEntry[]> {
   return inMemoryUsers;
 }
 
+export const getAllUsers = getUsers;
+
 export async function findUserByIdentifier(identifier: string): Promise<UserEntry | null> {
   const users = await getUsers();
   const clean = identifier.trim().toLowerCase();

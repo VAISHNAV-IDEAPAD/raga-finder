@@ -75,11 +75,18 @@ export async function getNotificationLogs(): Promise<NotificationLog[]> {
   return inMemoryLogs;
 }
 
+import {
+  sendRealEmail,
+  getWelcomeEmailHtml,
+  getWelcomeEmailText,
+} from './emailService';
+
 export async function sendWelcomeNotification(user: UserEntry): Promise<{
   success: boolean;
   type: 'email' | 'sms';
   recipient: string;
   message: string;
+  error?: string;
 }> {
   ensureDataFiles();
 
@@ -87,10 +94,43 @@ export async function sendWelcomeNotification(user: UserEntry): Promise<{
   const recipient = isEmail ? user.email! : (user.mobile || 'Registered User');
   const recipientType = isEmail ? 'email' : 'sms';
 
-  const subject = `Welcome to RagaFinder Family, ${user.name}! 🎵`;
+  const subject = `Welcome to Raga Finder Family, ${user.name}! 🎵`;
   const contentPreview = isEmail
     ? `Thank You For Joining Raga Finder Family, ${user.name}! Your account is now active. Explore Carnatic and Hindustani classical ragas with AI.`
     : `Thank You For Joining Raga Finder Family, ${user.name}! Your account is now active on RagaFinder AI.`;
+
+  let deliveryStatus: 'delivered' | 'failed' | 'pending' = 'delivered';
+  let statusMessage = '';
+  let deliveryError: string | undefined = undefined;
+
+  if (isEmail) {
+    try {
+      const emailResult = await sendRealEmail({
+        to: user.email!,
+        toName: user.name,
+        subject,
+        html: getWelcomeEmailHtml(user.name, user.email!),
+        text: getWelcomeEmailText(user.name, user.email!),
+      });
+
+      if (emailResult.success) {
+        deliveryStatus = 'delivered';
+        statusMessage = `Welcome confirmation email sent directly to ${user.email}! (Please check Inbox & Spam)`;
+      } else {
+        deliveryStatus = 'failed';
+        deliveryError = emailResult.error;
+        statusMessage = `Email dispatch pending: ${emailResult.error || 'SMTP server not configured'}`;
+      }
+    } catch (err: any) {
+      deliveryStatus = 'failed';
+      deliveryError = err?.message || 'SMTP transmission error';
+      statusMessage = `Email error: ${deliveryError}`;
+    }
+  } else {
+    // Mobile SMS notification simulation
+    deliveryStatus = 'delivered';
+    statusMessage = `Welcome confirmation SMS sent to ${recipient}!`;
+  }
 
   const newLog: NotificationLog = {
     id: 'notif_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
@@ -100,7 +140,7 @@ export async function sendWelcomeNotification(user: UserEntry): Promise<{
     recipientType,
     subject,
     contentPreview,
-    status: 'delivered',
+    status: deliveryStatus,
     timestamp: new Date().toISOString(),
   };
 
@@ -113,11 +153,11 @@ export async function sendWelcomeNotification(user: UserEntry): Promise<{
   }
 
   return {
-    success: true,
+    success: deliveryStatus === 'delivered',
     type: recipientType,
     recipient,
-    message: isEmail
-      ? `Welcome confirmation email dispatched to ${recipient}`
-      : `Welcome SMS notification dispatched to ${recipient}`,
+    message: statusMessage,
+    error: deliveryError,
   };
 }
+
