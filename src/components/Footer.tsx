@@ -9,9 +9,6 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-lg font-bold text-amber-400">RagaFinder AI</span>
-              <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30">
-                Next.js & Vercel
-              </span>
             </div>
             <p className="text-sm text-stone-400 leading-relaxed">
               An intelligent Indian classical raga discovery engine powered by OpenAI with
@@ -50,7 +47,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-stone-800 text-xs text-stone-500 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>
-            Crafted for classical musicians, students, and connoisseurs. Ready for zero-config Vercel deployment.
+            Crafted for classical musicians, students, and connoisseurs.
           </p>
           <div className="flex items-center gap-1">
             <span>Powered by</span>
