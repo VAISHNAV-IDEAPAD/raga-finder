@@ -13,6 +13,12 @@ export interface UserEntry {
   welcomeNotificationSent: boolean;
   notificationType?: 'email' | 'sms' | 'both';
   notificationDetails?: string;
+  emailPayload?: {
+    subject: string;
+    html: string;
+    text?: string;
+    sentAt: string;
+  };
 }
 
 export interface AuthSession {
@@ -29,6 +35,8 @@ export interface NotificationLog {
   recipientType: 'email' | 'sms';
   subject: string;
   contentPreview: string;
+  htmlContent?: string;
+  textContent?: string;
   status: 'delivered' | 'pending' | 'failed';
   timestamp: string;
 }

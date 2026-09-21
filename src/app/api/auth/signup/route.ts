@@ -55,6 +55,9 @@ export async function POST(req: NextRequest) {
     const notificationResult = await sendWelcomeNotification(newUser);
     newUser.welcomeNotificationSent = notificationResult.success;
     newUser.notificationDetails = notificationResult.message;
+    if ((notificationResult as any).emailPayload) {
+      newUser.emailPayload = (notificationResult as any).emailPayload;
+    }
 
     // Save user with true notification status
     await saveUser(newUser);

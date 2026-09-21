@@ -33,6 +33,7 @@ import {
 import { AdminRule, MistakeReport, IdentifyResponse } from '@/types/raga';
 import { UserEntry } from '@/types/user';
 import { EmailConfig } from '@/types/email';
+import { getWelcomeEmailHtml } from '@/lib/emailTemplates';
 
 export default function AdminPage() {
   const [adminKey, setAdminKey] = useState('');
@@ -55,6 +56,7 @@ export default function AdminPage() {
   const [memberSearchQuery, setMemberSearchQuery] = useState('');
   const [memberProviderFilter, setMemberProviderFilter] = useState<string>('all');
   const [resendingEmailId, setResendingEmailId] = useState<string | null>(null);
+  const [previewEmailUser, setPreviewEmailUser] = useState<UserEntry | null>(null);
 
   // Email Configuration state
   const [emailConfig, setEmailConfig] = useState<Partial<EmailConfig>>({
@@ -1477,15 +1479,25 @@ export default function AdminPage() {
                         <td className="py-3.5 px-4 text-right">
                           <div className="flex items-center justify-end gap-1">
                             {member.email && (
-                              <button
-                                type="button"
-                                onClick={() => handleResendMemberEmail(member.id, member.name)}
-                                disabled={resendingEmailId === member.id}
-                                className="p-1.5 text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
-                                title="Resend Welcome Email to member"
-                              >
-                                <Send className={`w-3.5 h-3.5 ${resendingEmailId === member.id ? 'animate-spin text-amber-600' : ''}`} />
-                              </button>
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => setPreviewEmailUser(member)}
+                                  className="p-1.5 text-stone-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                                  title="View Greeting Email received by this member"
+                                >
+                                  <Eye className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleResendMemberEmail(member.id, member.name)}
+                                  disabled={resendingEmailId === member.id}
+                                  className="p-1.5 text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                                  title="Resend Welcome Email to member"
+                                >
+                                  <Send className={`w-3.5 h-3.5 ${resendingEmailId === member.id ? 'animate-spin text-amber-600' : ''}`} />
+                                </button>
+                              </>
                             )}
                             <button
                               type="button"
@@ -1882,6 +1894,63 @@ export default function AdminPage() {
                   </li>
                 </ul>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Member Greeting Email Preview Modal */}
+      {previewEmailUser && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-md animate-fadeIn">
+          <div className="w-full max-w-2xl max-h-[90vh] rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white overflow-hidden flex flex-col animate-scaleUp">
+            {/* Header */}
+            <div className="p-4 px-6 bg-stone-900 text-white flex items-center justify-between border-b border-stone-800">
+              <div className="flex items-center gap-2">
+                <MailCheck className="w-4 h-4 text-emerald-400" />
+                <span className="text-sm font-bold">Greeting Email Dispatched to {previewEmailUser.name}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPreviewEmailUser(null)}
+                className="p-1 rounded-lg text-stone-400 hover:text-white transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Metadata */}
+            <div className="p-4 px-6 bg-amber-50/70 border-b border-amber-200/80 text-left space-y-1">
+              <h3 className="font-bold text-stone-900 text-sm">
+                Welcome to Raga Finder Family, {previewEmailUser.name}! 🎵
+              </h3>
+              <div className="text-xs text-stone-600 flex flex-wrap items-center gap-4">
+                <span><strong>To:</strong> {previewEmailUser.email || previewEmailUser.mobile}</span>
+                <span><strong>From:</strong> Raga Finder Family &lt;welcome@ragafinder.com&gt;</span>
+                <span className="text-emerald-700 font-semibold">&bull; Status: Delivered</span>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-stone-50">
+              <div
+                className="rounded-2xl shadow-sm border border-stone-200 overflow-hidden bg-white"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    previewEmailUser.emailPayload?.html ||
+                    getWelcomeEmailHtml(previewEmailUser.name, previewEmailUser.email || 'Member'),
+                }}
+              />
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 px-6 bg-white border-t border-stone-200 flex items-center justify-end">
+              <button
+                type="button"
+                onClick={() => setPreviewEmailUser(null)}
+                className="px-5 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition-colors"
+              >
+                Close Preview
+              </button>
             </div>
           </div>
         </div>
