@@ -36,10 +36,10 @@ export function getEmailConfig(): EmailConfig {
     smtpHost: process.env.SMTP_HOST || 'smtp.gmail.com',
     smtpPort: parseInt(process.env.SMTP_PORT || '465', 10),
     smtpSecure: true,
-    smtpUser: process.env.SMTP_USER || '',
-    smtpPass: process.env.SMTP_PASS || '',
+    smtpUser: process.env.SMTP_USER || 'vaishnavnavi@gmail.com',
+    smtpPass: process.env.SMTP_PASS || 'jasrdsyutnvvuwqh',
     fromName: process.env.SMTP_FROM_NAME || 'Raga Finder Family',
-    fromEmail: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER || 'no-reply@ragafinder.com',
+    fromEmail: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER || 'vaishnavnavi@gmail.com',
     resendApiKey: process.env.RESEND_API_KEY || '',
     brevoApiKey: process.env.BREVO_API_KEY || '',
   };
