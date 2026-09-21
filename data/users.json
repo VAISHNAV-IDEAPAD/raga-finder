@@ -1,0 +1,41 @@
+[
+  {
+    "id": "usr_init_1",
+    "name": "Aarav Sundaram",
+    "email": "aarav.sundaram@gmail.com",
+    "provider": "google",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aarav",
+    "createdAt": "2026-09-19T18:30:00.000Z",
+    "lastLoginAt": "2026-09-21T16:00:00.000Z",
+    "status": "active",
+    "welcomeNotificationSent": true,
+    "notificationType": "email",
+    "notificationDetails": "Welcome email delivered to aarav.sundaram@gmail.com"
+  },
+  {
+    "id": "usr_init_2",
+    "name": "Pooja Venkatesh",
+    "email": "pooja.v@outlook.com",
+    "provider": "microsoft",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Pooja",
+    "createdAt": "2026-09-20T18:30:00.000Z",
+    "lastLoginAt": "2026-09-21T18:00:00.000Z",
+    "status": "active",
+    "welcomeNotificationSent": true,
+    "notificationType": "email",
+    "notificationDetails": "Welcome email delivered to pooja.v@outlook.com"
+  },
+  {
+    "id": "usr_init_3",
+    "name": "Karthik Ramanathan",
+    "mobile": "+91 98401 23456",
+    "provider": "mobile",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Karthik",
+    "createdAt": "2026-09-21T06:30:00.000Z",
+    "lastLoginAt": "2026-09-21T20:00:00.000Z",
+    "status": "active",
+    "welcomeNotificationSent": true,
+    "notificationType": "sms",
+    "notificationDetails": "SMS welcome notification delivered to +91 98401 23456"
+  }
+]

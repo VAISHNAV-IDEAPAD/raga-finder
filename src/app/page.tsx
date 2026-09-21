@@ -431,6 +431,47 @@ export default function HomePage() {
             <RagaResultCard result={searchResult} rawQuery={searchResult.rawQuery} />
           </div>
         )}
+
+        {/* Raga Finder Family Community Banner */}
+        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-50 via-orange-50/40 to-stone-50 border border-amber-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-raga-500 to-amber-500 flex items-center justify-center text-white shadow-md shadow-raga-500/20 shrink-0">
+              <Sparkles className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-bold text-stone-900">
+                Join the Raga Finder Family
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600">
+                Sign up with your Mobile Number, Gmail, or Microsoft account to receive welcome confirmations, AI saves, and updates.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.dispatchEvent(new CustomEvent('open_auth_modal', { detail: { mode: 'login' } }));
+                }
+              }}
+              className="px-4 py-2.5 text-xs sm:text-sm font-semibold text-stone-700 hover:text-raga-600 hover:bg-white rounded-xl border border-stone-200 transition-colors"
+            >
+              Direct Login
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.dispatchEvent(new CustomEvent('open_auth_modal', { detail: { mode: 'signup' } }));
+                }
+              }}
+              className="px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-raga-600 to-amber-600 hover:from-raga-700 hover:to-amber-700 rounded-xl shadow-md hover:shadow-lg transition-all"
+            >
+              Sign Up Free
+            </button>
+          </div>
+        </div>
       </main>
 
       <ActivateAiModal

@@ -18,14 +18,21 @@ import {
   Info,
   Check,
   X,
+  Users,
+  Mail,
+  Phone,
+  Search,
+  ExternalLink,
+  ShieldCheck,
 } from 'lucide-react';
 import { AdminRule, MistakeReport, IdentifyResponse } from '@/types/raga';
+import { UserEntry } from '@/types/user';
 
 export default function AdminPage() {
   const [adminKey, setAdminKey] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authError, setAuthError] = useState('');
-  const [activeTab, setActiveTab] = useState<'rules' | 'reports' | 'playground' | 'backup'>('rules');
+  const [activeTab, setActiveTab] = useState<'rules' | 'reports' | 'members' | 'playground' | 'backup'>('rules');
 
   // Rules state
   const [rules, setRules] = useState<AdminRule[]>([]);
@@ -35,6 +42,12 @@ export default function AdminPage() {
   // Reports state
   const [reports, setReports] = useState<MistakeReport[]>([]);
   const [loadingReports, setLoadingReports] = useState(false);
+
+  // Members state
+  const [members, setMembers] = useState<UserEntry[]>([]);
+  const [loadingMembers, setLoadingMembers] = useState(false);
+  const [memberSearchQuery, setMemberSearchQuery] = useState('');
+  const [memberProviderFilter, setMemberProviderFilter] = useState<string>('all');
 
   // Playground state
   const [testQuery, setTestQuery] = useState('S R2 G3 P D2');
@@ -72,6 +85,7 @@ export default function AdminPage() {
         sessionStorage.setItem('raga_admin_key', key);
         loadRules(key);
         loadReports(key);
+        loadMembers(key);
       } else {
         setAuthError(data.error || 'Invalid Admin Secret Key');
         setIsAuthenticated(false);
@@ -125,6 +139,66 @@ export default function AdminPage() {
     } finally {
       setLoadingReports(false);
     }
+  };
+
+  const loadMembers = async (key = adminKey) => {
+    setLoadingMembers(true);
+    try {
+      const res = await fetch('/api/admin/members', {
+        headers: { 'x-admin-key': key },
+      });
+      const data = await res.json();
+      if (res.ok && data.members) {
+        setMembers(data.members);
+      }
+    } catch (err) {
+      console.error('Error loading members:', err);
+    } finally {
+      setLoadingMembers(false);
+    }
+  };
+
+  const handleDeleteMember = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to remove member "${name}"?`)) return;
+    try {
+      const res = await fetch(`/api/admin/members?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-key': adminKey },
+      });
+      if (res.ok) {
+        setMembers((prev) => prev.filter((m) => m.id !== id));
+        showToast(`Member "${name}" removed successfully.`);
+      } else {
+        alert('Failed to delete member');
+      }
+    } catch {
+      alert('Failed to delete member');
+    }
+  };
+
+  const handleExportMembersCsv = () => {
+    if (members.length === 0) {
+      alert('No members to export.');
+      return;
+    }
+    const headers = ['ID', 'Name', 'Email', 'Mobile', 'Provider', 'Notification Sent', 'Joined Date'];
+    const rows = members.map((m) => [
+      `"${m.id}"`,
+      `"${m.name}"`,
+      `"${m.email || ''}"`,
+      `"${m.mobile || ''}"`,
+      `"${m.provider}"`,
+      `"${m.welcomeNotificationSent ? 'Yes' : 'No'}"`,
+      `"${new Date(m.createdAt).toLocaleString()}"`,
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `raga_family_members_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   };
 
   const handleSaveRule = async (e: React.FormEvent) => {
@@ -320,6 +394,20 @@ export default function AdminPage() {
     reader.readAsText(file);
   };
 
+  const filteredMembers = members.filter((m) => {
+    if (memberProviderFilter !== 'all' && m.provider !== memberProviderFilter) {
+      return false;
+    }
+    if (memberSearchQuery.trim()) {
+      const q = memberSearchQuery.toLowerCase();
+      const matchName = (m.name || '').toLowerCase().includes(q);
+      const matchEmail = (m.email || '').toLowerCase().includes(q);
+      const matchMobile = (m.mobile || '').toLowerCase().includes(q);
+      return matchName || matchEmail || matchMobile;
+    }
+    return true;
+  });
+
   // Login Gate
   if (!isAuthenticated) {
     return (
@@ -455,6 +543,25 @@ export default function AdminPage() {
               {reports.filter((r) => r.status === 'pending').length} pending
             </span>
           )}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab('members');
+            loadMembers();
+          }}
+          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+            activeTab === 'members'
+              ? 'border-raga-600 text-raga-600'
+              : 'border-transparent text-stone-600 hover:text-stone-900'
+          }`}
+        >
+          <Users className="w-4 h-4 text-emerald-600" />
+          <span>Registered Members</span>
+          <span className="px-2 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold">
+            {members.length}
+          </span>
         </button>
 
         <button
@@ -1018,6 +1125,208 @@ export default function AdminPage() {
                 />
               </label>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab: Registered Members */}
+      {activeTab === 'members' && (
+        <div className="mt-8 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-lg font-bold text-stone-900">Raga Finder Family Members</h2>
+              </div>
+              <p className="text-xs text-stone-500">
+                View all registered users (Mobile, Google Gmail, Microsoft, Email), notification delivery logs, and export member records.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => loadMembers()}
+                className="px-3 py-2 text-xs font-semibold rounded-xl bg-stone-100 hover:bg-amber-100 text-stone-700 transition-colors flex items-center gap-1.5 border border-stone-200"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${loadingMembers ? 'animate-spin' : ''}`} />
+                <span>Refresh</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleExportMembersCsv}
+                className="px-3.5 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-colors flex items-center gap-1.5"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Export Members (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Quick Metrics */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="p-4 rounded-2xl glass-panel border border-amber-200 bg-white/70">
+              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">Total Members</span>
+              <span className="text-2xl font-black text-stone-900">{members.length}</span>
+            </div>
+            <div className="p-4 rounded-2xl glass-panel border border-red-200 bg-white/70">
+              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">Google Accounts</span>
+              <span className="text-2xl font-black text-red-600">
+                {members.filter((m) => m.provider === 'google').length}
+              </span>
+            </div>
+            <div className="p-4 rounded-2xl glass-panel border border-blue-200 bg-white/70">
+              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">Microsoft Accounts</span>
+              <span className="text-2xl font-black text-blue-600">
+                {members.filter((m) => m.provider === 'microsoft').length}
+              </span>
+            </div>
+            <div className="p-4 rounded-2xl glass-panel border border-emerald-200 bg-white/70">
+              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">Mobile / Phone</span>
+              <span className="text-2xl font-black text-emerald-600">
+                {members.filter((m) => m.provider === 'mobile').length}
+              </span>
+            </div>
+          </div>
+
+          {/* Filters & Search */}
+          <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <div className="relative w-full sm:w-80">
+              <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search by name, email, or mobile..."
+                value={memberSearchQuery}
+                onChange={(e) => setMemberSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <span className="text-xs text-stone-500 font-medium whitespace-nowrap">Filter Provider:</span>
+              <select
+                value={memberProviderFilter}
+                onChange={(e) => setMemberProviderFilter(e.target.value)}
+                className="px-3 py-2 text-xs rounded-xl border border-stone-300 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium text-stone-700"
+              >
+                <option value="all">All Providers ({members.length})</option>
+                <option value="google">Google ({members.filter((m) => m.provider === 'google').length})</option>
+                <option value="microsoft">Microsoft ({members.filter((m) => m.provider === 'microsoft').length})</option>
+                <option value="mobile">Mobile ({members.filter((m) => m.provider === 'mobile').length})</option>
+                <option value="email">Direct Email ({members.filter((m) => m.provider === 'email').length})</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Members Table */}
+          <div className="overflow-hidden rounded-2xl glass-panel border border-stone-200 bg-white/90 shadow-sm">
+            {loadingMembers ? (
+              <div className="p-12 text-center text-stone-400 text-sm">Loading registered members...</div>
+            ) : filteredMembers.length === 0 ? (
+              <div className="p-12 text-center text-stone-500 space-y-2">
+                <Users className="w-10 h-10 text-stone-300 mx-auto" />
+                <p className="font-semibold text-sm">No members found</p>
+                <p className="text-xs text-stone-400">Try changing or clearing your search filters</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-stone-100/80 border-b border-stone-200 text-stone-600 font-bold uppercase tracking-wider text-[10px]">
+                      <th className="py-3.5 px-4">Member</th>
+                      <th className="py-3.5 px-4">Contact Info</th>
+                      <th className="py-3.5 px-4">Sign Up Provider</th>
+                      <th className="py-3.5 px-4">Welcome Notification</th>
+                      <th className="py-3.5 px-4">Joined On</th>
+                      <th className="py-3.5 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-stone-100">
+                    {filteredMembers.map((member) => (
+                      <tr key={member.id} className="hover:bg-amber-50/40 transition-colors">
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={member.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(member.name)}`}
+                              alt={member.name}
+                              className="w-9 h-9 rounded-xl object-cover bg-amber-100 border border-amber-200 shrink-0"
+                            />
+                            <div>
+                              <span className="font-bold text-stone-900 block text-sm leading-tight">
+                                {member.name}
+                              </span>
+                              <span className="text-[10px] font-mono text-stone-400">ID: {member.id.slice(0, 10)}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 font-medium text-stone-700">
+                          {member.email && (
+                            <div className="flex items-center gap-1.5 text-stone-800">
+                              <Mail className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+                              <span>{member.email}</span>
+                            </div>
+                          )}
+                          {member.mobile && (
+                            <div className="flex items-center gap-1.5 text-stone-800">
+                              <Phone className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+                              <span>{member.mobile}</span>
+                            </div>
+                          )}
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                              member.provider === 'google'
+                                ? 'bg-red-50 text-red-700 border border-red-200'
+                                : member.provider === 'microsoft'
+                                ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                                : member.provider === 'mobile'
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                : 'bg-purple-50 text-purple-700 border border-purple-200'
+                            }`}
+                          >
+                            {member.provider === 'google' && 'Gmail (Google)'}
+                            {member.provider === 'microsoft' && 'Microsoft'}
+                            {member.provider === 'mobile' && 'Mobile OTP'}
+                            {member.provider === 'email' && 'Direct Email'}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium ${
+                              member.welcomeNotificationSent
+                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                : 'bg-stone-100 text-stone-600'
+                            }`}
+                          >
+                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                            {member.welcomeNotificationSent ? 'Dispatched' : 'Pending'}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4 text-stone-500 whitespace-nowrap">
+                          {new Date(member.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </td>
+                        <td className="py-3.5 px-4 text-right">
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteMember(member.id, member.name)}
+                            className="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Remove member"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}

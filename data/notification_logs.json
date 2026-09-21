@@ -1,0 +1,35 @@
+[
+  {
+    "id": "notif_init_1",
+    "userId": "usr_init_1",
+    "userName": "Aarav Sundaram",
+    "recipient": "aarav.sundaram@gmail.com",
+    "recipientType": "email",
+    "subject": "Welcome to Raga Finder Family! 🎵",
+    "contentPreview": "Dear Aarav Sundaram, Welcome to Raga Finder! Your Google account is verified.",
+    "status": "delivered",
+    "timestamp": "2026-09-19T18:30:05.000Z"
+  },
+  {
+    "id": "notif_init_2",
+    "userId": "usr_init_2",
+    "userName": "Pooja Venkatesh",
+    "recipient": "pooja.v@outlook.com",
+    "recipientType": "email",
+    "subject": "Welcome to Raga Finder Family! 🎵",
+    "contentPreview": "Dear Pooja Venkatesh, Welcome to Raga Finder! Your Microsoft account is verified.",
+    "status": "delivered",
+    "timestamp": "2026-09-20T18:30:05.000Z"
+  },
+  {
+    "id": "notif_init_3",
+    "userId": "usr_init_3",
+    "userName": "Karthik Ramanathan",
+    "recipient": "+91 98401 23456",
+    "recipientType": "sms",
+    "subject": "Raga Finder Welcome SMS",
+    "contentPreview": "Welcome to Raga Finder Family, Karthik Ramanathan! You are verified.",
+    "status": "delivered",
+    "timestamp": "2026-09-21T06:30:05.000Z"
+  }
+]
