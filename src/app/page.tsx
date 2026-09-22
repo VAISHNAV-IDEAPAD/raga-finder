@@ -68,26 +68,32 @@ export default function HomePage() {
     window.addEventListener('raga_ai_updated', checkAiStatus);
 
     if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const tabParam = params.get('tab');
-      if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'home') {
-        setActiveTopTab(tabParam as 'home' | 'ragas' | 'downloads');
-      }
-
-      const handlePopState = () => {
-        const currentParams = new URLSearchParams(window.location.search);
-        const currentTab = currentParams.get('tab');
-        if (currentTab === 'ragas' || currentTab === 'downloads') {
-          setActiveTopTab(currentTab);
+      const syncTabFromUrl = () => {
+        const params = new URLSearchParams(window.location.search);
+        const tabParam = params.get('tab');
+        if (tabParam === 'ragas' || tabParam === 'downloads') {
+          setActiveTopTab(tabParam as 'ragas' | 'downloads');
         } else {
           setActiveTopTab('home');
         }
       };
 
-      window.addEventListener('popstate', handlePopState);
+      syncTabFromUrl();
+
+      const handleSwitchTabEvent = (e: Event) => {
+        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' }>;
+        if (customEvent.detail?.tab) {
+          setActiveTopTab(customEvent.detail.tab);
+        }
+      };
+
+      window.addEventListener('switch_top_tab', handleSwitchTabEvent);
+      window.addEventListener('popstate', syncTabFromUrl);
+
       return () => {
         window.removeEventListener('raga_ai_updated', checkAiStatus);
-        window.removeEventListener('popstate', handlePopState);
+        window.removeEventListener('switch_top_tab', handleSwitchTabEvent);
+        window.removeEventListener('popstate', syncTabFromUrl);
       };
     }
 

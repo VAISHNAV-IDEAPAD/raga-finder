@@ -143,6 +143,11 @@ export default function Navbar() {
             <nav className="flex items-center space-x-1 sm:space-x-2">
               <Link
                 href="/"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('switch_top_tab', { detail: { tab: 'home' } }));
+                  }
+                }}
                 className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
               >
                 <Home className="w-3.5 h-3.5 text-stone-500" />
@@ -151,6 +156,11 @@ export default function Navbar() {
 
               <Link
                 href="/?tab=ragas"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('switch_top_tab', { detail: { tab: 'ragas' } }));
+                  }
+                }}
                 className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
               >
                 <Music className="w-3.5 h-3.5 text-raga-500" />
@@ -159,6 +169,11 @@ export default function Navbar() {
 
               <Link
                 href="/?tab=downloads"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('switch_top_tab', { detail: { tab: 'downloads' } }));
+                  }
+                }}
                 className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
               >
                 <Download className="w-3.5 h-3.5 text-amber-600" />
