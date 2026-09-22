@@ -1,0 +1,55 @@
+================================================================================
+RAGA FINDER - CARNATIC & HINDUSTANI SWARA FREQUENCY & NOTATION GUIDE
+================================================================================
+
+1. CARNATIC 16 SWARASTHANAS (PITCH POSITIONS)
+--------------------------------------------------------------------------------
+Note  Name                    Western Equivalent (Tonic C)   Semitone Ratio
+--------------------------------------------------------------------------------
+S     Shadjam                 C                              1/1 (Base Tonic)
+R1    Shuddha Rishabham       Db                             16/15 (Minor 2nd)
+R2    Chatushruti Rishabham   D                              9/8 (Major 2nd)
+R3    Shatshruti Rishabham    D# / Eb                        75/64 (Augmented 2nd)
+G1    Shuddha Gandharam       D                              9/8 (Enharmonic to R2)
+G2    Sadharana Gandharam     Eb                             6/5 (Minor 3rd)
+G3    Antara Gandharam        E                              5/4 (Major 3rd)
+M1    Shuddha Madhyamam       F                              4/3 (Perfect 4th)
+M2    Prati Madhyamam         F#                             45/32 (Augmented 4th)
+P     Panchamam               G                              3/2 (Perfect 5th)
+D1    Shuddha Dhaivatam       Ab                             8/5 (Minor 6th)
+D2    Chatushruti Dhaivatam   A                              5/3 (Major 6th)
+D3    Shatshruti Dhaivatam    A# / Bb                        225/128 (Augmented 6th)
+N1    Shuddha Nishadham       A                              5/3 (Enharmonic to D2)
+N2    Kaisiki Nishadham       Bb                             9/5 (Minor 7th)
+N3    Kakali Nishadham        B                              15/8 (Major 7th)
+
+2. HINDUSTANI 12 SWARAS & THAAT EQUIVALENTS
+--------------------------------------------------------------------------------
+Sa          Base Shadjam (C)
+Komal Re    Shuddha Rishabham (Db)
+Shuddha Re  Chatushruti Rishabham (D)
+Komal Ga    Sadharana Gandharam (Eb)
+Shuddha Ga  Antara Gandharam (E)
+Shuddha Ma  Shuddha Madhyamam (F)
+Teevra Ma   Prati Madhyamam (F#)
+Pa          Panchamam (G)
+Komal Dha   Shuddha Dhaivatam (Ab)
+Shuddha Dha Chatushruti Dhaivatam (A)
+Komal Ni    Kaisiki Nishadham (Bb)
+Shuddha Ni  Kakali Nishadham (B)
+
+3. THE 10 HINDUSTANI THAATS & CORRESPONDING CARNATIC MELAKARTAS
+--------------------------------------------------------------------------------
+1. Bilawal   <-->  29. Dheerasankarabharanam (S R2 G3 M1 P D2 N3 S')
+2. Kalyan    <-->  65. Mechakalyani (S R2 G3 M2 P D2 N3 S')
+3. Khamaj    <-->  28. Harikambhoji (S R2 G3 M1 P D2 N2 S')
+4. Kafi      <-->  22. Kharaharapriya (S R2 G2 M1 P D2 N2 S')
+5. Asavari   <-->  20. Natabhairavi (S R2 G2 M1 P D1 N2 S')
+6. Bhairav   <-->  15. Mayamalavagowla (S R1 G3 M1 P D1 N3 S')
+7. Bhairavi  <-->  08. Hanumatodi (S R1 G2 M1 P D1 N2 S')
+8. Poorvi    <-->  51. Kamavardhini / Pantuvarali (S R1 G3 M2 P D1 N3 S')
+9. Marwa     <-->  53. Gamanashrama (S R1 G3 M2 P D2 N3 S')
+10. Todi     <-->  45. Subhapantuvarali (S R1 G2 M2 P D1 N3 S')
+
+================================================================================
+Generated for RagaFinder AI (https://raga-finder-ideapad.vercel.app)

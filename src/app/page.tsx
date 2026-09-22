@@ -11,13 +11,18 @@ import {
   Info,
   CheckCircle,
   Zap,
+  Home,
+  Download,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
 import ActivateAiModal from '@/components/ActivateAiModal';
+import RagasExplorerTab from '@/components/RagasExplorerTab';
+import DownloadsTab from '@/components/DownloadsTab';
 import { IdentifyRequest, IdentifyResponse, Tradition } from '@/types/raga';
 
 export default function HomePage() {
+  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads'>('home');
   const [searchMode, setSearchMode] = useState<'swaras' | 'song' | 'description'>('swaras');
   const [selectedSwaras, setSelectedSwaras] = useState<string[]>(['S', 'R1', 'G3', 'M1', 'P', 'D1', 'N3']);
   const [songQuery, setSongQuery] = useState('');
@@ -61,8 +66,51 @@ export default function HomePage() {
   useEffect(() => {
     checkAiStatus();
     window.addEventListener('raga_ai_updated', checkAiStatus);
+
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'home') {
+        setActiveTopTab(tabParam as 'home' | 'ragas' | 'downloads');
+      }
+
+      const handlePopState = () => {
+        const currentParams = new URLSearchParams(window.location.search);
+        const currentTab = currentParams.get('tab');
+        if (currentTab === 'ragas' || currentTab === 'downloads') {
+          setActiveTopTab(currentTab);
+        } else {
+          setActiveTopTab('home');
+        }
+      };
+
+      window.addEventListener('popstate', handlePopState);
+      return () => {
+        window.removeEventListener('raga_ai_updated', checkAiStatus);
+        window.removeEventListener('popstate', handlePopState);
+      };
+    }
+
     return () => window.removeEventListener('raga_ai_updated', checkAiStatus);
   }, []);
+
+  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads') => {
+    setActiveTopTab(tab);
+    if (typeof window !== 'undefined') {
+      const url = tab === 'home' ? '/' : `/?tab=${tab}`;
+      window.history.pushState({}, '', url);
+    }
+  };
+
+  const handleSelectRagaFromExplorer = (swaras: string[]) => {
+    setSelectedSwaras(swaras);
+    setSearchMode('swaras');
+    setActiveTopTab('home');
+    if (typeof window !== 'undefined') {
+      window.history.pushState({}, '', '/');
+      window.scrollTo({ top: 250, behavior: 'smooth' });
+    }
+  };
 
   const handleSearch = async () => {
     setErrorMsg('');
@@ -151,66 +199,131 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-music-pattern pb-20">
       {/* Hero Section */}
-      <section className="pt-10 pb-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/80 border border-amber-300 text-amber-900 text-xs font-semibold mb-4 shadow-sm">
+      <section className="pt-8 pb-6 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+        {/* Top 3 Navigation Tabs: Home, Ragas, Downloads - Positioned directly UPWARD of Powered by Google */}
+        <div className="flex items-center justify-center mb-6">
+          <div className="inline-flex p-1.5 rounded-2xl bg-amber-50/90 backdrop-blur-md border border-amber-300/80 shadow-md">
+            <button
+              type="button"
+              onClick={() => handleTopTabChange('home')}
+              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                activeTopTab === 'home'
+                  ? 'bg-gradient-to-r from-raga-600 to-amber-600 text-white shadow-md'
+                  : 'text-stone-700 hover:text-stone-900 hover:bg-amber-100/60'
+              }`}
+            >
+              <Home className="w-4 h-4" />
+              <span>Home</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleTopTabChange('ragas')}
+              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                activeTopTab === 'ragas'
+                  ? 'bg-gradient-to-r from-raga-600 to-amber-600 text-white shadow-md'
+                  : 'text-stone-700 hover:text-stone-900 hover:bg-amber-100/60'
+              }`}
+            >
+              <Music className="w-4 h-4" />
+              <span>Ragas</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                  activeTopTab === 'ragas' ? 'bg-white/20 text-white' : 'bg-amber-200 text-amber-900'
+                }`}
+              >
+                72+
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleTopTabChange('downloads')}
+              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                activeTopTab === 'downloads'
+                  ? 'bg-gradient-to-r from-raga-600 to-amber-600 text-white shadow-md'
+                  : 'text-stone-700 hover:text-stone-900 hover:bg-amber-100/60'
+              }`}
+            >
+              <Download className="w-4 h-4" />
+              <span>Downloads</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                  activeTopTab === 'downloads' ? 'bg-white/20 text-white' : 'bg-amber-200 text-amber-900'
+                }`}
+              >
+                5
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Powered by Google Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/90 border border-amber-300 text-amber-900 text-xs font-semibold mb-4 shadow-xs">
           <Sparkles className="w-3.5 h-3.5 text-raga-600" />
-          <span>Powered by Google Gemini & OpenAI &bull; Continuous Admin Ground-Truth Teaching</span>
+          <span>Powered by Google Gemini &amp; OpenAI &bull; Continuous Admin Ground-Truth Teaching</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-tight">
-          Find Any <span className="text-raga-600">Raga</span> in Seconds
-        </h1>
-        <p className="mt-4 text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-          Explore Carnatic and Hindustani classical ragas by tapping Swaras, typing any song or
-          film title, or describing musical scales with precision AI analysis.
-        </p>
+        {activeTopTab === 'home' && (
+          <>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-tight">
+              Find Any <span className="text-raga-600">Raga</span> in Seconds
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
+              Explore Carnatic and Hindustani classical ragas by tapping Swaras, typing any song or
+              film title, or describing musical scales with precision AI analysis.
+            </p>
 
-        {/* Mode Switcher Tabs */}
-        <div className="mt-8 inline-flex p-1.5 rounded-2xl glass-panel shadow-md border border-amber-200/80">
-          <button
-            type="button"
-            onClick={() => setSearchMode('swaras')}
-            className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
-              searchMode === 'swaras'
-                ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
-                : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
-            }`}
-          >
-            <Music className="w-4 h-4" />
-            <span>By Swaras (Notes)</span>
-          </button>
+            {/* Mode Switcher Tabs */}
+            <div className="mt-8 inline-flex p-1.5 rounded-2xl glass-panel shadow-md border border-amber-200/80">
+              <button
+                type="button"
+                onClick={() => setSearchMode('swaras')}
+                className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                  searchMode === 'swaras'
+                    ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
+                    : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
+                }`}
+              >
+                <Music className="w-4 h-4" />
+                <span>By Swaras (Notes)</span>
+              </button>
 
-          <button
-            type="button"
-            onClick={() => setSearchMode('song')}
-            className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
-              searchMode === 'song'
-                ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
-                : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
-            }`}
-          >
-            <Search className="w-4 h-4" />
-            <span>By Song / Kriti</span>
-          </button>
+              <button
+                type="button"
+                onClick={() => setSearchMode('song')}
+                className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                  searchMode === 'song'
+                    ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
+                    : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
+                }`}
+              >
+                <Search className="w-4 h-4" />
+                <span>By Song / Kriti</span>
+              </button>
 
-          <button
-            type="button"
-            onClick={() => setSearchMode('description')}
-            className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
-              searchMode === 'description'
-                ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
-                : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
-            }`}
-          >
-            <FileText className="w-4 h-4" />
-            <span>Western / Description</span>
-          </button>
-        </div>
+              <button
+                type="button"
+                onClick={() => setSearchMode('description')}
+                className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                  searchMode === 'description'
+                    ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
+                    : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
+                }`}
+              >
+                <FileText className="w-4 h-4" />
+                <span>Western / Description</span>
+              </button>
+            </div>
+          </>
+        )}
       </section>
 
-      {/* Main Search Panel */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-6 sm:p-8 rounded-3xl glass-panel shadow-xl border border-amber-200/80 space-y-6">
+      {/* Main Content Area */}
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {activeTopTab === 'home' && (
+          <>
+            <div className="p-6 sm:p-8 rounded-3xl glass-panel shadow-xl border border-amber-200/80 space-y-6">
           {/* Tradition Preference Filter */}
           <div className="flex items-center justify-between flex-wrap gap-3 pb-4 border-b border-amber-200/60">
             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-stone-600">
@@ -430,6 +543,18 @@ export default function HomePage() {
           <div id="raga-result-section" className="mt-12 animate-fadeIn">
             <RagaResultCard result={searchResult} rawQuery={searchResult.rawQuery} />
           </div>
+        )}
+          </>
+        )}
+
+        {/* Tab 2: Ragas Explorer Tab */}
+        {activeTopTab === 'ragas' && (
+          <RagasExplorerTab onSelectRagaInFinder={handleSelectRagaFromExplorer} />
+        )}
+
+        {/* Tab 3: Downloads Tab */}
+        {activeTopTab === 'downloads' && (
+          <DownloadsTab />
         )}
 
         {/* Raga Finder Family Community Banner */}

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus } from 'lucide-react';
+import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus, Download, Home } from 'lucide-react';
 import ActivateAiModal from './ActivateAiModal';
 import AuthModal from './AuthModal';
 import SignupSuccessModal from './SignupSuccessModal';
@@ -145,13 +145,29 @@ export default function Navbar() {
                 href="/"
                 className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
               >
+                <Home className="w-3.5 h-3.5 text-stone-500" />
+                <span>Home</span>
+              </Link>
+
+              <Link
+                href="/?tab=ragas"
+                className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
+              >
                 <Music className="w-3.5 h-3.5 text-raga-500" />
-                <span>Finder</span>
+                <span>Ragas</span>
+              </Link>
+
+              <Link
+                href="/?tab=downloads"
+                className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
+              >
+                <Download className="w-3.5 h-3.5 text-amber-600" />
+                <span>Downloads</span>
               </Link>
 
               <Link
                 href="/melakarta"
-                className="hidden sm:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
+                className="hidden md:flex px-2.5 py-1.5 text-xs sm:text-sm font-medium text-stone-700 hover:text-raga-600 hover:bg-amber-50 rounded-lg transition-colors items-center gap-1.5"
               >
                 <BookOpen className="w-3.5 h-3.5 text-amber-600" />
                 <span>72 Melakartas</span>
