@@ -33,15 +33,15 @@ interface DatasetItem {
 
 const DATASETS: DatasetItem[] = [
   {
-    id: 'msidb-csv',
-    title: 'MSIDB Classical & Cinema Songs with Raga Dataset',
-    filename: 'msidb_songs_with_raga.csv',
+    id: 'songs-csv',
+    title: 'Classical & Cinema Songs with Raga Dataset',
+    filename: 'classical_cinema_songs_with_raga.csv',
     format: 'CSV (Comma Separated)',
     fileSize: '601 KB',
     recordsCount: '3,469+ Songs',
     badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
     icon: <FileSpreadsheet className="w-6 h-6 text-emerald-600" />,
-    tags: ['Carnatic', 'Cinema Songs', 'MSIDB', 'Excel Ready'],
+    tags: ['Carnatic', 'Cinema Songs', 'Soundtracks', 'Excel Ready'],
     description:
       'Extensive verified database linking Malayalam, Tamil, and Indian film songs to their parent classical ragas, including composer, lyricist, year, singer, and audio source identifiers.',
     previewType: 'csv',
@@ -54,9 +54,9 @@ const DATASETS: DatasetItem[] = [
     ],
   },
   {
-    id: 'msidb-json',
-    title: 'MSIDB Songs to Classical Raga Database',
-    filename: 'msidb_songs_with_raga.json',
+    id: 'songs-json',
+    title: 'Complete Songs to Classical Raga Database',
+    filename: 'classical_cinema_songs_with_raga.json',
     format: 'JSON (Structured)',
     fileSize: '1.34 MB',
     recordsCount: '3,469 Objects',
@@ -64,7 +64,7 @@ const DATASETS: DatasetItem[] = [
     icon: <FileCode className="w-6 h-6 text-amber-600" />,
     tags: ['JSON', 'API Ready', 'Full Metadata', 'Machine Learning'],
     description:
-      'Structured hierarchical dataset optimized for developers, machine learning models, music apps, and indexing systems. Contains complete song metadata and direct MSIDB references.',
+      'Structured hierarchical dataset optimized for developers, machine learning models, music apps, and indexing systems. Contains complete song metadata and direct classical references.',
     previewType: 'json',
     previewData: [
       {
@@ -90,9 +90,9 @@ const DATASETS: DatasetItem[] = [
     ],
   },
   {
-    id: 'msidb-html',
-    title: 'MSIDB Offline Searchable Songs & Ragas Portal',
-    filename: 'msidb_raga_songs_table.html',
+    id: 'songs-html',
+    title: 'Offline Searchable Songs & Ragas Portal',
+    filename: 'offline_searchable_songs_ragas_portal.html',
     format: 'Standalone Web App (HTML)',
     fileSize: '1.13 MB',
     recordsCount: 'Interactive Client Table',
@@ -317,7 +317,7 @@ export default function DownloadsTab() {
             Open Musicology &amp; Academic Dataset Usage
           </p>
           <p>
-            The MSIDB song and raga catalog is curated from classical traditions and verified movie song databases. Free to use for research, education, music practice, and software development with attribution to RagaFinder AI.
+            The classical and cinema song catalog is curated from classical traditions and verified soundtrack databases. Free to use for research, education, music practice, and software development with attribution to RagaFinder AI.
           </p>
         </div>
       </div>
@@ -402,7 +402,7 @@ export default function DownloadsTab() {
                     Standalone Searchable HTML Table (1.13 MB)
                   </p>
                   <p className="text-xs text-stone-600 max-w-md mx-auto">
-                    Contains the full MSIDB database embedded directly inside an offline HTML page with instantaneous filtering by title, singer, raga, and composer.
+                    Contains the full verified songs and ragas database embedded directly inside an offline HTML page with instantaneous filtering by title, singer, raga, and composer.
                   </p>
                 </div>
               )}

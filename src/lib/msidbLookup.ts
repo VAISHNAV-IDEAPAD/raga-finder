@@ -187,7 +187,7 @@ export async function lookupSongOnMSIDB(
       singers: bestSingers || 'Malayalam Artists',
       language: 'Malayalam Film Song',
       raga: raga,
-      source: 'MSIDB Verified',
+      source: 'Classical & Film Archive',
     };
 
     const ragaProfile = resolveRagaProfile(raga);
