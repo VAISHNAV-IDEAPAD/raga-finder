@@ -12,8 +12,9 @@ Featuring an **Admin Musicologist Teaching & Ground-Truth Correction System**, a
    - **Interactive Swara Keyboard**: Select Carnatic swaras (`S, R1, R2, R3, G1, G2, G3, M1, M2, P, D1, D2, D3, N1, N2, N3`) or Hindustani notes with real-time audio pitch audition.
    - **Song / Kriti Search**: Identify the raga behind any classical Kriti, Hindustani Bandish, or cinema song (e.g. *Vatapi Ganapatim*, *Albela Sajan*, *Krishna Nee Begane*).
    - **Western Scale & Free-form Description**: Analyze Western note sequences (e.g. `C D E F# G A B`) or descriptions (e.g. *"Evening raga with teevra ma and komal ni expressing romance"*).
-2. **Web Audio Swara Synthesizer**:
-   - Play back Arohana and Avarohana scales note-by-note with warm harmonic tones directly in the browser.
+2. **Web Audio Swara Synthesizer & Independent Scale Audition**:
+   - Audition scales note-by-note with warm harmonic synthesizers directly in the browser.
+   - Independent playback controls for ascending scale (`Aro ↗`), descending scale (`Ava ↘`), and continuous scale audition (`Both ⇄`).
 3. **OpenAI Musicology Engine with Dynamic Prompt Augmentation**:
    - System prompt dynamically injects all verified **Admin Ground-Truth Rules** into OpenAI context with highest priority.
    - Low-temperature deterministic inference strictly differentiates subtle ragas (e.g., *Keeravani vs Simhendramadhyamam*, *Mohanam vs Bhoopali*, *Carnatic Hanumatodi vs Hindustani Miyan ki Todi*).
@@ -24,6 +25,10 @@ Featuring an **Admin Musicologist Teaching & Ground-Truth Correction System**, a
    - **Backup & Export**: Download all taught rules as `rules.json` or import existing knowledge bases.
 5. **72 Melakarta Interactive Directory (`/melakarta`)**:
    - Browse all 72 Janaka ragas organized into 12 Chakras with swara formulas and instant audio previews.
+6. **Authentic Janya Ragas Classical Library (908 Ragas)**:
+   - Comprehensive directory of 908 authentic Janya ragas mapped to their 72 parent Melakartas across all 12 Chakras.
+   - Annotated with Bhashanga (foreign swaras), Vakra patterns, and scale classifications (Audava, Shadava, Sampurna).
+   - Real-time search, filtering, and instant export to CSV and JSON.
 
 ---
 
@@ -112,14 +117,18 @@ raga-finder/
 │   │   ├── layout.tsx          # Root layout with Navbar & Footer
 │   │   └── page.tsx            # Main Raga Finder interface
 │   ├── components/
+│   │   ├── AuthenticJanyaRagaTable.tsx # 908 Authentic Janya Ragas table with independent Aro/Ava audio
 │   │   ├── Footer.tsx          # Brand footer
 │   │   ├── Navbar.tsx          # Header with navigation
 │   │   ├── RagaResultCard.tsx  # Result card with audio playback & mistake reporting
+│   │   ├── RagasExplorerTab.tsx # Unified Ragas & Janya library tab
 │   │   ├── ReportMistakeModal.tsx # Correction submission modal
 │   │   └── SwaraKeyboard.tsx   # Interactive note keyboard & presets
 │   ├── data/
+│   │   ├── carnatic_janya_ragas.json # Classical catalog of 908 Janya ragas across 72 Melakartas
 │   │   ├── seed_admin_rules.json # Pre-seeded disambiguation ground-truth rules
-│   │   └── seed_ragas.json     # Reference dataset of Carnatic & Hindustani ragas
+│   │   ├── seed_ragas.json     # Reference dataset of Carnatic & Hindustani ragas
+│   │   └── song_ragas_db.json  # Curated classical & film songs database
 │   ├── lib/
 │   │   ├── audioSynth.ts       # Web Audio API swara synthesizer
 │   │   ├── openai.ts           # OpenAI client & dynamic prompt injector
