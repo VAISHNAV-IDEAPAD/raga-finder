@@ -143,6 +143,18 @@ export default function MelakartaPage() {
           />
           <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
         </div>
+
+        {/* Link to Authentic Janya Ragas Table */}
+        <div className="mt-4">
+          <Link
+            href="/?tab=ragas&sub=janya"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-amber-900 bg-amber-100/80 hover:bg-amber-200/80 border border-amber-300 transition-all shadow-2xs"
+          >
+            <Music className="w-3.5 h-3.5 text-raga-600" />
+            <span>Explore all 908 Authentic Janya Ragas derived from these Melakartas</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* Chakras Grid */}

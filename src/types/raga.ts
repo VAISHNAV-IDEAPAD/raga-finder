@@ -126,3 +126,26 @@ export interface MistakeReport {
   status: 'pending' | 'resolved' | 'dismissed';
   resolvedAsRuleId?: string;
 }
+
+export interface JanyaRaga {
+  id: string;
+  name: string;
+  originalName: string;
+  parentMelakartaNo: number;
+  parentMelakartaName: string;
+  chakraNo: number;
+  chakraName: string;
+  madhyama: string;
+  arohana: string;
+  avarohana: string;
+  swaras: string[];
+  aroCount: number;
+  avaCount: number;
+  scaleType: string;
+  isVakra: boolean;
+  isBhashanga: boolean;
+  anyaSwaras?: string;
+  extraNote?: string;
+  wikiUrl: string;
+}
+

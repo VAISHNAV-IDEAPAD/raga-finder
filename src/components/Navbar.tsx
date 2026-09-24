@@ -165,6 +165,9 @@ export default function Navbar() {
               >
                 <Music className="w-3.5 h-3.5 text-raga-500" />
                 <span>Ragas</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                  908
+                </span>
               </Link>
 
               <Link

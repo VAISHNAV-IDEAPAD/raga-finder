@@ -108,7 +108,7 @@ export default function HomePage() {
     }
   };
 
-  const handleSelectRagaFromExplorer = (swaras: string[]) => {
+  const handleSelectRagaFromExplorer = (swaras: string[], ragaName?: string) => {
     setSelectedSwaras(swaras);
     setSearchMode('swaras');
     setActiveTopTab('home');
