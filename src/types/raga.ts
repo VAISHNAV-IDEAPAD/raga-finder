@@ -146,6 +146,6 @@ export interface JanyaRaga {
   isBhashanga: boolean;
   anyaSwaras?: string;
   extraNote?: string;
-  wikiUrl: string;
+  wikiUrl?: string;
 }
 

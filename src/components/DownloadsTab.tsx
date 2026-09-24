@@ -34,16 +34,16 @@ interface DatasetItem {
 const DATASETS: DatasetItem[] = [
   {
     id: 'janyas-csv',
-    title: 'Authentic Carnatic Janya Ragas Dataset (Wikipedia)',
-    filename: 'wikipedia_janya_ragas_908.csv',
+    title: 'Authentic Carnatic Janya Ragas Dataset',
+    filename: 'carnatic_janya_ragas_908.csv',
     format: 'CSV (Spreadsheet)',
     fileSize: '115 KB',
     recordsCount: '908 Janya Ragas',
     badgeColor: 'bg-amber-100 text-amber-900 border-amber-300',
     icon: <FileSpreadsheet className="w-6 h-6 text-amber-700" />,
-    tags: ['Wikipedia Sourced', 'Carnatic', '72 Melakartas', '12 Chakras', 'Arohana & Avarohana'],
+    tags: ['Classical Archive', 'Carnatic', '72 Melakartas', '12 Chakras', 'Arohana & Avarohana'],
     description:
-      'Complete authentic dataset of 908 Carnatic Janya ragas extracted from Wikipedia, systematically classified under all 72 Melakarta parent ragas with Arohana, Avarohana, scale classification, Bhashanga Anya swaras, and links.',
+      'Complete authentic dataset of 908 Carnatic Janya ragas, systematically classified under all 72 Melakarta parent ragas with Arohana, Avarohana, scale classification, and Bhashanga Anya swaras.',
     previewType: 'csv',
     previewData: [
       { Raga: 'Kanakambari', Melakarta_No: 1, Melakarta: 'Kanakangi', Scale_Type: 'Audava-Sampurna', Arohana: "S R1 M1 P D1 S'", Avarohana: "S' N1 D1 P M1 G1 R1 S", Bhashanga: 'No' },
@@ -55,16 +55,16 @@ const DATASETS: DatasetItem[] = [
   },
   {
     id: 'janyas-json',
-    title: 'Complete Janya Ragas JSON Database (Wikipedia)',
-    filename: 'wikipedia_janya_ragas_908.json',
+    title: 'Complete Janya Ragas JSON Database',
+    filename: 'carnatic_janya_ragas_908.json',
     format: 'JSON (Hierarchical)',
     fileSize: '582 KB',
     recordsCount: '908 Raga Objects',
     badgeColor: 'bg-orange-100 text-orange-900 border-orange-300',
     icon: <FileCode className="w-6 h-6 text-orange-600" />,
-    tags: ['JSON', 'Wikipedia', 'Carnatic Musicology', 'Full Swaras Array'],
+    tags: ['JSON', 'API Ready', 'Carnatic Musicology', 'Full Swaras Array'],
     description:
-      'Structured JSON database of all 908 Janya ragas with swara arrays, chakra metadata, scale counts, Vakra/Bhashanga flags, and Wikipedia article references.',
+      'Structured JSON database of all 908 Janya ragas with swara arrays, chakra metadata, scale counts, and Vakra/Bhashanga flags.',
     previewType: 'json',
     previewData: [
       {
@@ -79,7 +79,6 @@ const DATASETS: DatasetItem[] = [
         swaras: ['R2', 'G3', 'P', 'D2'],
         scaleType: 'Audava',
         isBhashanga: false,
-        wikiUrl: 'https://en.wikipedia.org/wiki/Mohanam',
       },
       {
         id: 'hamsadhwani',
@@ -93,7 +92,6 @@ const DATASETS: DatasetItem[] = [
         swaras: ['R2', 'G3', 'P', 'N3'],
         scaleType: 'Audava',
         isBhashanga: false,
-        wikiUrl: 'https://en.wikipedia.org/wiki/Hamsadhvani',
       },
     ],
   },

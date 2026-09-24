@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { playSwaraSequence } from '@/lib/audioSynth';
 import { JanyaRaga } from '@/types/raga';
-import rawJanyaData from '@/data/wikipedia_janya_ragas.json';
+import rawJanyaData from '@/data/carnatic_janya_ragas.json';
 
 const ALL_JANYAS: JanyaRaga[] = rawJanyaData as JanyaRaga[];
 
@@ -269,7 +269,6 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
       'Anya_Swaras',
       'Is_Vakra',
       'Extra_Note',
-      'Wikipedia_URL',
     ];
 
     const rows = sortedRagas.map((r) => [
@@ -287,7 +286,6 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
       `"${r.anyaSwaras || ''}"`,
       r.isVakra ? 'Yes' : 'No',
       `"${r.extraNote || ''}"`,
-      `"${r.wikiUrl}"`,
     ]);
 
     const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
@@ -295,7 +293,7 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `wikipedia_janya_ragas_${sortedRagas.length}.csv`);
+    link.setAttribute('download', `carnatic_janya_ragas_${sortedRagas.length}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -306,7 +304,7 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(sortedRagas, null, 2));
     const dlAnchor = document.createElement('a');
     dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', `wikipedia_janya_ragas_${sortedRagas.length}.json`);
+    dlAnchor.setAttribute('download', `carnatic_janya_ragas_${sortedRagas.length}.json`);
     document.body.appendChild(dlAnchor);
     dlAnchor.click();
     dlAnchor.remove();
@@ -314,30 +312,25 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
 
   return (
     <div className="space-y-6">
-      {/* Authentic Wikipedia Badge & Overview Banner */}
+      {/* Authentic Classical Badge & Overview Banner */}
       <div className="rounded-3xl glass-panel p-5 sm:p-7 border border-amber-300/80 shadow-md bg-gradient-to-br from-amber-50/90 via-white to-orange-50/50 space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-600 text-white shadow-xs">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Authentic Wikipedia Source</span>
+                <span>Authentic Classical Source</span>
               </span>
-              <a
-                href="https://en.wikipedia.org/wiki/List_of_Janya_ragas"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 hover:text-amber-950 underline decoration-amber-400 decoration-2"
-              >
-                <span>List of Janya ragas (Wikipedia)</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800">
+                <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+                <span>Complete 908 Janya Ragas Library</span>
+              </span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
               Authentic <span className="text-raga-600">Janya Ragas Table</span>
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 max-w-3xl">
-              Explore all <strong>{ALL_JANYAS.length} authentic Janya ragas</strong> categorized systematically under their 72 parent Melakartas across the 12 Chakras. Sourced directly from Wikipedia with independent audio playback for <strong>ascending (arohanam)</strong> and <strong>descending (avarohanam)</strong> scales, foreign swara (Bhashanga) annotations, and one-click Raga Finder loading.
+              Explore all <strong>{ALL_JANYAS.length} authentic Janya ragas</strong> categorized systematically under their 72 parent Melakartas across the 12 Chakras with independent audio playback for <strong>ascending (arohanam)</strong> and <strong>descending (avarohanam)</strong> scales, foreign swara (Bhashanga) annotations, and one-click Raga Finder loading.
             </p>
           </div>
 
@@ -669,17 +662,6 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                             <div>
                               <div className="font-bold text-stone-900 group-hover:text-raga-600 transition-colors flex items-center gap-1.5">
                                 <span>{raga.name}</span>
-                                {raga.wikiUrl && (
-                                  <a
-                                    href={raga.wikiUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    title="View on Wikipedia"
-                                    className="text-stone-400 hover:text-amber-700"
-                                  >
-                                    <ExternalLink className="w-3 h-3" />
-                                  </a>
-                                )}
                               </div>
                               {raga.originalName && raga.originalName !== raga.name && (
                                 <div className="text-[10px] text-stone-400 italic">
@@ -1017,16 +999,6 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                                   <div>
                                     <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center gap-1.5">
                                       <span>{raga.name}</span>
-                                      {raga.wikiUrl && (
-                                        <a
-                                          href={raga.wikiUrl}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-stone-400 hover:text-amber-700"
-                                        >
-                                          <ExternalLink className="w-3 h-3" />
-                                        </a>
-                                      )}
                                     </div>
                                     {raga.originalName && raga.originalName !== raga.name && (
                                       <div className="text-[10px] text-stone-400 italic">

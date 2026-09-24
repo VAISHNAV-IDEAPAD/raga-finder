@@ -226,7 +226,7 @@ export default function RagasExplorerTab({ onSelectRagaInFinder }: RagasExplorer
           Explore Classical <span className="text-raga-600">Ragas &amp; Scales</span>
         </h2>
         <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto">
-          Discover the complete 908 authentic Janya ragas sourced from Wikipedia, 72 Melakarta parent ragas, arohana-avarohana scales, and audition live swaras with built-in audio synthesis.
+          Discover the complete 908 authentic Janya ragas, 72 Melakarta parent ragas, arohana-avarohana scales, and audition live swaras with built-in audio synthesis.
         </p>
       </div>
 
@@ -307,7 +307,7 @@ export default function RagasExplorerTab({ onSelectRagaInFinder }: RagasExplorer
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-600 text-white">
                   <CheckCircle2 className="w-3 h-3" />
-                  <span>Wikipedia Sourced</span>
+                  <span>Classical Archive</span>
                 </span>
                 <span className="text-xs text-stone-500 font-semibold">908 Carnatic Janya Ragas</span>
               </div>
