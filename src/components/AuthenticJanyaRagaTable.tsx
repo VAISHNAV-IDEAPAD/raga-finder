@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import {
   Music,
   Search,
@@ -38,6 +38,11 @@ const CHAKRAS_LIST = [
   { no: 12, name: 'Aditya (Suns)', m: 'M2', range: '67–72' },
 ];
 
+function extractPlayableSwaras(scaleStr: string): string[] {
+  const withoutParens = scaleStr.replace(/\([^)]*\)/g, ' ');
+  return withoutParens.match(/[SRGMPDN][123]?'?,?/g) || [];
+}
+
 interface AuthenticJanyaRagaTableProps {
   onSelectRagaInFinder: (swaras: string[], ragaName?: string) => void;
 }
@@ -52,8 +57,14 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(25);
-  const [playingId, setPlayingId] = useState<string | null>(null);
   const [expandedMelaGroups, setExpandedMelaGroups] = useState<Record<number, boolean>>({});
+
+  // Active audio playback state
+  const [activePlayback, setActivePlayback] = useState<{
+    ragaId: string;
+    mode: 'arohana' | 'avarohana' | 'both';
+  } | null>(null);
+  const cancelRef = useRef(false);
 
   // Unique Melakartas present in dataset
   const melakartasSummary = useMemo(() => {
@@ -177,22 +188,48 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
     }
   };
 
-  const handleAudition = async (raga: JanyaRaga) => {
-    if (playingId === raga.id) return;
-    setPlayingId(raga.id);
+  // Playback handler for Arohana, Avarohana, or Both
+  const handleAudition = async (raga: JanyaRaga, mode: 'arohana' | 'avarohana' | 'both') => {
+    // If clicking the same active button, stop it
+    if (activePlayback && activePlayback.ragaId === raga.id && activePlayback.mode === mode) {
+      cancelRef.current = true;
+      setActivePlayback(null);
+      return;
+    }
 
-    // Play Arohana notes
-    const tokens = raga.arohana
-      .replace(/'/g, "'")
-      .split(/\s+/)
-      .filter((t) => /^[SRGMPDN]/.test(t));
+    // Cancel any ongoing playback
+    cancelRef.current = true;
+    await new Promise((r) => setTimeout(r, 60));
+    cancelRef.current = false;
+
+    setActivePlayback({ ragaId: raga.id, mode });
+
+    const aroNotes = extractPlayableSwaras(raga.arohana);
+    const avaNotes = extractPlayableSwaras(raga.avarohana);
 
     try {
-      await playSwaraSequence(tokens, 0.45);
-    } catch {
-      // Audio synth error fallback
+      if (mode === 'arohana') {
+        await playSwaraSequence(aroNotes, 0.42, () => cancelRef.current);
+      } else if (mode === 'avarohana') {
+        await playSwaraSequence(avaNotes, 0.42, () => cancelRef.current);
+      } else if (mode === 'both') {
+        // 1. Play Arohana
+        await playSwaraSequence(aroNotes, 0.40, () => cancelRef.current);
+        if (!cancelRef.current) {
+          // Brief pause between ascending and descending
+          await new Promise((r) => setTimeout(r, 320));
+        }
+        // 2. Play Avarohana
+        if (!cancelRef.current) {
+          await playSwaraSequence(avaNotes, 0.40, () => cancelRef.current);
+        }
+      }
+    } catch (err) {
+      console.error('Audio playback error', err);
     } finally {
-      setPlayingId(null);
+      setActivePlayback((curr) =>
+        curr && curr.ragaId === raga.id && curr.mode === mode ? null : curr
+      );
     }
   };
 
@@ -300,7 +337,7 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
               Authentic <span className="text-raga-600">Janya Ragas Table</span>
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 max-w-3xl">
-              Explore all <strong>{ALL_JANYAS.length} authentic Janya ragas</strong> categorized systematically under their 72 parent Melakartas across the 12 Chakras. Sourced directly from Wikipedia, including complete arohanam and avarohanam scales, foreign swara (Bhashanga) annotations, live audio synthesis, and one-click Raga Finder loading.
+              Explore all <strong>{ALL_JANYAS.length} authentic Janya ragas</strong> categorized systematically under their 72 parent Melakartas across the 12 Chakras. Sourced directly from Wikipedia with independent audio playback for <strong>ascending (arohanam)</strong> and <strong>descending (avarohanam)</strong> scales, foreign swara (Bhashanga) annotations, and one-click Raga Finder loading.
             </p>
           </div>
 
@@ -342,8 +379,8 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
             <div className="text-lg font-black text-rose-600">50 Ragas</div>
           </div>
           <div className="p-2.5 rounded-2xl bg-white/80 border border-amber-200/80 shadow-2xs">
-            <div className="text-stone-500 font-medium text-[11px]">Chakra Classification</div>
-            <div className="text-lg font-black text-indigo-700">12 Chakras</div>
+            <div className="text-stone-500 font-medium text-[11px]">Audio Playback</div>
+            <div className="text-lg font-black text-emerald-700">Aro + Ava + Both</div>
           </div>
         </div>
       </div>
@@ -472,7 +509,7 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
               onChange={(e) => {
                 const val = e.target.value === '' ? null : Number(e.target.value);
                 setSelectedChakra(val);
-                setSelectedMelakarta(null); // Reset melakarta when chakra changes
+                setSelectedMelakarta(null);
                 setCurrentPage(1);
               }}
               className="w-full px-3 py-1.5 rounded-xl border border-stone-300 bg-white text-stone-800 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -586,16 +623,16 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                       <ArrowUpDown className="w-3 h-3 text-stone-400" />
                     </div>
                   </th>
-                  <th scope="col" className="p-3 min-w-[180px]">
-                    Ascending Scale (Arohanam)
+                  <th scope="col" className="p-3 min-w-[210px]">
+                    Ascending (Arohanam)
                   </th>
-                  <th scope="col" className="p-3 min-w-[180px]">
-                    Descending Scale (Avarohanam)
+                  <th scope="col" className="p-3 min-w-[210px]">
+                    Descending (Avarohanam)
                   </th>
-                  <th scope="col" className="p-3 text-center w-24">
-                    Audition
+                  <th scope="col" className="p-3 text-center w-28">
+                    Full Audition
                   </th>
-                  <th scope="col" className="p-3 text-right w-28">
+                  <th scope="col" className="p-3 text-right w-24">
                     Action
                   </th>
                 </tr>
@@ -612,7 +649,9 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                 ) : (
                   paginatedRagas.map((raga, index) => {
                     const rowNumber = (validCurrentPage - 1) * pageSize + index + 1;
-                    const isPlaying = playingId === raga.id;
+                    const isAroPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'arohana';
+                    const isAvaPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'avarohana';
+                    const isBothPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'both';
 
                     return (
                       <tr
@@ -708,50 +747,111 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                           </div>
                         </td>
 
-                        {/* Arohanam */}
+                        {/* Arohanam with Direct Play Option */}
                         <td className="p-3 font-mono text-stone-800">
-                          <div className="font-semibold text-raga-700 bg-amber-50/60 px-2 py-1 rounded-lg border border-amber-200/60 inline-block">
-                            {raga.arohana}
-                          </div>
-                        </td>
-
-                        {/* Avarohanam */}
-                        <td className="p-3 font-mono text-stone-800">
-                          <div className="font-semibold text-stone-700 bg-stone-50 px-2 py-1 rounded-lg border border-stone-200/80 inline-block">
-                            {raga.avarohana}
-                          </div>
-                          {raga.anyaSwaras && (
-                            <div className="mt-1 text-[10px] font-sans font-bold text-rose-700 flex items-center gap-1">
-                              <span>* Anya Swara:</span>
-                              <span className="font-mono bg-rose-50 px-1 py-0.2 rounded border border-rose-200">
-                                {raga.anyaSwaras}
-                              </span>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <div
+                              className={`font-semibold px-2 py-1 rounded-lg border text-xs transition-all ${
+                                isAroPlaying || (isBothPlaying && !isAvaPlaying)
+                                  ? 'bg-amber-500 text-white border-amber-600 shadow-sm'
+                                  : 'text-raga-700 bg-amber-50/60 border-amber-200/60'
+                              }`}
+                            >
+                              {raga.arohana}
                             </div>
-                          )}
+                            <button
+                              type="button"
+                              onClick={() => handleAudition(raga, 'arohana')}
+                              className={`px-2 py-1 rounded-lg border text-[11px] font-bold transition-all inline-flex items-center gap-1 shadow-2xs ${
+                                isAroPlaying
+                                  ? 'bg-amber-600 text-white border-amber-700 animate-pulse'
+                                  : 'bg-white hover:bg-amber-50 text-amber-900 border-amber-300 hover:border-amber-400'
+                              }`}
+                              title="Play Ascending Scale (Arohanam)"
+                            >
+                              {isAroPlaying ? (
+                                <>
+                                  <VolumeX className="w-3 h-3 text-white" />
+                                  <span className="text-[10px]">Aro ↗</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Volume2 className="w-3 h-3 text-amber-700" />
+                                  <span className="text-[10px]">Aro ↗</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
                         </td>
 
-                        {/* Audition Button */}
+                        {/* Avarohanam with Direct Play Option */}
+                        <td className="p-3 font-mono text-stone-800">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <div
+                                className={`font-semibold px-2 py-1 rounded-lg border text-xs transition-all ${
+                                  isAvaPlaying
+                                    ? 'bg-amber-500 text-white border-amber-600 shadow-sm'
+                                    : 'text-stone-700 bg-stone-50 border-stone-200/80'
+                                }`}
+                              >
+                                {raga.avarohana}
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => handleAudition(raga, 'avarohana')}
+                                className={`px-2 py-1 rounded-lg border text-[11px] font-bold transition-all inline-flex items-center gap-1 shadow-2xs ${
+                                  isAvaPlaying
+                                    ? 'bg-amber-600 text-white border-amber-700 animate-pulse'
+                                    : 'bg-white hover:bg-stone-100 text-stone-800 border-stone-300 hover:border-stone-400'
+                                }`}
+                                title="Play Descending Scale (Avarohanam)"
+                              >
+                                {isAvaPlaying ? (
+                                  <>
+                                    <VolumeX className="w-3 h-3 text-white" />
+                                    <span className="text-[10px]">Ava ↘</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Volume2 className="w-3 h-3 text-stone-600" />
+                                    <span className="text-[10px]">Ava ↘</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                            {raga.anyaSwaras && (
+                              <div className="text-[10px] font-sans font-bold text-rose-700 flex items-center gap-1">
+                                <span>* Anya Swara:</span>
+                                <span className="font-mono bg-rose-50 px-1 py-0.2 rounded border border-rose-200">
+                                  {raga.anyaSwaras}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </td>
+
+                        {/* Full Scale Audition (Both Arohana & Avarohana) */}
                         <td className="p-3 text-center">
                           <button
                             type="button"
-                            onClick={() => handleAudition(raga)}
-                            disabled={isPlaying}
-                            className={`p-1.5 rounded-xl border text-xs font-bold transition-all inline-flex items-center gap-1 ${
-                              isPlaying
-                                ? 'bg-amber-500 text-white border-amber-600 animate-pulse'
+                            onClick={() => handleAudition(raga, 'both')}
+                            className={`px-2.5 py-1.5 rounded-xl border text-[11px] font-bold transition-all inline-flex items-center gap-1 shadow-2xs ${
+                              isBothPlaying
+                                ? 'bg-gradient-to-r from-amber-600 to-raga-600 text-white border-amber-700 animate-pulse'
                                 : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100 hover:border-amber-300'
                             }`}
-                            title="Audition scale with live Web Audio synthesizer"
+                            title="Play Complete Scale: Ascending then Descending"
                           >
-                            {isPlaying ? (
+                            {isBothPlaying ? (
                               <>
                                 <VolumeX className="w-3.5 h-3.5" />
-                                <span className="text-[10px]">Playing</span>
+                                <span className="text-[10px]">Playing Full</span>
                               </>
                             ) : (
                               <>
                                 <Volume2 className="w-3.5 h-3.5 text-amber-700" />
-                                <span className="text-[10px]">Play</span>
+                                <span className="text-[10px]">Both ⇄</span>
                               </>
                             )}
                           </button>
@@ -903,7 +1003,9 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                     <div className="p-3 bg-white divide-y divide-stone-100">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-1">
                         {group.ragas.map((raga) => {
-                          const isPlaying = playingId === raga.id;
+                          const isAroPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'arohana';
+                          const isAvaPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'avarohana';
+                          const isBothPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'both';
 
                           return (
                             <div
@@ -945,19 +1047,52 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                                   </div>
                                 </div>
 
-                                {/* Arohana & Avarohana */}
-                                <div className="p-2 rounded-lg bg-white border border-stone-200 text-xs font-mono space-y-1">
-                                  <div className="text-stone-700 flex items-center gap-1.5">
-                                    <span className="text-[10px] font-bold text-stone-400 uppercase font-sans">
-                                      Aro:
-                                    </span>
-                                    <span className="text-raga-600 font-semibold">{raga.arohana}</span>
+                                {/* Arohana & Avarohana with individual play buttons */}
+                                <div className="p-2.5 rounded-lg bg-white border border-stone-200 text-xs font-mono space-y-2">
+                                  {/* Arohana */}
+                                  <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-[10px] font-bold text-stone-400 uppercase font-sans">
+                                        Aro:
+                                      </span>
+                                      <span className="text-raga-600 font-semibold">{raga.arohana}</span>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleAudition(raga, 'arohana')}
+                                      className={`px-2 py-0.5 rounded border text-[10px] font-bold transition-all inline-flex items-center gap-1 ${
+                                        isAroPlaying
+                                          ? 'bg-amber-600 text-white border-amber-700 animate-pulse'
+                                          : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100'
+                                      }`}
+                                      title="Play Ascending Scale"
+                                    >
+                                      {isAroPlaying ? <VolumeX className="w-2.5 h-2.5" /> : <Volume2 className="w-2.5 h-2.5" />}
+                                      <span>Play Aro ↗</span>
+                                    </button>
                                   </div>
-                                  <div className="text-stone-700 flex items-center gap-1.5">
-                                    <span className="text-[10px] font-bold text-stone-400 uppercase font-sans">
-                                      Ava:
-                                    </span>
-                                    <span className="text-stone-800">{raga.avarohana}</span>
+
+                                  {/* Avarohana */}
+                                  <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-[10px] font-bold text-stone-400 uppercase font-sans">
+                                        Ava:
+                                      </span>
+                                      <span className="text-stone-800">{raga.avarohana}</span>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleAudition(raga, 'avarohana')}
+                                      className={`px-2 py-0.5 rounded border text-[10px] font-bold transition-all inline-flex items-center gap-1 ${
+                                        isAvaPlaying
+                                          ? 'bg-amber-600 text-white border-amber-700 animate-pulse'
+                                          : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-stone-100'
+                                      }`}
+                                      title="Play Descending Scale"
+                                    >
+                                      {isAvaPlaying ? <VolumeX className="w-2.5 h-2.5" /> : <Volume2 className="w-2.5 h-2.5" />}
+                                      <span>Play Ava ↘</span>
+                                    </button>
                                   </div>
                                 </div>
 
@@ -974,26 +1109,26 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
                                 )}
                               </div>
 
-                              {/* Footer Actions */}
+                              {/* Footer Actions: Play Both & Load in Finder */}
                               <div className="pt-2 border-t border-stone-200/60 flex items-center justify-between">
                                 <button
                                   type="button"
-                                  onClick={() => handleAudition(raga)}
-                                  disabled={isPlaying}
-                                  className={`px-2 py-1 rounded-lg border text-[11px] font-bold transition-all inline-flex items-center gap-1 ${
-                                    isPlaying
-                                      ? 'bg-amber-500 text-white border-amber-600 animate-pulse'
-                                      : 'bg-white text-stone-700 border-stone-200 hover:bg-amber-50'
+                                  onClick={() => handleAudition(raga, 'both')}
+                                  className={`px-2.5 py-1 rounded-lg border text-[11px] font-bold transition-all inline-flex items-center gap-1 ${
+                                    isBothPlaying
+                                      ? 'bg-gradient-to-r from-amber-600 to-raga-600 text-white border-amber-700 animate-pulse'
+                                      : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100'
                                   }`}
+                                  title="Play Full Scale: Ascending + Descending"
                                 >
-                                  {isPlaying ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3 text-amber-600" />}
-                                  <span>{isPlaying ? 'Playing...' : 'Audition'}</span>
+                                  {isBothPlaying ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3 text-amber-700" />}
+                                  <span>Full Scale (Both ⇄)</span>
                                 </button>
 
                                 <button
                                   type="button"
                                   onClick={() => onSelectRagaInFinder(raga.swaras, raga.name)}
-                                  className="px-2.5 py-1 rounded-lg text-[11px] font-bold text-raga-700 bg-amber-50 hover:bg-amber-100 border border-amber-300 transition-colors inline-flex items-center gap-1"
+                                  className="px-2.5 py-1 rounded-lg text-[11px] font-bold text-raga-700 bg-white hover:bg-amber-50 border border-amber-300 transition-colors inline-flex items-center gap-1"
                                 >
                                   <span>Load in Finder</span>
                                   <ArrowRight className="w-3 h-3" />
