@@ -14,6 +14,7 @@ import {
   Home,
   Download,
   LifeBuoy,
+  Radio,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
@@ -21,10 +22,11 @@ import ActivateAiModal from '@/components/ActivateAiModal';
 import RagasExplorerTab from '@/components/RagasExplorerTab';
 import DownloadsTab from '@/components/DownloadsTab';
 import SosTab from '@/components/SosTab';
+import RagaRadioTab from '@/components/RagaRadioTab';
 import { IdentifyRequest, IdentifyResponse, Tradition } from '@/types/raga';
 
 export default function HomePage() {
-  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads' | 'sos'>('home');
+  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads' | 'sos' | 'radio'>('home');
   const [searchMode, setSearchMode] = useState<'swaras' | 'song' | 'description'>('swaras');
   const [selectedSwaras, setSelectedSwaras] = useState<string[]>(['S', 'R1', 'G3', 'M1', 'P', 'D1', 'N3']);
   const [songQuery, setSongQuery] = useState('');
@@ -73,8 +75,8 @@ export default function HomePage() {
       const syncTabFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
         const tabParam = params.get('tab');
-        if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'sos') {
-          setActiveTopTab(tabParam as 'ragas' | 'downloads' | 'sos');
+        if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'sos' || tabParam === 'radio') {
+          setActiveTopTab(tabParam as 'ragas' | 'downloads' | 'sos' | 'radio');
         } else {
           setActiveTopTab('home');
         }
@@ -83,7 +85,7 @@ export default function HomePage() {
       syncTabFromUrl();
 
       const handleSwitchTabEvent = (e: Event) => {
-        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' | 'sos' }>;
+        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' | 'sos' | 'radio' }>;
         if (customEvent.detail?.tab) {
           setActiveTopTab(customEvent.detail.tab);
         }
@@ -102,7 +104,7 @@ export default function HomePage() {
     return () => window.removeEventListener('raga_ai_updated', checkAiStatus);
   }, []);
 
-  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads' | 'sos') => {
+  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads' | 'sos' | 'radio') => {
     setActiveTopTab(tab);
     if (typeof window !== 'undefined') {
       const url = tab === 'home' ? '/' : `/?tab=${tab}`;
@@ -282,6 +284,27 @@ export default function HomePage() {
                 }`}
               >
                 Rescue
+              </span>
+            </button>
+
+            {/* Raga Radio Menu */}
+            <button
+              type="button"
+              onClick={() => handleTopTabChange('radio')}
+              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                activeTopTab === 'radio'
+                  ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-md'
+                  : 'text-amber-900 hover:text-amber-950 hover:bg-amber-100/60'
+              }`}
+            >
+              <Radio className="w-4 h-4 text-amber-600" />
+              <span>Raga Radio</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                  activeTopTab === 'radio' ? 'bg-white/20 text-white' : 'bg-amber-200 text-amber-900'
+                }`}
+              >
+                90
               </span>
             </button>
           </div>
@@ -589,6 +612,11 @@ export default function HomePage() {
         {/* Tab 4: SOS Musician Rescue Tab */}
         {activeTopTab === 'sos' && (
           <SosTab onSelectSwaras={handleSelectRagaFromExplorer} />
+        )}
+
+        {/* Tab 5: Raga Radio (90 Ragas & All Compositions) */}
+        {activeTopTab === 'radio' && (
+          <RagaRadioTab />
         )}
 
         {/* Raga Finder Family Community Banner */}

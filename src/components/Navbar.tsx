@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus, Download, Home, LifeBuoy } from 'lucide-react';
+import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus, Download, Home, LifeBuoy, Radio } from 'lucide-react';
 import AuthModal from './AuthModal';
 import SignupSuccessModal from './SignupSuccessModal';
 import UserProfileBadge from './UserProfileBadge';
@@ -158,6 +158,24 @@ export default function Navbar() {
                 <span>SOS</span>
                 <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-rose-200 text-rose-900 border border-rose-300">
                   Rescue
+                </span>
+              </Link>
+
+              {/* Raga Radio Menu */}
+              <Link
+                href="/?tab=radio"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('switch_top_tab', { detail: { tab: 'radio' } }));
+                  }
+                }}
+                className="flex px-2.5 py-1.5 text-xs sm:text-sm font-bold text-amber-900 hover:text-amber-950 hover:bg-amber-100/80 rounded-lg transition-colors items-center gap-1.5 border border-amber-300/80 bg-amber-50/80 shadow-xs"
+                title="Raga Radio: 90 Ragas, 3,274 Compositions with Direct In-Menu Radio Streaming"
+              >
+                <Radio className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                <span>Raga Radio</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-200 text-amber-900 border border-amber-300">
+                  90 Ragas
                 </span>
               </Link>
 
