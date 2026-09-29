@@ -68,27 +68,46 @@ export default function RagaRadioTab() {
   const handleTuneSong = async (song: RadioSong) => {
     setActiveSong(song);
     setIsPlaying(true);
-    setIsResolvingStream(true);
     setStreamError(null);
-    setActiveVideoId(null);
 
     // Scroll smoothly to player
     if (playerRef.current) {
       playerRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
+    if (song.videoId) {
+      setActiveVideoId(song.videoId);
+      setIsResolvingStream(false);
+      return;
+    }
+
+    setIsResolvingStream(true);
+    setActiveVideoId(null);
+
     try {
-      const q = `${song.title} ${song.movie} ${song.musicDirector} Malayalam song`;
-      const res = await fetch(`/api/radio/stream?q=${encodeURIComponent(q)}`);
+      const cleanTitle = song.title.replace(/\([^)]*\)/g, '').trim();
+      const cleanMovie = song.movie.replace(/\([^)]*\)/g, '').trim();
+      const q = `${cleanTitle} ${cleanMovie} Malayalam song`;
+      const res = await fetch(
+        `/api/radio/stream?q=${encodeURIComponent(q)}&raga=${encodeURIComponent(song.raga || currentChannel.name)}`
+      );
       const data = await res.json();
 
       if (data.success && data.videoId) {
         setActiveVideoId(data.videoId);
+        if (data.isFallback) {
+          setStreamError(`Streaming Raga ${currentChannel.name} Featured Melodies`);
+        }
       } else {
-        setStreamError('Direct stream link unindexed. Click below to stream on YouTube.');
+        // Fallback to raga channel's default verified stream so player ALWAYS plays!
+        const fallbackId = currentChannel.defaultVideoId || 'BKlsIpDB_QA';
+        setActiveVideoId(fallbackId);
+        setStreamError(`Streaming Raga ${currentChannel.name} Melodies`);
       }
     } catch {
-      setStreamError('Failed to resolve stream. Click below to open on YouTube.');
+      const fallbackId = currentChannel.defaultVideoId || 'BKlsIpDB_QA';
+      setActiveVideoId(fallbackId);
+      setStreamError(`Streaming Raga ${currentChannel.name} Melodies`);
     } finally {
       setIsResolvingStream(false);
     }
@@ -194,6 +213,11 @@ export default function RagaRadioTab() {
                 <span className="text-[11px] font-semibold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">
                   Raga: {activeSong ? activeSong.raga : currentChannel.name}
                 </span>
+                {streamError && (
+                  <span className="text-[10px] text-amber-300 bg-amber-900/60 px-2 py-0.5 rounded border border-amber-500/30">
+                    {streamError}
+                  </span>
+                )}
               </div>
 
               <h3 className="text-base sm:text-lg font-bold text-white truncate">
@@ -226,29 +250,19 @@ export default function RagaRadioTab() {
 
             {!isResolvingStream && activeVideoId && isPlaying && (
               <iframe
-                src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&enablejsapi=1`}
-                title={`Streaming ${activeSong?.title}`}
+                key={activeVideoId}
+                src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&playsinline=1&enablejsapi=1&rel=0`}
+                title={`Streaming ${activeSong?.title || currentChannel.name}`}
                 className="w-full h-full object-cover"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
             )}
 
             {!isResolvingStream && !activeVideoId && isPlaying && (
               <div className="flex flex-col items-center justify-center gap-2 p-3 text-center">
-                <AlertCircle className="w-6 h-6 text-amber-400" />
-                <span className="text-xs text-stone-200 font-medium">Stream Ready</span>
-                {activeSong && (
-                  <a
-                    href={activeSong.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1 transition-all"
-                  >
-                    <span>Play on YouTube</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                )}
+                <Loader2 className="w-6 h-6 text-amber-400 animate-spin" />
+                <span className="text-xs text-stone-200 font-medium">Connecting Stream...</span>
               </div>
             )}
 

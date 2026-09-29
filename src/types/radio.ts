@@ -9,6 +9,7 @@ export interface RadioSong {
   raga: string;
   youtubeUrl: string;
   searchQuery: string;
+  videoId?: string;
 }
 
 export interface RagaRadioChannel {
@@ -16,5 +17,6 @@ export interface RagaRadioChannel {
   name: string;
   songCount: number;
   rank: number;
+  defaultVideoId?: string;
   songs: RadioSong[];
 }
