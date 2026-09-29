@@ -13,16 +13,18 @@ import {
   Zap,
   Home,
   Download,
+  LifeBuoy,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
 import ActivateAiModal from '@/components/ActivateAiModal';
 import RagasExplorerTab from '@/components/RagasExplorerTab';
 import DownloadsTab from '@/components/DownloadsTab';
+import SosTab from '@/components/SosTab';
 import { IdentifyRequest, IdentifyResponse, Tradition } from '@/types/raga';
 
 export default function HomePage() {
-  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads'>('home');
+  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads' | 'sos'>('home');
   const [searchMode, setSearchMode] = useState<'swaras' | 'song' | 'description'>('swaras');
   const [selectedSwaras, setSelectedSwaras] = useState<string[]>(['S', 'R1', 'G3', 'M1', 'P', 'D1', 'N3']);
   const [songQuery, setSongQuery] = useState('');
@@ -71,8 +73,8 @@ export default function HomePage() {
       const syncTabFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
         const tabParam = params.get('tab');
-        if (tabParam === 'ragas' || tabParam === 'downloads') {
-          setActiveTopTab(tabParam as 'ragas' | 'downloads');
+        if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'sos') {
+          setActiveTopTab(tabParam as 'ragas' | 'downloads' | 'sos');
         } else {
           setActiveTopTab('home');
         }
@@ -81,7 +83,7 @@ export default function HomePage() {
       syncTabFromUrl();
 
       const handleSwitchTabEvent = (e: Event) => {
-        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' }>;
+        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' | 'sos' }>;
         if (customEvent.detail?.tab) {
           setActiveTopTab(customEvent.detail.tab);
         }
@@ -100,7 +102,7 @@ export default function HomePage() {
     return () => window.removeEventListener('raga_ai_updated', checkAiStatus);
   }, []);
 
-  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads') => {
+  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads' | 'sos') => {
     setActiveTopTab(tab);
     if (typeof window !== 'undefined') {
       const url = tab === 'home' ? '/' : `/?tab=${tab}`;
@@ -259,6 +261,27 @@ export default function HomePage() {
                 }`}
               >
                 5
+              </span>
+            </button>
+
+            {/* Right side of Downloads: SOS Menu */}
+            <button
+              type="button"
+              onClick={() => handleTopTabChange('sos')}
+              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                activeTopTab === 'sos'
+                  ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md'
+                  : 'text-rose-700 hover:text-rose-900 hover:bg-rose-100/60'
+              }`}
+            >
+              <LifeBuoy className="w-4 h-4 text-rose-500" />
+              <span>SOS</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                  activeTopTab === 'sos' ? 'bg-white/20 text-white' : 'bg-rose-200 text-rose-900'
+                }`}
+              >
+                Rescue
               </span>
             </button>
           </div>
@@ -561,6 +584,11 @@ export default function HomePage() {
         {/* Tab 3: Downloads Tab */}
         {activeTopTab === 'downloads' && (
           <DownloadsTab />
+        )}
+
+        {/* Tab 4: SOS Musician Rescue Tab */}
+        {activeTopTab === 'sos' && (
+          <SosTab onSelectSwaras={handleSelectRagaFromExplorer} />
         )}
 
         {/* Raga Finder Family Community Banner */}

@@ -24,7 +24,12 @@ export default function Footer() {
               <li>Carnatic: 72 Melakarta Katapayadi System</li>
               <li>Hindustani: 10 Bhatkhande Thaats</li>
               <li>Arohana / Avarohana & Vakra Janya Ragas</li>
-              <li>Vadi, Samvadi & Rasa Theory</li>
+              <li>
+                <Link href="/?tab=sos" className="hover:text-amber-300 transition-colors flex items-center gap-1 text-rose-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                  <span>Emergency SOS Musician Rescue</span>
+                </Link>
+              </li>
             </ul>
           </div>
 

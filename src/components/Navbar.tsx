@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus, Download, Home } from 'lucide-react';
+import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus, Download, Home, LifeBuoy } from 'lucide-react';
 import ActivateAiModal from './ActivateAiModal';
 import AuthModal from './AuthModal';
 import SignupSuccessModal from './SignupSuccessModal';
@@ -181,6 +181,24 @@ export default function Navbar() {
               >
                 <Download className="w-3.5 h-3.5 text-amber-600" />
                 <span>Downloads</span>
+              </Link>
+
+              {/* SOS Menu - Right side of Downloads */}
+              <Link
+                href="/?tab=sos"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('switch_top_tab', { detail: { tab: 'sos' } }));
+                  }
+                }}
+                className="flex px-2.5 py-1.5 text-xs sm:text-sm font-bold text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-lg transition-colors items-center gap-1.5 border border-rose-300/80 bg-rose-50/60 shadow-xs"
+                title="SOS Musician Rescue: Instant Raga Disambiguation, Emergency Shruti Tanpura, Katapayadi Formula"
+              >
+                <LifeBuoy className="w-3.5 h-3.5 text-rose-600 animate-pulse" />
+                <span>SOS</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-rose-200 text-rose-900 border border-rose-300">
+                  Rescue
+                </span>
               </Link>
 
               <Link
