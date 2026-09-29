@@ -3,19 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Music, ShieldAlert, BookOpen, Sparkles, LogIn, UserPlus, Download, Home, LifeBuoy } from 'lucide-react';
-import ActivateAiModal from './ActivateAiModal';
 import AuthModal from './AuthModal';
 import SignupSuccessModal from './SignupSuccessModal';
 import UserProfileBadge from './UserProfileBadge';
 import { UserEntry } from '@/types/user';
 
 export default function Navbar() {
-  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
-  const [aiStatus, setAiStatus] = useState<{ active: boolean; provider: string }>({
-    active: false,
-    provider: '',
-  });
-
   // Auth States
   const [currentUser, setCurrentUser] = useState<UserEntry | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -24,35 +17,7 @@ export default function Navbar() {
   const [newlyRegisteredUser, setNewlyRegisteredUser] = useState<UserEntry | null>(null);
   const [notificationMsg, setNotificationMsg] = useState<string | undefined>(undefined);
 
-  const checkAiStatus = () => {
-    const key = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_key') : null;
-    const provider = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_provider') || 'gemini' : 'gemini';
-    if (key && key.trim().length > 5) {
-      setAiStatus({ active: true, provider: provider === 'gemini' ? 'Gemini' : 'OpenAI' });
-      return;
-    }
-
-    // Check server status
-    fetch('/api/ai/status')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.serverHasKey) {
-          setAiStatus({
-            active: true,
-            provider: data.provider === 'gemini' ? 'Gemini' : 'OpenAI',
-          });
-        } else {
-          setAiStatus({ active: false, provider: '' });
-        }
-      })
-      .catch(() => {
-        setAiStatus({ active: false, provider: '' });
-      });
-  };
-
   useEffect(() => {
-    checkAiStatus();
-    window.addEventListener('raga_ai_updated', checkAiStatus);
 
     // Read stored user session
     if (typeof window !== 'undefined') {
@@ -77,14 +42,9 @@ export default function Navbar() {
 
       window.addEventListener('open_auth_modal', handleOpenAuth);
       return () => {
-        window.removeEventListener('raga_ai_updated', checkAiStatus);
         window.removeEventListener('open_auth_modal', handleOpenAuth);
       };
     }
-
-    return () => {
-      window.removeEventListener('raga_ai_updated', checkAiStatus);
-    };
   }, []);
 
   const handleLogout = () => {
@@ -209,30 +169,6 @@ export default function Navbar() {
                 <span>72 Melakartas</span>
               </Link>
 
-              {/* Activate AI / AI Status Button */}
-              <button
-                type="button"
-                onClick={() => setIsAiModalOpen(true)}
-                className={`px-2.5 py-1.5 text-xs sm:text-sm font-bold rounded-xl transition-all flex items-center gap-1.5 border shadow-xs ${
-                  aiStatus.active
-                    ? 'bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100'
-                    : 'bg-gradient-to-r from-amber-500 to-raga-500 text-white border-amber-400 hover:from-amber-600 hover:to-raga-600 shadow-amber-500/20'
-                }`}
-                title="Configure Google Gemini or OpenAI API Key"
-              >
-                {aiStatus.active ? (
-                  <>
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="hidden xs:inline">AI:</span> {aiStatus.provider}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Activate AI</span>
-                  </>
-                )}
-              </button>
-
               <Link
                 href="/admin"
                 className="px-2.5 py-1.5 text-xs sm:text-sm font-semibold text-white bg-stone-900 hover:bg-stone-800 rounded-lg shadow-sm hover:shadow transition-all flex items-center gap-1.5 border border-stone-800"
@@ -282,11 +218,6 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-
-      <ActivateAiModal
-        isOpen={isAiModalOpen}
-        onClose={() => setIsAiModalOpen(false)}
-      />
 
       {/* Authentication Modal (Login / Sign Up) */}
       <AuthModal
