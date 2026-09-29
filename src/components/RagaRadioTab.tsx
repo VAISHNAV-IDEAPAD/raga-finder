@@ -41,6 +41,30 @@ export default function RagaRadioTab() {
     return CHANNELS.find((c) => c.id === selectedChannelId) || CHANNELS[0];
   }, [selectedChannelId]);
 
+  // Sync raga from URL param if present
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const ragaParam = params.get('raga') || params.get('channel');
+      if (ragaParam) {
+        const found = CHANNELS.find(
+          (c) =>
+            c.id.toLowerCase() === ragaParam.toLowerCase() ||
+            c.name.toLowerCase() === ragaParam.toLowerCase()
+        );
+        if (found) {
+          setSelectedChannelId(found.id);
+          if (found.songs && found.songs.length > 0) {
+            setActiveSong(found.songs[0]);
+            if (found.songs[0].videoId) {
+              setActiveVideoId(found.songs[0].videoId);
+            }
+          }
+        }
+      }
+    }
+  }, []);
+
   // Filtered Channels for 90 Ragas selector
   const filteredChannels = useMemo(() => {
     if (!channelSearch.trim()) return CHANNELS;
@@ -69,6 +93,18 @@ export default function RagaRadioTab() {
     setActiveSong(song);
     setIsPlaying(true);
     setStreamError(null);
+
+    // Sync channel if song belongs to another raga channel
+    if (song.raga) {
+      const matchingChannel = CHANNELS.find(
+        (c) =>
+          c.name.toLowerCase() === song.raga.toLowerCase() ||
+          c.id.toLowerCase() === song.raga.toLowerCase()
+      );
+      if (matchingChannel && matchingChannel.id !== selectedChannelId) {
+        setSelectedChannelId(matchingChannel.id);
+      }
+    }
 
     // Scroll smoothly to player
     if (playerRef.current) {
@@ -113,6 +149,47 @@ export default function RagaRadioTab() {
     }
   };
 
+  // Tune to a new Raga Channel and immediately start streaming its first song
+  const handleSelectChannel = (channelId: string, autoPlay: boolean = true) => {
+    const channel = CHANNELS.find((c) => c.id === channelId) || CHANNELS[0];
+    setSelectedChannelId(channel.id);
+    setSongSearch('');
+
+    if (channel.songs && channel.songs.length > 0) {
+      const songToPlay = channel.songs[0];
+      if (autoPlay) {
+        handleTuneSong(songToPlay);
+      } else {
+        setActiveSong(songToPlay);
+        if (songToPlay.videoId) {
+          setActiveVideoId(songToPlay.videoId);
+        }
+      }
+    } else if (channel.defaultVideoId) {
+      setActiveVideoId(channel.defaultVideoId);
+      if (autoPlay) setIsPlaying(true);
+    }
+
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', 'radio');
+      url.searchParams.set('raga', channel.id);
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
+
+  const handleNextRaga = () => {
+    const currentIndex = CHANNELS.findIndex((c) => c.id === selectedChannelId);
+    const nextIndex = (currentIndex + 1) % CHANNELS.length;
+    handleSelectChannel(CHANNELS[nextIndex].id, true);
+  };
+
+  const handlePrevRaga = () => {
+    const currentIndex = CHANNELS.findIndex((c) => c.id === selectedChannelId);
+    const prevIndex = (currentIndex - 1 + CHANNELS.length) % CHANNELS.length;
+    handleSelectChannel(CHANNELS[prevIndex].id, true);
+  };
+
   const handleStopRadio = () => {
     setIsPlaying(false);
     setActiveVideoId(null);
@@ -137,6 +214,7 @@ export default function RagaRadioTab() {
       handleTuneSong(currentChannel.songs[currentChannel.songs.length - 1]);
     }
   };
+
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -210,15 +288,29 @@ export default function RagaRadioTab() {
                   <span className={`w-1.5 h-1.5 rounded-full ${isPlaying ? 'bg-black' : 'bg-stone-400'}`} />
                   {isPlaying ? 'ON AIR • STREAMING NOW' : 'RADIO STANDBY'}
                 </span>
-                <span className="text-[11px] font-semibold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">
-                  Raga: {activeSong ? activeSong.raga : currentChannel.name}
-                </span>
+                <div className="inline-flex items-center gap-1.5 bg-amber-950/90 px-2.5 py-1 rounded-xl border border-amber-500/50 text-xs shadow-inner">
+                  <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse shrink-0" />
+                  <span className="font-bold text-amber-300">Raga:</span>
+                  <select
+                    value={selectedChannelId}
+                    onChange={(e) => handleSelectChannel(e.target.value, true)}
+                    className="bg-transparent text-white font-extrabold focus:outline-none cursor-pointer pr-1 text-xs"
+                    title="Change Raga Radio Channel"
+                  >
+                    {CHANNELS.map((ch) => (
+                      <option key={ch.id} value={ch.id} className="bg-stone-900 text-stone-100">
+                        #{ch.rank} {ch.name} ({ch.songCount} Songs)
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 {streamError && (
                   <span className="text-[10px] text-amber-300 bg-amber-900/60 px-2 py-0.5 rounded border border-amber-500/30">
                     {streamError}
                   </span>
                 )}
               </div>
+
 
               <h3 className="text-base sm:text-lg font-bold text-white truncate">
                 {activeSong ? activeSong.title : 'Select any song radio button below to stream'}
@@ -324,6 +416,26 @@ export default function RagaRadioTab() {
               <SkipForward className="w-4 h-4" />
             </button>
 
+            {/* Switch Raga Channel Station buttons */}
+            <div className="flex items-center gap-1.5 pl-2 border-l border-stone-700">
+              <button
+                type="button"
+                onClick={handlePrevRaga}
+                className="px-2.5 py-2 rounded-xl bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all flex items-center gap-1 shadow-sm whitespace-nowrap"
+                title="Switch to Previous Raga Channel"
+              >
+                <span>&laquo; Prev Raga</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleNextRaga}
+                className="px-2.5 py-2 rounded-xl bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all flex items-center gap-1 shadow-sm whitespace-nowrap"
+                title="Switch to Next Raga Channel"
+              >
+                <span>Next Raga &raquo;</span>
+              </button>
+            </div>
+
             {activeSong && (
               <a
                 href={activeSong.youtubeUrl}
@@ -375,20 +487,23 @@ export default function RagaRadioTab() {
                 <button
                   key={c.id}
                   type="button"
-                  onClick={() => {
-                    setSelectedChannelId(c.id);
-                    setSongSearch('');
-                  }}
+                  onClick={() => handleSelectChannel(c.id, true)}
                   className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left flex items-center justify-between border ${
                     isSelected
-                      ? 'bg-gradient-to-r from-amber-600 to-raga-600 text-white border-amber-600 shadow-md font-bold'
+                      ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white border-amber-600 shadow-md font-bold ring-2 ring-amber-400 scale-[1.02]'
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
                   }`}
+                  title={`Tune Radio Station to ${c.name} (${c.songCount} Songs)`}
                 >
-                  <span className="truncate pr-1">{c.name}</span>
+                  <span className="truncate pr-1 flex items-center gap-1.5">
+                    {isSelected && (
+                      <Radio className="w-3.5 h-3.5 text-amber-300 animate-pulse shrink-0" />
+                    )}
+                    <span>{c.name}</span>
+                  </span>
                   <span
                     className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold shrink-0 ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-900 border border-amber-300'
+                      isSelected ? 'bg-white/25 text-white font-extrabold' : 'bg-amber-100 text-amber-900 border border-amber-300'
                     }`}
                   >
                     {c.songCount}
@@ -519,7 +634,12 @@ export default function RagaRadioTab() {
 
                     {/* LAST SECTION: RADIO BUTTON STREAMING CELL */}
                     <td className="px-4 py-3 text-center bg-amber-50/50 border-l border-amber-200/80">
-                      <label className="inline-flex items-center justify-center gap-2 cursor-pointer group">
+                      <button
+                        type="button"
+                        onClick={() => handleTuneSong(song)}
+                        className="inline-flex items-center justify-center gap-2 cursor-pointer group px-2 py-1 rounded-lg hover:bg-amber-100 transition-colors"
+                        title={`Stream "${song.title}"`}
+                      >
                         <input
                           type="radio"
                           name="raga_radio_stream_selection"
@@ -536,7 +656,7 @@ export default function RagaRadioTab() {
                         >
                           {isCurrentStream ? (isResolvingStream ? 'Tuning...' : 'Playing 🎶') : 'Tune In'}
                         </span>
-                      </label>
+                      </button>
                     </td>
                   </tr>
                 );
