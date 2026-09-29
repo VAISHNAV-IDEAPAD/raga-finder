@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Radio,
   Play,
@@ -17,6 +17,8 @@ import {
   Sparkles,
   ChevronRight,
   Filter,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import radioChannelsData from '@/data/raga_radio_90.json';
 import { RagaRadioChannel, RadioSong } from '@/types/radio';
@@ -26,6 +28,9 @@ const CHANNELS = radioChannelsData as RagaRadioChannel[];
 export default function RagaRadioTab() {
   const [selectedChannelId, setSelectedChannelId] = useState<string>(CHANNELS[0]?.id || 'mohanam');
   const [activeSong, setActiveSong] = useState<RadioSong | null>(null);
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+  const [isResolvingStream, setIsResolvingStream] = useState<boolean>(false);
+  const [streamError, setStreamError] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [channelSearch, setChannelSearch] = useState<string>('');
   const [songSearch, setSongSearch] = useState<string>('');
@@ -60,17 +65,38 @@ export default function RagaRadioTab() {
     );
   }, [currentChannel, songSearch]);
 
-  const handleTuneSong = (song: RadioSong) => {
+  const handleTuneSong = async (song: RadioSong) => {
     setActiveSong(song);
     setIsPlaying(true);
-    // Smooth scroll to radio player if not in view
+    setIsResolvingStream(true);
+    setStreamError(null);
+    setActiveVideoId(null);
+
+    // Scroll smoothly to player
     if (playerRef.current) {
       playerRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    try {
+      const q = `${song.title} ${song.movie} ${song.musicDirector} Malayalam song`;
+      const res = await fetch(`/api/radio/stream?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+
+      if (data.success && data.videoId) {
+        setActiveVideoId(data.videoId);
+      } else {
+        setStreamError('Direct stream link unindexed. Click below to stream on YouTube.');
+      }
+    } catch {
+      setStreamError('Failed to resolve stream. Click below to open on YouTube.');
+    } finally {
+      setIsResolvingStream(false);
     }
   };
 
   const handleStopRadio = () => {
     setIsPlaying(false);
+    setActiveVideoId(null);
   };
 
   const handleNextSong = () => {
@@ -189,19 +215,50 @@ export default function RagaRadioTab() {
           </div>
 
           {/* Middle: Embedded Streaming Player (Streams directly in the menu) */}
-          {activeSong && isPlaying && (
-            <div className="w-full lg:w-72 xl:w-80 h-28 rounded-xl overflow-hidden shadow-inner border border-amber-500/40 bg-black shrink-0 relative">
+          <div className="w-full lg:w-80 h-36 rounded-2xl overflow-hidden shadow-inner border border-amber-500/40 bg-black shrink-0 relative flex items-center justify-center">
+            {isResolvingStream && (
+              <div className="flex flex-col items-center justify-center gap-2 text-stone-300 p-4 text-center">
+                <Loader2 className="w-6 h-6 text-amber-400 animate-spin" />
+                <span className="text-xs font-semibold">Tuning into frequency...</span>
+                <span className="text-[10px] text-stone-400 truncate max-w-[200px]">{activeSong?.title}</span>
+              </div>
+            )}
+
+            {!isResolvingStream && activeVideoId && isPlaying && (
               <iframe
-                src={`https://www.youtube-nocookie.com/embed?listType=search&list=${encodeURIComponent(
-                  activeSong.searchQuery
-                )}&autoplay=1&mute=0`}
-                title={`Streaming ${activeSong.title}`}
+                src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&enablejsapi=1`}
+                title={`Streaming ${activeSong?.title}`}
                 className="w-full h-full object-cover"
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
               />
-            </div>
-          )}
+            )}
+
+            {!isResolvingStream && !activeVideoId && isPlaying && (
+              <div className="flex flex-col items-center justify-center gap-2 p-3 text-center">
+                <AlertCircle className="w-6 h-6 text-amber-400" />
+                <span className="text-xs text-stone-200 font-medium">Stream Ready</span>
+                {activeSong && (
+                  <a
+                    href={activeSong.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1 transition-all"
+                  >
+                    <span>Play on YouTube</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
+            )}
+
+            {!isPlaying && (
+              <div className="flex flex-col items-center justify-center gap-1.5 text-stone-500 text-xs p-4 text-center">
+                <Radio className="w-6 h-6 text-stone-600" />
+                <span>Radio Idle • Select any track</span>
+              </div>
+            )}
+          </div>
 
           {/* Right: Controls & Actions */}
           <div className="flex items-center gap-3 shrink-0 w-full lg:w-auto justify-end">
@@ -230,7 +287,7 @@ export default function RagaRadioTab() {
                 type="button"
                 onClick={() => {
                   if (activeSong) {
-                    setIsPlaying(true);
+                    handleTuneSong(activeSong);
                   } else if (currentChannel.songs.length > 0) {
                     handleTuneSong(currentChannel.songs[0]);
                   }
@@ -463,7 +520,7 @@ export default function RagaRadioTab() {
                               : 'text-stone-700 group-hover:text-amber-800'
                           }`}
                         >
-                          {isCurrentStream ? 'Playing 🎶' : 'Tune In'}
+                          {isCurrentStream ? (isResolvingStream ? 'Tuning...' : 'Playing 🎶') : 'Tune In'}
                         </span>
                       </label>
                     </td>
