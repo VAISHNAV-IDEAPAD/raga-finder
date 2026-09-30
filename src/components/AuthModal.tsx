@@ -275,19 +275,19 @@ export default function AuthModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm animate-fadeIn">
-      <div className="w-full max-w-md rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white/95 overflow-hidden transition-all">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/70 backdrop-blur-sm animate-fadeIn overflow-y-auto touch-scroll">
+      <div className="w-full max-w-md max-h-[92vh] flex flex-col rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white/95 overflow-hidden transition-all my-auto">
         {/* Top Header */}
-        <div className="px-6 py-5 bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 text-white flex items-center justify-between">
+        <div className="shrink-0 px-4 sm:px-6 py-4 sm:py-5 bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-raga-500 flex items-center justify-center text-stone-950 shadow-md">
-              <Sparkles className="w-5 h-5" />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-400 to-raga-500 flex items-center justify-center text-stone-950 shadow-md shrink-0">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-black tracking-tight text-white">
+              <h2 className="text-base sm:text-lg font-black tracking-tight text-white leading-tight">
                 {mode === 'signup' ? 'Join RagaFinder Family' : 'Direct Login'}
               </h2>
-              <p className="text-[11px] text-amber-200/80">
+              <p className="text-[10px] sm:text-[11px] text-amber-200/80">
                 Carnatic & Hindustani Musicology Community
               </p>
             </div>
@@ -296,21 +296,21 @@ export default function AuthModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors touch-manipulation active:scale-95"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Mode Switcher Tabs (Sign Up vs Direct Login) */}
-        <div className="p-2 border-b border-amber-200/60 bg-amber-50/50 flex gap-1">
+        <div className="shrink-0 p-2 border-b border-amber-200/60 bg-amber-50/50 flex gap-1">
           <button
             type="button"
             onClick={() => {
               setMode('signup');
               setErrorMsg('');
             }}
-            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all touch-manipulation active:scale-95 ${
               mode === 'signup'
                 ? 'bg-white text-stone-900 shadow-sm border border-amber-300'
                 : 'text-stone-600 hover:text-stone-900'
@@ -324,7 +324,7 @@ export default function AuthModal({
               setMode('login');
               setErrorMsg('');
             }}
-            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all touch-manipulation active:scale-95 ${
               mode === 'login'
                 ? 'bg-white text-stone-900 shadow-sm border border-amber-300'
                 : 'text-stone-600 hover:text-stone-900'
@@ -335,7 +335,7 @@ export default function AuthModal({
         </div>
 
         {/* Main Body */}
-        <div className="p-6 space-y-4">
+        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto touch-scroll flex-1">
           {/* Quick OAuth Buttons (Google & Microsoft) */}
           <div className="space-y-2">
             {/* Google */}

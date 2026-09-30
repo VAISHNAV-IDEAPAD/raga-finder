@@ -25,6 +25,12 @@ export default function Footer() {
               <li>Hindustani: 10 Bhatkhande Thaats</li>
               <li>Arohana / Avarohana & Vakra Janya Ragas</li>
               <li>
+                <Link href="/?tab=updates" className="hover:text-amber-300 transition-colors flex items-center gap-1.5 text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Updates: Live Malayalam Film Songs (Spotify)</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/?tab=sos" className="hover:text-amber-300 transition-colors flex items-center gap-1 text-rose-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                   <span>Emergency SOS Musician Rescue</span>

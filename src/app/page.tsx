@@ -15,6 +15,7 @@ import {
   Download,
   LifeBuoy,
   Radio,
+  ArrowRight,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
@@ -23,10 +24,11 @@ import RagasExplorerTab from '@/components/RagasExplorerTab';
 import DownloadsTab from '@/components/DownloadsTab';
 import SosTab from '@/components/SosTab';
 import RagaRadioTab from '@/components/RagaRadioTab';
+import UpdatesTab from '@/components/UpdatesTab';
 import { IdentifyRequest, IdentifyResponse, Tradition } from '@/types/raga';
 
 export default function HomePage() {
-  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads' | 'sos' | 'radio'>('home');
+  const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads' | 'sos' | 'radio' | 'updates'>('home');
   const [searchMode, setSearchMode] = useState<'swaras' | 'song' | 'description'>('swaras');
   const [selectedSwaras, setSelectedSwaras] = useState<string[]>(['S', 'R1', 'G3', 'M1', 'P', 'D1', 'N3']);
   const [songQuery, setSongQuery] = useState('');
@@ -75,8 +77,8 @@ export default function HomePage() {
       const syncTabFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
         const tabParam = params.get('tab');
-        if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'sos' || tabParam === 'radio') {
-          setActiveTopTab(tabParam as 'ragas' | 'downloads' | 'sos' | 'radio');
+        if (tabParam === 'ragas' || tabParam === 'downloads' || tabParam === 'sos' || tabParam === 'radio' || tabParam === 'updates') {
+          setActiveTopTab(tabParam as 'ragas' | 'downloads' | 'sos' | 'radio' | 'updates');
         } else {
           setActiveTopTab('home');
         }
@@ -85,7 +87,7 @@ export default function HomePage() {
       syncTabFromUrl();
 
       const handleSwitchTabEvent = (e: Event) => {
-        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' | 'sos' | 'radio' }>;
+        const customEvent = e as CustomEvent<{ tab: 'home' | 'ragas' | 'downloads' | 'sos' | 'radio' | 'updates' }>;
         if (customEvent.detail?.tab) {
           setActiveTopTab(customEvent.detail.tab);
         }
@@ -104,7 +106,7 @@ export default function HomePage() {
     return () => window.removeEventListener('raga_ai_updated', checkAiStatus);
   }, []);
 
-  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads' | 'sos' | 'radio') => {
+  const handleTopTabChange = (tab: 'home' | 'ragas' | 'downloads' | 'sos' | 'radio' | 'updates') => {
     setActiveTopTab(tab);
     if (typeof window !== 'undefined') {
       const url = tab === 'home' ? '/' : `/?tab=${tab}`;
@@ -209,56 +211,56 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-music-pattern pb-20">
       {/* Hero Section */}
-      <section className="pt-8 pb-6 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        {/* Top 3 Navigation Tabs: Home, Ragas, Downloads - Positioned directly UPWARD of Powered by Google */}
-        <div className="flex items-center justify-center mb-6">
-          <div className="inline-flex p-1.5 rounded-2xl bg-amber-50/90 backdrop-blur-md border border-amber-300/80 shadow-md">
+      <section className="pt-6 sm:pt-8 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+        {/* Top 5 Navigation Tabs: Home, Ragas, Downloads, SOS, Radio - Swipeable on mobile */}
+        <div className="flex items-center justify-start sm:justify-center mb-5 max-w-full overflow-x-auto no-scrollbar px-1 py-1">
+          <div className="inline-flex p-1 sm:p-1.5 rounded-2xl bg-amber-50/90 backdrop-blur-md border border-amber-300/80 shadow-md shrink-0 gap-0.5">
             <button
               type="button"
               onClick={() => handleTopTabChange('home')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                 activeTopTab === 'home'
                   ? 'bg-gradient-to-r from-raga-600 to-amber-600 text-white shadow-md'
                   : 'text-stone-700 hover:text-stone-900 hover:bg-amber-100/60'
               }`}
             >
-              <Home className="w-4 h-4" />
+              <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Home</span>
             </button>
 
             <button
               type="button"
               onClick={() => handleTopTabChange('ragas')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                 activeTopTab === 'ragas'
                   ? 'bg-gradient-to-r from-raga-600 to-amber-600 text-white shadow-md'
                   : 'text-stone-700 hover:text-stone-900 hover:bg-amber-100/60'
               }`}
             >
-              <Music className="w-4 h-4" />
+              <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Ragas</span>
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                   activeTopTab === 'ragas' ? 'bg-white/20 text-white' : 'bg-amber-200 text-amber-900'
                 }`}
               >
-                72+
+                908
               </span>
             </button>
 
             <button
               type="button"
               onClick={() => handleTopTabChange('downloads')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                 activeTopTab === 'downloads'
                   ? 'bg-gradient-to-r from-raga-600 to-amber-600 text-white shadow-md'
                   : 'text-stone-700 hover:text-stone-900 hover:bg-amber-100/60'
               }`}
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Downloads</span>
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                   activeTopTab === 'downloads' ? 'bg-white/20 text-white' : 'bg-amber-200 text-amber-900'
                 }`}
               >
@@ -270,16 +272,16 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => handleTopTabChange('sos')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                 activeTopTab === 'sos'
                   ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md'
                   : 'text-rose-700 hover:text-rose-900 hover:bg-rose-100/60'
               }`}
             >
-              <LifeBuoy className="w-4 h-4 text-rose-500" />
+              <LifeBuoy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-500" />
               <span>SOS</span>
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                   activeTopTab === 'sos' ? 'bg-white/20 text-white' : 'bg-rose-200 text-rose-900'
                 }`}
               >
@@ -291,80 +293,127 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => handleTopTabChange('radio')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
                 activeTopTab === 'radio'
                   ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-md'
                   : 'text-amber-900 hover:text-amber-950 hover:bg-amber-100/60'
               }`}
             >
-              <Radio className="w-4 h-4 text-amber-600" />
+              <Radio className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600" />
               <span>Raga Radio</span>
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                   activeTopTab === 'radio' ? 'bg-white/20 text-white' : 'bg-amber-200 text-amber-900'
                 }`}
               >
                 90
               </span>
             </button>
+
+            {/* Updates (Live Malayalam Film Songs) Menu */}
+            <button
+              type="button"
+              onClick={() => handleTopTabChange('updates')}
+              className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 ${
+                activeTopTab === 'updates'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md'
+                  : 'text-emerald-800 hover:text-emerald-950 hover:bg-emerald-100/60'
+              }`}
+            >
+              <Radio className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 animate-pulse" />
+              <span>Spotify Updates</span>
+              <span
+                className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                  activeTopTab === 'updates' ? 'bg-white/20 text-white' : 'bg-[#1DB954] text-white'
+                }`}
+              >
+                Live
+              </span>
+            </button>
           </div>
         </div>
 
         {/* Powered by Google Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/90 border border-amber-300 text-amber-900 text-xs font-semibold mb-4 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-raga-600" />
-          <span>Powered by Google Gemini &amp; OpenAI &bull; Continuous Admin Ground-Truth Teaching</span>
+        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:py-1.5 rounded-full bg-amber-100/90 border border-amber-300 text-amber-900 text-[11px] sm:text-xs font-semibold mb-4 shadow-xs max-w-full truncate">
+          <Sparkles className="w-3.5 h-3.5 text-raga-600 shrink-0" />
+          <span className="truncate">Powered by Gemini &amp; OpenAI &bull; Ground-Truth Taught</span>
         </div>
 
         {activeTopTab === 'home' && (
           <>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-tight">
+            {/* Spotify Malayalam Film Songs Live Banner on Homepage */}
+            <div className="mb-6 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-stone-950 via-stone-900 to-amber-950 text-white border border-emerald-500/30 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#1DB954] flex items-center justify-center text-white shrink-0 shadow-md">
+                  <Radio className="w-5 h-5 animate-pulse" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs sm:text-sm font-bold text-white">Live Spotify Section: New Malayalam Film Songs</span>
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#1DB954] text-white uppercase tracking-wider">LIVE</span>
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-stone-300">
+                    Stream the latest Mollywood cinema releases, trending songs, and chartbusters updated live on Spotify.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleTopTabChange('updates')}
+                className="shrink-0 w-full sm:w-auto px-4 py-2 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>Open Spotify Player</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-tight leading-tight">
               Find Any <span className="text-raga-600">Raga</span> in Seconds
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
               Explore Carnatic and Hindustani classical ragas by tapping Swaras, typing any song or
               film title, or describing musical scales with precision AI analysis.
             </p>
 
             {/* Mode Switcher Tabs */}
-            <div className="mt-8 inline-flex p-1.5 rounded-2xl glass-panel shadow-md border border-amber-200/80">
+            <div className="mt-6 sm:mt-8 grid grid-cols-1 xs:grid-cols-3 sm:inline-flex p-1.5 rounded-2xl glass-panel shadow-md border border-amber-200/80 gap-1 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => setSearchMode('swaras')}
-                className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${
                   searchMode === 'swaras'
                     ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
                     : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
                 }`}
               >
-                <Music className="w-4 h-4" />
-                <span>By Swaras (Notes)</span>
+                <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                <span>By Swaras</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setSearchMode('song')}
-                className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${
                   searchMode === 'song'
                     ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
                     : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
                 }`}
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                 <span>By Song / Kriti</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setSearchMode('description')}
-                className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${
                   searchMode === 'description'
                     ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md'
                     : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100/70'
                 }`}
               >
-                <FileText className="w-4 h-4" />
-                <span>Western / Description</span>
+                <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                <span>Western / Notes</span>
               </button>
             </div>
           </>
@@ -372,10 +421,10 @@ export default function HomePage() {
       </section>
 
       {/* Main Content Area */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8">
         {activeTopTab === 'home' && (
           <>
-            <div className="p-6 sm:p-8 rounded-3xl glass-panel shadow-xl border border-amber-200/80 space-y-6">
+            <div className="p-4 sm:p-8 rounded-3xl glass-panel shadow-xl border border-amber-200/80 space-y-6">
           {/* Tradition Preference Filter */}
           <div className="flex items-center justify-between flex-wrap gap-3 pb-4 border-b border-amber-200/60">
             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-stone-600">
@@ -617,6 +666,21 @@ export default function HomePage() {
         {/* Tab 5: Raga Radio (90 Ragas & All Compositions) */}
         {activeTopTab === 'radio' && (
           <RagaRadioTab />
+        )}
+
+        {/* Tab 6: Updates (Live Spotify Malayalam Film Songs) */}
+        {activeTopTab === 'updates' && (
+          <UpdatesTab
+            onFindRaga={(songName) => {
+              setSongQuery(songName);
+              setSearchMode('song');
+              setActiveTopTab('home');
+              if (typeof window !== 'undefined') {
+                window.history.pushState({}, '', '/');
+                window.scrollTo({ top: 250, behavior: 'smooth' });
+              }
+            }}
+          />
         )}
 
         {/* Raga Finder Family Community Banner */}

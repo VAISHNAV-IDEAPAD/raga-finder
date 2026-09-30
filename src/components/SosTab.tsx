@@ -422,24 +422,24 @@ export default function SosTab({ onSelectSwaras }: SosTabProps) {
   return (
     <div className="space-y-8 animate-fadeIn">
       {/* SOS Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-900 via-rose-800 to-amber-950 text-white p-6 sm:p-10 shadow-2xl border border-rose-700/50">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-900 via-rose-800 to-amber-950 text-white p-4 sm:p-10 shadow-2xl border border-rose-700/50">
         <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-rose-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-3 max-w-2xl">
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
+          <div className="space-y-2 sm:space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/30 text-rose-200 border border-rose-400/40 text-xs font-bold tracking-wide uppercase">
               <LifeBuoy className="w-3.5 h-3.5 text-rose-300 animate-pulse" />
               <span>Musician &amp; Listener SOS Emergency Rescue</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
               Instant <span className="text-rose-300 underline decoration-rose-400/60">SOS</span> Musicology Rescue
             </h1>
-            <p className="text-sm sm:text-base text-rose-100/90 leading-relaxed">
+            <p className="text-xs sm:text-base text-rose-100/90 leading-relaxed">
               Stuck on a tricky raga during a concert, exam, or recording? Need an immediate Tanpura drone, a 1-tap swara panic identifier, or instant disambiguation between lookalike ragas? You are covered.
             </p>
           </div>
 
           {/* Quick SOS Mode Selector Pills */}
-          <div className="bg-black/30 backdrop-blur-md p-2 rounded-2xl border border-white/10 flex flex-wrap gap-1.5 shrink-0 self-stretch md:self-auto justify-center">
+          <div className="bg-black/30 backdrop-blur-md p-1.5 sm:p-2 rounded-2xl border border-white/10 flex flex-wrap sm:flex-nowrap sm:overflow-x-auto no-scrollbar gap-1.5 shrink-0 self-stretch md:self-auto justify-center">
             <button
               type="button"
               onClick={() => setActiveSubSection('tanpura')}
@@ -531,30 +531,30 @@ export default function SosTab({ onSelectSwaras }: SosTabProps) {
           </div>
 
           {/* Visual String Vibration Display */}
-          <div className="bg-stone-900 rounded-2xl p-6 text-white flex flex-col items-center justify-center gap-4 relative overflow-hidden">
-            <div className="text-xs uppercase tracking-widest text-amber-400 font-bold">
+          <div className="bg-stone-900 rounded-2xl p-4 sm:p-6 text-white flex flex-col items-center justify-center gap-4 relative overflow-hidden">
+            <div className="text-[10px] sm:text-xs uppercase tracking-widest text-amber-400 font-bold text-center">
               {isTanpuraPlaying ? 'Tanpura Resonating • 4-String Sequential Pluck' : 'Tanpura Paused • Click Start to Resonate'}
             </div>
 
-            <div className="flex items-center justify-center gap-6 sm:gap-12 w-full max-w-lg my-2">
+            <div className="flex items-center justify-center gap-3 xs:gap-6 sm:gap-12 w-full max-w-lg my-2 overflow-hidden">
               {[
-                { name: `${tanpuraTuning} (First)`, idx: 1, label: 'String 1' },
-                { name: "Sa' (Madhya)", idx: 2, label: 'String 2' },
-                { name: "Sa' (Chorus)", idx: 3, label: 'String 3' },
-                { name: 'Sa (Mandra)', idx: 4, label: 'String 4' },
+                { name: `${tanpuraTuning} (1)`, idx: 1, label: 'String 1' },
+                { name: "Sa' (2)", idx: 2, label: 'String 2' },
+                { name: "Sa' (3)", idx: 3, label: 'String 3' },
+                { name: 'Sa (4)', idx: 4, label: 'String 4' },
               ].map((str) => {
                 const isActive = activeTanpuraString === str.idx && isTanpuraPlaying;
                 return (
-                  <div key={str.idx} className="flex flex-col items-center gap-2">
-                    <span className="text-[10px] text-stone-400 font-mono">{str.label}</span>
+                  <div key={str.idx} className="flex flex-col items-center gap-1.5 sm:gap-2 shrink-0">
+                    <span className="text-[9px] sm:text-[10px] text-stone-400 font-mono">{str.label}</span>
                     <div
-                      className={`w-3 rounded-full transition-all duration-300 ${
+                      className={`w-2.5 sm:w-3 rounded-full transition-all duration-300 ${
                         isActive
-                          ? 'h-24 bg-gradient-to-t from-amber-400 via-rose-400 to-yellow-200 shadow-lg shadow-rose-500/50 scale-110'
-                          : 'h-16 bg-stone-700'
+                          ? 'h-20 sm:h-24 bg-gradient-to-t from-amber-400 via-rose-400 to-yellow-200 shadow-lg shadow-rose-500/50 scale-110'
+                          : 'h-14 sm:h-16 bg-stone-700'
                       }`}
                     />
-                    <span className={`text-xs font-bold ${isActive ? 'text-amber-300 scale-105' : 'text-stone-400'}`}>
+                    <span className={`text-[10px] sm:text-xs font-bold ${isActive ? 'text-amber-300 scale-105' : 'text-stone-400'}`}>
                       {str.name}
                     </span>
                   </div>
@@ -577,7 +577,7 @@ export default function SosTab({ onSelectSwaras }: SosTabProps) {
                         setTimeout(startTanpura, 150);
                       }
                     }}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all touch-manipulation active:scale-95 ${
                       tanpuraTuning === mode
                         ? 'bg-rose-600 text-white shadow-xs'
                         : 'text-stone-300 hover:text-white'
@@ -595,7 +595,7 @@ export default function SosTab({ onSelectSwaras }: SosTabProps) {
             <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
               Select Shruti Pitch / Key (Kattai):
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
+            <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
               {SHRU_TI_KEYS.map((k) => (
                 <button
                   key={k.key}
@@ -607,7 +607,7 @@ export default function SosTab({ onSelectSwaras }: SosTabProps) {
                       setTimeout(startTanpura, 150);
                     }
                   }}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center ${
+                  className={`px-3 py-2 sm:py-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center touch-manipulation active:scale-95 ${
                     selectedKey === k.key
                       ? 'bg-gradient-to-r from-rose-600 to-amber-600 text-white border-rose-600 shadow-md'
                       : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
@@ -795,7 +795,7 @@ export default function SosTab({ onSelectSwaras }: SosTabProps) {
                       key={swara}
                       type="button"
                       onClick={() => togglePanicSwara(swara)}
-                      className={`p-3 rounded-2xl font-black text-sm border transition-all flex flex-col items-center justify-center gap-1 ${
+                      className={`p-2.5 sm:p-3 rounded-2xl font-black text-sm border transition-all flex flex-col items-center justify-center gap-1 touch-manipulation select-none active:scale-95 ${
                         isSelected
                           ? 'bg-rose-600 text-white border-rose-600 shadow-md scale-[1.02]'
                           : 'bg-stone-50 hover:bg-stone-100 text-stone-800 border-stone-200'

@@ -63,44 +63,44 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
   return (
     <div className="rounded-3xl glass-panel shadow-xl border border-amber-200/80 overflow-hidden transition-all">
       {/* Top Banner */}
-      <div className="px-6 py-5 bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 text-white">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                 {raga.tradition} Tradition
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 {confidence}
               </span>
               {isMultiRaga && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-400 text-stone-950 border border-amber-300 shadow-sm flex items-center gap-1 animate-pulse">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-bold bg-amber-400 text-stone-950 border border-amber-300 shadow-sm flex items-center gap-1 animate-pulse">
                   <Sparkles className="w-3 h-3" /> Ragamalika ({ragasList.length} Ragas)
                 </span>
               )}
               {source === 'gemini' && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-cyan-300" /> Google Gemini AI
                 </span>
               )}
               {source === 'openai' && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> OpenAI GPT
                 </span>
               )}
               {source === 'ai_musicologist' && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> AI Musicologist
                 </span>
               )}
               {source === 'database' && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
                   Verified Archive
                 </span>
               )}
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mt-2">
+            <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-white mt-2">
               {raga.name}
             </h2>
 
@@ -111,21 +111,21 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
             )}
           </div>
 
-          <div className="text-right">
+          <div className="flex sm:flex-col items-center sm:items-end justify-start gap-2">
             {raga.melakartaNumber && (
-              <div className="inline-block p-2.5 rounded-xl bg-white/10 backdrop-blur border border-white/10 text-center">
-                <span className="block text-[10px] text-amber-300 uppercase font-bold tracking-wider">
+              <div className="inline-block p-2 sm:p-2.5 rounded-xl bg-white/10 backdrop-blur border border-white/10 text-center">
+                <span className="block text-[9px] sm:text-[10px] text-amber-300 uppercase font-bold tracking-wider">
                   Melakarta
                 </span>
-                <span className="text-xl font-black text-white">#{raga.melakartaNumber}</span>
+                <span className="text-lg sm:text-xl font-black text-white">#{raga.melakartaNumber}</span>
               </div>
             )}
             {raga.thaat && (
-              <div className="inline-block ml-2 p-2.5 rounded-xl bg-white/10 backdrop-blur border border-white/10 text-center">
-                <span className="block text-[10px] text-amber-300 uppercase font-bold tracking-wider">
+              <div className="inline-block p-2 sm:p-2.5 rounded-xl bg-white/10 backdrop-blur border border-white/10 text-center">
+                <span className="block text-[9px] sm:text-[10px] text-amber-300 uppercase font-bold tracking-wider">
                   Thaat
                 </span>
-                <span className="text-sm font-bold text-white">{raga.thaat}</span>
+                <span className="text-xs sm:text-sm font-bold text-white">{raga.thaat}</span>
               </div>
             )}
           </div>
@@ -242,28 +242,28 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
       </div>
 
       {/* Main Details Body */}
-      <div className="p-6 sm:p-8 space-y-6">
+      <div className="p-4 sm:p-8 space-y-5 sm:space-y-6">
         {/* Arohana & Avarohana Scales */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {/* Arohana */}
-          <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex flex-col justify-between">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-                  <Music className="w-3.5 h-3.5 text-amber-600" />
-                  Arohana (Ascent) - {raga.name}
+              <div className="flex items-center justify-between mb-1.5 gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5 truncate">
+                  <Music className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <span>Arohana (Ascent)</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => handlePlayScale(raga.arohana, `${raga.name}-main-arohana`)}
                   disabled={isPlayingAudio}
-                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1 transition-all disabled:opacity-50"
+                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-700 text-white shadow-sm flex items-center gap-1 transition-all disabled:opacity-50 touch-manipulation active:scale-95 shrink-0"
                 >
                   <Volume2 className="w-3 h-3" />
                   <span>{playingScaleId === `${raga.name}-main-arohana` ? 'Playing...' : 'Play'}</span>
                 </button>
               </div>
-              <div className="text-lg sm:text-xl font-mono font-bold text-stone-900 tracking-wide mt-1">
+              <div className="text-base sm:text-xl font-mono font-bold text-stone-900 tracking-wide mt-1 break-words">
                 {raga.arohana}
               </div>
             </div>
@@ -273,24 +273,24 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
           </div>
 
           {/* Avarohana */}
-          <div className="p-4 rounded-2xl bg-orange-50/70 border border-orange-200/80 flex flex-col justify-between">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-orange-50/70 border border-orange-200/80 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-900 flex items-center gap-1.5">
-                  <Music className="w-3.5 h-3.5 text-orange-600" />
-                  Avarohana (Descent) - {raga.name}
+              <div className="flex items-center justify-between mb-1.5 gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-orange-900 flex items-center gap-1.5 truncate">
+                  <Music className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+                  <span>Avarohana (Descent)</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => handlePlayScale(raga.avarohana, `${raga.name}-main-avarohana`)}
                   disabled={isPlayingAudio}
-                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-orange-600 hover:bg-orange-700 text-white shadow-sm flex items-center gap-1 transition-all disabled:opacity-50"
+                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-orange-600 hover:bg-orange-700 text-white shadow-sm flex items-center gap-1 transition-all disabled:opacity-50 touch-manipulation active:scale-95 shrink-0"
                 >
                   <Volume2 className="w-3 h-3" />
                   <span>{playingScaleId === `${raga.name}-main-avarohana` ? 'Playing...' : 'Play'}</span>
                 </button>
               </div>
-              <div className="text-lg sm:text-xl font-mono font-bold text-stone-900 tracking-wide mt-1">
+              <div className="text-base sm:text-xl font-mono font-bold text-stone-900 tracking-wide mt-1 break-words">
                 {raga.avarohana}
               </div>
             </div>

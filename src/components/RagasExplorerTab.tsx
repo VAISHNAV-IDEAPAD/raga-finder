@@ -231,8 +231,8 @@ export default function RagasExplorerTab({ onSelectRagaInFinder }: RagasExplorer
       </div>
 
       {/* Primary Sub-View Navigation Switcher */}
-      <div className="flex items-center justify-center">
-        <div className="flex items-center gap-1 bg-stone-100/90 p-1.5 rounded-2xl border border-stone-200/80 shadow-xs max-w-full overflow-x-auto">
+      <div className="flex items-center justify-start sm:justify-center max-w-full overflow-x-auto no-scrollbar px-1 py-1">
+        <div className="flex items-center gap-1 bg-stone-100/90 p-1 sm:p-1.5 rounded-2xl border border-stone-200/80 shadow-xs max-w-full overflow-x-auto no-scrollbar shrink-0">
           <button
             type="button"
             onClick={() => handleSwitchSubTab('janya')}

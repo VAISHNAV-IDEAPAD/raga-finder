@@ -1,7 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#faf5eb',
+};
 
 export const metadata: Metadata = {
   title: 'Raga Finder AI - Discover Carnatic & Hindustani Ragas',
@@ -26,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen flex flex-col bg-music-pattern text-stone-900 selection:bg-amber-200 selection:text-amber-900">
+      <body className="antialiased min-h-screen flex flex-col bg-music-pattern text-stone-900 selection:bg-amber-200 selection:text-amber-900 pb-16 md:pb-0">
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />

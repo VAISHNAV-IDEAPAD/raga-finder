@@ -117,48 +117,48 @@ export default function MelakartaPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mb-3">
           <BookOpen className="w-3.5 h-3.5" />
           <span>72 Melakarta Katapayadi System</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-stone-900">
+        <h1 className="text-2xl sm:text-4xl font-black text-stone-900">
           The 72 Janaka (Parent) Ragas of Carnatic Music
         </h1>
-        <p className="mt-3 text-sm text-stone-600 leading-relaxed">
+        <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-stone-600 leading-relaxed px-2">
           Structured into 12 Chakras of 6 ragas each. Chakras 1-6 use Shuddha Madhyamam (M1) and
           Chakras 7-12 use Prati Madhyamam (M2).
         </p>
 
         {/* Search */}
-        <div className="mt-6 relative max-w-md mx-auto">
+        <div className="mt-5 sm:mt-6 relative max-w-md mx-auto">
           <input
             type="text"
             placeholder="Search melakarta by name or number (e.g. Kalyani, 15, 29)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-4 py-2.5 pl-10 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white shadow-sm"
+            className="w-full px-4 py-2.5 pl-10 text-xs sm:text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white shadow-sm"
           />
           <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
         </div>
 
         {/* Link to Authentic Janya Ragas Table */}
-        <div className="mt-4">
+        <div className="mt-3.5 sm:mt-4">
           <Link
             href="/?tab=ragas&sub=janya"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-amber-900 bg-amber-100/80 hover:bg-amber-200/80 border border-amber-300 transition-all shadow-2xs"
+            className="inline-flex items-center text-center sm:text-left gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold text-amber-900 bg-amber-100/80 hover:bg-amber-200/80 border border-amber-300 transition-all shadow-2xs touch-manipulation active:scale-95"
           >
-            <Music className="w-3.5 h-3.5 text-raga-600" />
+            <Music className="w-3.5 h-3.5 text-raga-600 shrink-0" />
             <span>Explore all 908 Authentic Janya Ragas derived from these Melakartas</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 shrink-0" />
           </Link>
         </div>
       </div>
 
       {/* Chakras Grid */}
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {CHAKRAS.map((chakra) => {
           const filteredRagas = chakra.ragas.filter(
             (r) =>
@@ -172,29 +172,29 @@ export default function MelakartaPage() {
           return (
             <div
               key={chakra.no}
-              className="rounded-3xl glass-panel border border-amber-200/80 p-6 shadow-md"
+              className="rounded-2xl sm:rounded-3xl glass-panel border border-amber-200/80 p-4 sm:p-6 shadow-md"
             >
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-amber-200/60 mb-4">
+              <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 sm:pb-4 border-b border-amber-200/60 mb-3.5 sm:mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-lg bg-stone-900 text-amber-400 font-bold text-sm flex items-center justify-center">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-stone-900 text-amber-400 font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
                     {chakra.no}
                   </span>
                   <div>
-                    <h2 className="text-lg font-bold text-stone-900">
+                    <h2 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                       Chakra {chakra.no}: {chakra.name}
                     </h2>
-                    <span className="text-xs text-stone-500 font-mono">
+                    <span className="text-[11px] sm:text-xs text-stone-500 font-mono">
                       Madhyamam: {chakra.m} ({chakra.m === 'M1' ? 'Shuddha' : 'Prati'})
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3">
                 {filteredRagas.map((raga) => (
                   <div
                     key={raga.no}
-                    className="p-3.5 rounded-xl bg-white border border-stone-200 hover:border-amber-300 transition-all shadow-sm flex flex-col justify-between"
+                    className="p-3 sm:p-3.5 rounded-xl bg-white border border-stone-200 hover:border-amber-300 transition-all shadow-sm flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between">
@@ -205,14 +205,14 @@ export default function MelakartaPage() {
                           type="button"
                           onClick={() => handlePlayScale(raga.swaras, raga.no)}
                           disabled={playingRagaNo !== null}
-                          className="text-[11px] font-semibold text-stone-500 hover:text-stone-900 flex items-center gap-1"
+                          className="text-[11px] font-semibold text-stone-500 hover:text-stone-900 flex items-center gap-1 touch-manipulation active:scale-95 py-1 px-1.5 rounded hover:bg-stone-100"
                         >
-                          <Volume2 className="w-3 h-3 text-amber-600" />
+                          <Volume2 className="w-3.5 h-3.5 text-amber-600" />
                           <span>{playingRagaNo === raga.no ? 'Playing...' : 'Play'}</span>
                         </button>
                       </div>
                       <h3 className="text-sm font-bold text-stone-900 mt-1">{raga.name}</h3>
-                      <div className="text-[11px] font-mono text-stone-600 mt-1 bg-stone-50 p-1.5 rounded border border-stone-100">
+                      <div className="text-[11px] font-mono text-stone-600 mt-1 bg-stone-50 p-1.5 rounded border border-stone-100 break-words">
                         {raga.swaras}
                       </div>
                     </div>
@@ -220,7 +220,7 @@ export default function MelakartaPage() {
                     <div className="pt-2 flex justify-end">
                       <Link
                         href={`/?swaras=${encodeURIComponent(raga.swaras)}`}
-                        className="text-[11px] text-raga-600 hover:text-raga-700 font-bold inline-flex items-center gap-0.5"
+                        className="text-[11px] text-raga-600 hover:text-raga-700 font-bold inline-flex items-center gap-0.5 touch-manipulation py-1"
                       >
                         <span>Find details</span>
                         <ArrowRight className="w-3 h-3" />

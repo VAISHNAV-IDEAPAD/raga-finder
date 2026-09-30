@@ -603,7 +603,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-stone-900 text-white shadow-2xl border border-amber-400/30 flex items-center gap-3 animate-fadeIn">
@@ -613,13 +613,13 @@ export default function AdminPage() {
       )}
 
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-amber-200/80">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-5 sm:pb-6 border-b border-amber-200/80">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-stone-900 text-amber-400">
+            <span className="p-1.5 rounded-lg bg-stone-900 text-amber-400 shrink-0">
               <ShieldAlert className="w-5 h-5" />
             </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-stone-900">
+            <h1 className="text-xl sm:text-3xl font-black text-stone-900">
               AI Musicologist Teaching Console
             </h1>
           </div>
@@ -635,7 +635,7 @@ export default function AdminPage() {
               loadRules();
               loadReports();
             }}
-            className="p-2 text-xs font-semibold rounded-lg bg-stone-100 hover:bg-amber-100 text-stone-700 transition-colors flex items-center gap-1.5"
+            className="p-2 text-xs font-semibold rounded-lg bg-stone-100 hover:bg-amber-100 text-stone-700 transition-colors flex items-center gap-1.5 touch-manipulation active:scale-95"
             title="Refresh"
           >
             <RefreshCw className="w-4 h-4" />
@@ -643,7 +643,7 @@ export default function AdminPage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="px-3 py-2 text-xs font-semibold rounded-lg bg-stone-200 hover:bg-red-100 text-stone-700 hover:text-red-700 transition-colors flex items-center gap-1.5"
+            className="px-3 py-2 text-xs font-semibold rounded-lg bg-stone-200 hover:bg-red-100 text-stone-700 hover:text-red-700 transition-colors flex items-center gap-1.5 touch-manipulation active:scale-95"
           >
             <LogOut className="w-4 h-4" />
             <span>Lock Console</span>
@@ -652,11 +652,11 @@ export default function AdminPage() {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="mt-6 flex flex-wrap gap-2 border-b border-stone-200">
+      <div className="mt-5 sm:mt-6 flex items-center gap-1.5 sm:gap-2 border-b border-stone-200 overflow-x-auto no-scrollbar pb-1 whitespace-nowrap">
         <button
           type="button"
           onClick={() => setActiveTab('rules')}
-          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
             activeTab === 'rules'
               ? 'border-raga-600 text-raga-600'
               : 'border-transparent text-stone-600 hover:text-stone-900'
@@ -671,7 +671,7 @@ export default function AdminPage() {
         <button
           type="button"
           onClick={() => setActiveTab('reports')}
-          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
             activeTab === 'reports'
               ? 'border-raga-600 text-raga-600'
               : 'border-transparent text-stone-600 hover:text-stone-900'
@@ -691,7 +691,7 @@ export default function AdminPage() {
             setActiveTab('members');
             loadMembers();
           }}
-          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
             activeTab === 'members'
               ? 'border-raga-600 text-raga-600'
               : 'border-transparent text-stone-600 hover:text-stone-900'
@@ -710,7 +710,7 @@ export default function AdminPage() {
             setActiveTab('email');
             loadEmailConfig();
           }}
-          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
             activeTab === 'email'
               ? 'border-raga-600 text-raga-600'
               : 'border-transparent text-stone-600 hover:text-stone-900'
@@ -732,7 +732,7 @@ export default function AdminPage() {
         <button
           type="button"
           onClick={() => setActiveTab('playground')}
-          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
             activeTab === 'playground'
               ? 'border-raga-600 text-raga-600'
               : 'border-transparent text-stone-600 hover:text-stone-900'
@@ -745,7 +745,7 @@ export default function AdminPage() {
         <button
           type="button"
           onClick={() => setActiveTab('backup')}
-          className={`px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 touch-manipulation active:scale-95 ${
             activeTab === 'backup'
               ? 'border-raga-600 text-raga-600'
               : 'border-transparent text-stone-600 hover:text-stone-900'
@@ -1148,12 +1148,12 @@ export default function AdminPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl glass-panel border border-amber-200/80 space-y-4">
-            <div className="flex items-center gap-2">
+          <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl glass-panel border border-amber-200/80 space-y-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <select
                 value={testMode}
                 onChange={(e) => setTestMode(e.target.value as any)}
-                className="px-3 py-2 text-xs font-bold rounded-lg border border-stone-300 bg-white"
+                className="px-3 py-2.5 sm:py-2 text-xs font-bold rounded-xl sm:rounded-lg border border-stone-300 bg-white"
               >
                 <option value="swaras">By Swaras</option>
                 <option value="song">By Song Title</option>
@@ -1165,14 +1165,14 @@ export default function AdminPage() {
                 value={testQuery}
                 onChange={(e) => setTestQuery(e.target.value)}
                 placeholder="Enter swaras or song title..."
-                className="flex-1 px-4 py-2 text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="flex-1 px-4 py-2.5 sm:py-2 text-xs sm:text-sm rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
 
               <button
                 type="button"
                 onClick={handleRunPlaygroundTest}
                 disabled={testingAi || !testQuery.trim()}
-                className="px-5 py-2 text-xs font-bold rounded-xl bg-stone-900 hover:bg-stone-800 text-white shadow-sm flex items-center gap-1.5 disabled:opacity-50"
+                className="px-5 py-2.5 sm:py-2 text-xs font-bold rounded-xl bg-stone-900 hover:bg-stone-800 text-white shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-50 touch-manipulation active:scale-95"
               >
                 {testingAi ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -1395,9 +1395,125 @@ export default function AdminPage() {
                 <p className="text-xs text-stone-400">Try changing or clearing your search filters</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
-                  <thead>
+              <>
+                {/* Mobile Members Cards View (sm:hidden) */}
+                <div className="block sm:hidden divide-y divide-stone-100 p-2 space-y-2.5">
+                  {filteredMembers.map((member) => (
+                    <div
+                      key={member.id}
+                      className="p-3.5 rounded-xl bg-white border border-stone-200/80 shadow-2xs space-y-2.5"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2.5">
+                          <img
+                            src={member.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(member.name)}`}
+                            alt={member.name}
+                            className="w-10 h-10 rounded-xl object-cover bg-amber-100 border border-amber-200 shrink-0"
+                          />
+                          <div>
+                            <span className="font-bold text-stone-900 block text-sm leading-tight">
+                              {member.name}
+                            </span>
+                            <span className="text-[10px] font-mono text-stone-400">ID: {member.id.slice(0, 10)}</span>
+                          </div>
+                        </div>
+
+                        <span
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider shrink-0 ${
+                            member.provider === 'google'
+                              ? 'bg-red-50 text-red-700 border border-red-200'
+                              : member.provider === 'microsoft'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              : member.provider === 'mobile'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                              : 'bg-purple-50 text-purple-700 border border-purple-200'
+                          }`}
+                        >
+                          {member.provider === 'google' && 'Gmail'}
+                          {member.provider === 'microsoft' && 'Microsoft'}
+                          {member.provider === 'mobile' && 'Mobile OTP'}
+                          {member.provider === 'email' && 'Direct Email'}
+                        </span>
+                      </div>
+
+                      {/* Contact details */}
+                      <div className="space-y-1 text-xs">
+                        {member.email && (
+                          <div className="flex items-center gap-1.5 text-stone-700 break-all">
+                            <Mail className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+                            <span>{member.email}</span>
+                          </div>
+                        )}
+                        {member.mobile && (
+                          <div className="flex items-center gap-1.5 text-stone-700">
+                            <Phone className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+                            <span>{member.mobile}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Status & Date */}
+                      <div className="flex items-center justify-between text-[11px] pt-1 border-t border-stone-100">
+                        <span
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium ${
+                            member.welcomeNotificationSent
+                              ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                              : 'bg-stone-100 text-stone-600'
+                          }`}
+                        >
+                          <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                          {member.welcomeNotificationSent ? 'Dispatched' : 'Pending'}
+                        </span>
+
+                        <span className="text-stone-400 text-[10px]">
+                          {new Date(member.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </span>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center justify-end gap-1.5 pt-1">
+                        {member.email && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => setPreviewEmailUser(member)}
+                              className="px-2.5 py-1 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors flex items-center gap-1 touch-manipulation active:scale-95"
+                            >
+                              <Eye className="w-3.5 h-3.5" />
+                              <span>View Email</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleResendMemberEmail(member.id, member.name)}
+                              disabled={resendingEmailId === member.id}
+                              className="px-2.5 py-1 text-xs font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors flex items-center gap-1 touch-manipulation active:scale-95"
+                            >
+                              <Send className={`w-3.5 h-3.5 ${resendingEmailId === member.id ? 'animate-spin text-amber-600' : ''}`} />
+                              <span>Resend</span>
+                            </button>
+                          </>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteMember(member.id, member.name)}
+                          className="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors touch-manipulation active:scale-95"
+                          title="Remove member"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop Table View (hidden sm:block) */}
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="w-full text-left border-collapse text-xs">
+                    <thead>
                     <tr className="bg-stone-100/80 border-b border-stone-200 text-stone-600 font-bold uppercase tracking-wider text-[10px]">
                       <th className="py-3.5 px-4">Member</th>
                       <th className="py-3.5 px-4">Contact Info</th>
@@ -1514,7 +1630,8 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
-            )}
+            </>
+          )}
           </div>
         </div>
       )}
@@ -1901,29 +2018,31 @@ export default function AdminPage() {
 
       {/* Member Greeting Email Preview Modal */}
       {previewEmailUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-md animate-fadeIn">
-          <div className="w-full max-w-2xl max-h-[90vh] rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white overflow-hidden flex flex-col animate-scaleUp">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/80 backdrop-blur-md animate-fadeIn overflow-y-auto touch-scroll">
+          <div className="w-full max-w-2xl max-h-[90vh] rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white overflow-hidden flex flex-col animate-scaleUp my-auto">
             {/* Header */}
-            <div className="p-4 px-6 bg-stone-900 text-white flex items-center justify-between border-b border-stone-800">
+            <div className="shrink-0 p-3.5 sm:p-4 px-4 sm:px-6 bg-stone-900 text-white flex items-center justify-between border-b border-stone-800">
               <div className="flex items-center gap-2">
                 <MailCheck className="w-4 h-4 text-emerald-400" />
-                <span className="text-sm font-bold">Greeting Email Dispatched to {previewEmailUser.name}</span>
+                <span className="text-xs sm:text-sm font-bold truncate max-w-[200px] sm:max-w-none">
+                  Greeting Email Dispatched to {previewEmailUser.name}
+                </span>
               </div>
               <button
                 type="button"
                 onClick={() => setPreviewEmailUser(null)}
-                className="p-1 rounded-lg text-stone-400 hover:text-white transition-colors"
+                className="p-1 rounded-lg text-stone-400 hover:text-white transition-colors touch-manipulation active:scale-95"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Metadata */}
-            <div className="p-4 px-6 bg-amber-50/70 border-b border-amber-200/80 text-left space-y-1">
-              <h3 className="font-bold text-stone-900 text-sm">
+            <div className="shrink-0 p-3 sm:p-4 px-4 sm:px-6 bg-amber-50/70 border-b border-amber-200/80 text-left space-y-1">
+              <h3 className="font-bold text-stone-900 text-xs sm:text-sm">
                 Welcome to Raga Finder Family, {previewEmailUser.name}! 🎵
               </h3>
-              <div className="text-xs text-stone-600 flex flex-wrap items-center gap-4">
+              <div className="text-[11px] sm:text-xs text-stone-600 flex flex-wrap items-center gap-2 sm:gap-4">
                 <span><strong>To:</strong> {previewEmailUser.email || previewEmailUser.mobile}</span>
                 <span><strong>From:</strong> Raga Finder Family &lt;welcome@ragafinder.com&gt;</span>
                 <span className="text-emerald-700 font-semibold">&bull; Status: Delivered</span>
@@ -1931,7 +2050,7 @@ export default function AdminPage() {
             </div>
 
             {/* Body */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-stone-50">
+            <div className="flex-1 overflow-y-auto touch-scroll p-3 sm:p-6 bg-stone-50">
               <div
                 className="rounded-2xl shadow-sm border border-stone-200 overflow-hidden bg-white"
                 dangerouslySetInnerHTML={{
@@ -1943,11 +2062,11 @@ export default function AdminPage() {
             </div>
 
             {/* Footer */}
-            <div className="p-4 px-6 bg-white border-t border-stone-200 flex items-center justify-end">
+            <div className="shrink-0 p-3 sm:p-4 px-4 sm:px-6 bg-white border-t border-stone-200 flex items-center justify-end">
               <button
                 type="button"
                 onClick={() => setPreviewEmailUser(null)}
-                className="px-5 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition-colors"
+                className="w-full sm:w-auto px-5 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition-colors touch-manipulation active:scale-95"
               >
                 Close Preview
               </button>

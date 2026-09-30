@@ -141,16 +141,16 @@ export default function ActivateAiModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm animate-fadeIn">
-      <div className="w-full max-w-lg rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white/95 overflow-hidden transition-all">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/70 backdrop-blur-sm animate-fadeIn overflow-y-auto touch-scroll">
+      <div className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl glass-panel shadow-2xl border-2 border-amber-300 bg-white/95 overflow-hidden transition-all my-auto">
         {/* Top Header */}
-        <div className="px-6 py-5 bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-raga-500 flex items-center justify-center text-stone-950 shadow-md">
-              <Sparkles className="w-5 h-5" />
+        <div className="shrink-0 px-4 sm:px-6 py-4 sm:py-5 bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white flex items-center justify-between">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-raga-500 flex items-center justify-center text-stone-950 shadow-md shrink-0">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-black text-white flex items-center gap-2">
+              <h2 className="text-base sm:text-lg font-black text-white flex items-center gap-2 leading-tight">
                 <span>Activate AI Musicologist</span>
                 {isCurrentlyActive && (
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-400 text-stone-950 flex items-center gap-1">
@@ -158,7 +158,7 @@ export default function ActivateAiModal({
                   </span>
                 )}
               </h2>
-              <p className="text-xs text-amber-200/80">
+              <p className="text-[11px] sm:text-xs text-amber-200/80">
                 Identify Ragas for ANY song not in the offline database
               </p>
             </div>
@@ -167,14 +167,14 @@ export default function ActivateAiModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors touch-manipulation active:scale-95"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-6 space-y-5">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto touch-scroll flex-1">
           {initialSongQuery && (
             <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-stone-700 flex items-start gap-2.5">
               <Zap className="w-4 h-4 text-raga-600 shrink-0 mt-0.5" />

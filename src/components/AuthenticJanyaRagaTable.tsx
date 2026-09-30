@@ -579,7 +579,164 @@ export default function AuthenticJanyaRagaTable({ onSelectRagaInFinder }: Authen
       {/* TABLE VIEW */}
       {layoutMode === 'table' && (
         <div className="space-y-4">
-          <div className="overflow-x-auto rounded-2xl border border-stone-200 glass-panel shadow-sm">
+          {/* Mobile Janya Cards List (block lg:hidden) - Eliminates painful 8-column horizontal scrolling on phones */}
+          <div className="block lg:hidden space-y-3">
+            {paginatedRagas.map((raga, index) => {
+              const rowNumber = (validCurrentPage - 1) * pageSize + index + 1;
+              const isAroPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'arohana';
+              const isAvaPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'avarohana';
+              const isBothPlaying = activePlayback?.ragaId === raga.id && activePlayback?.mode === 'both';
+
+              return (
+                <div
+                  key={raga.id}
+                  className="p-4 rounded-2xl bg-white border border-stone-200/90 shadow-sm space-y-3 hover:border-amber-300 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="w-5 h-5 rounded-md bg-stone-100 text-stone-600 font-mono text-[10px] font-bold flex items-center justify-center">
+                          {rowNumber}
+                        </span>
+                        <h4 className="font-bold text-stone-900 text-base">
+                          {raga.name}
+                        </h4>
+                        {raga.originalName && raga.originalName !== raga.name && (
+                          <span className="text-[11px] text-stone-400 italic">
+                            ({raga.originalName})
+                          </span>
+                        )}
+                      </div>
+                      {/* Melakarta button */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedMelakarta(raga.parentMelakartaNo);
+                          setCurrentPage(1);
+                        }}
+                        className="mt-1 text-left inline-flex items-center gap-1.5 text-xs text-stone-600 hover:text-raga-600"
+                      >
+                        <span className="w-4 h-4 rounded bg-amber-100 text-amber-900 font-bold text-[9px] flex items-center justify-center">
+                          {raga.parentMelakartaNo}
+                        </span>
+                        <span className="font-semibold underline decoration-amber-300">
+                          {raga.parentMelakartaName}
+                        </span>
+                        <span className="text-[10px] text-stone-400">
+                          &bull; Chakra {raga.chakraNo} ({raga.madhyama})
+                        </span>
+                      </button>
+                    </div>
+
+                    <div className="flex flex-col items-end gap-1 shrink-0">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-700 border border-stone-200">
+                        {raga.scaleType}
+                      </span>
+                      {raga.isBhashanga && (
+                        <span className="px-1.5 py-0.2 rounded text-[9px] font-black bg-rose-100 text-rose-800 border border-rose-300">
+                          Bhashanga
+                        </span>
+                      )}
+                      {raga.isVakra && (
+                        <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                          Vakra
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Scales */}
+                  <div className="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 text-xs font-mono space-y-2">
+                    {/* Arohana */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 overflow-hidden">
+                        <span className="text-[10px] font-bold text-stone-400 font-sans shrink-0">Aro:</span>
+                        <span className="text-raga-600 font-semibold truncate">{raga.arohana}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleAudition(raga, 'arohana')}
+                        className={`px-2 py-0.5 rounded border text-[10px] font-bold transition-all shrink-0 inline-flex items-center gap-1 touch-manipulation active:scale-95 ${
+                          isAroPlaying
+                            ? 'bg-amber-600 text-white border-amber-700 animate-pulse'
+                            : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-100'
+                        }`}
+                      >
+                        {isAroPlaying ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3 text-amber-600" />}
+                        <span>Aro ↗</span>
+                      </button>
+                    </div>
+
+                    {/* Avarohana */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 overflow-hidden">
+                        <span className="text-[10px] font-bold text-stone-400 font-sans shrink-0">Ava:</span>
+                        <span className="text-stone-800 truncate">{raga.avarohana}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleAudition(raga, 'avarohana')}
+                        className={`px-2 py-0.5 rounded border text-[10px] font-bold transition-all shrink-0 inline-flex items-center gap-1 touch-manipulation active:scale-95 ${
+                          isAvaPlaying
+                            ? 'bg-amber-600 text-white border-amber-700 animate-pulse'
+                            : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-100'
+                        }`}
+                      >
+                        {isAvaPlaying ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3 text-amber-600" />}
+                        <span>Ava ↘</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {raga.anyaSwaras && (
+                    <div className="text-[11px] font-bold text-rose-700">
+                      * Anya Swara: {raga.anyaSwaras}
+                    </div>
+                  )}
+
+                  {raga.extraNote && (
+                    <div className="text-[10px] text-amber-800 bg-amber-50 px-2 py-1 rounded border border-amber-200">
+                      {raga.extraNote}
+                    </div>
+                  )}
+
+                  {/* Action Row */}
+                  <div className="pt-2 border-t border-stone-100 flex items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleAudition(raga, 'both')}
+                      className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all inline-flex items-center gap-1.5 shadow-2xs touch-manipulation active:scale-95 ${
+                        isBothPlaying
+                          ? 'bg-gradient-to-r from-amber-600 to-raga-600 text-white border-amber-700 animate-pulse'
+                          : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100'
+                      }`}
+                    >
+                      {isBothPlaying ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-700" />}
+                      <span>Play Scale Both ⇄</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => onSelectRagaInFinder(raga.swaras, raga.name)}
+                      className="px-3 py-1.5 rounded-xl text-xs font-bold text-raga-700 bg-white hover:bg-amber-50 border border-amber-300 shadow-2xs inline-flex items-center gap-1 touch-manipulation active:scale-95"
+                    >
+                      <span>Load in Finder</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+
+            {paginatedRagas.length === 0 && (
+              <div className="p-8 text-center text-stone-500 bg-stone-50 rounded-2xl border border-stone-200 text-xs">
+                No Janya ragas match the current search or filters.
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Janya Table (hidden on mobile, visible on lg+) */}
+          <div className="hidden lg:block overflow-x-auto rounded-2xl border border-stone-200 glass-panel shadow-sm">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-stone-100/90 border-b border-stone-200 text-stone-700 font-bold uppercase tracking-wider text-[11px]">

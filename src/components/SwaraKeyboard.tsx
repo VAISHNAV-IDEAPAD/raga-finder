@@ -158,16 +158,16 @@ export default function SwaraKeyboard({
       </div>
 
       {/* Interactive Swara Key Matrix */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2 sm:gap-3">
         {CARNATIC_GROUPS.map((group) => (
           <div
             key={group.name}
-            className="p-2.5 rounded-xl bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between"
+            className="p-2 sm:p-2.5 rounded-xl bg-white border border-stone-200/80 shadow-sm flex flex-col justify-between"
           >
-            <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider mb-2 block text-center">
+            <span className="text-[10px] sm:text-[11px] font-bold text-stone-500 uppercase tracking-wider mb-2 block text-center truncate">
               {group.name}
             </span>
-            <div className="space-y-1.5 flex-1 flex flex-col justify-end">
+            <div className="space-y-1 sm:space-y-1.5 flex-1 flex flex-col justify-end">
               {group.swaras.map((item) => {
                 const isSelected = selectedSwaras.includes(item.symbol);
                 return (
@@ -175,14 +175,14 @@ export default function SwaraKeyboard({
                     key={item.symbol}
                     type="button"
                     onClick={() => toggleSwara(item.symbol)}
-                    className={`w-full py-2 px-1 rounded-lg text-xs font-bold transition-all flex flex-col items-center justify-center ${
+                    className={`w-full py-2 sm:py-2.5 px-1 rounded-lg text-xs font-bold transition-all flex flex-col items-center justify-center touch-manipulation select-none active:scale-95 ${
                       isSelected
                         ? 'bg-gradient-to-r from-raga-500 to-amber-600 text-white shadow-md ring-2 ring-raga-400 ring-offset-1 scale-[1.02]'
                         : 'bg-stone-50 hover:bg-amber-100/70 text-stone-800 border border-stone-200 hover:border-amber-300'
                     }`}
                   >
                     <span className="text-sm font-extrabold">{item.symbol}</span>
-                    <span className="text-[9px] font-medium opacity-80 truncate max-w-full">
+                    <span className="text-[8px] sm:text-[9px] font-medium opacity-80 truncate max-w-full">
                       {item.label}
                     </span>
                   </button>

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "37i9dQZF1DWSxEc2RjBCQv",
+    "title": "Latest Malayalam",
+    "tagline": "Official Spotify Editorial • Brand New Film Releases",
+    "category": "Official Editorial",
+    "badge": "Live Editorial Feed",
+    "description": "Spotify's flagship official editorial playlist for freshly released Malayalam cinema songs, soundtracks, and teaser audio drops. Automatically updated live every week.",
+    "thumbnail": "https://i.scdn.co/image/ab67706f00000002e77370da1c2bb28e0dc3691d",
+    "featured": true,
+    "tags": ["Official", "New Releases", "Film Soundtracks", "Weekly Updates"]
+  },
+  {
+    "id": "37i9dQZF1DWTYKFynxp6Fs",
+    "title": "Trending Now Malayalam",
+    "tagline": "Viral Mollywood Hits & Trending Chartbusters",
+    "category": "Viral & Trending",
+    "badge": "Top Viral",
+    "description": "The most streamed, viral, and trending songs from recent Malayalam cinema blockbusters and social media trends across Kerala.",
+    "thumbnail": "https://i.scdn.co/image/ab67706f00000002547620ef4db4d13e248bc2be",
+    "featured": true,
+    "tags": ["Trending", "Viral", "Blockbusters", "Party & Beats"]
+  },
+  {
+    "id": "0XH8siiUbvs2TqBNTH4PO6",
+    "title": "Latest Malayalam Songs 2026",
+    "tagline": "New Malayalam Movie Hit Songs",
+    "category": "Cinema Hits",
+    "badge": "2026 Cinema Hits",
+    "description": "Continuous live collection of new cinema songs and freshly debuted movie soundtracks directly from theatre releases.",
+    "thumbnail": "https://mosaic.scdn.co/300/ab67616d00001e0205e1e8b23410216d4c7a82e3ab67616d00001e02ecb4e63c970cc07b8acb198aab67616d00001e02f2cbe6c6da9591ad934b60b6ab67616d00001e02fe67400ba83ea29df7f45f17",
+    "featured": false,
+    "tags": ["Movies", "Soundtracks", "Current Year"]
+  },
+  {
+    "id": "1WaU5rVLBwjBxzTFSbtqpM",
+    "title": "Trending Malayalam Songs 2026 | Top 50",
+    "tagline": "Top 50 Mollywood Chartbusters",
+    "category": "Top 50",
+    "badge": "Top 50",
+    "description": "Curated top 50 Malayalam chartbusters, featuring high-energy tracks and melodic songs ruling the streaming charts.",
+    "thumbnail": "https://image-cdn-fa.spotifycdn.com/image/ab67706c0000da846ed1c4a3f6a3edf135784ad5",
+    "featured": false,
+    "tags": ["Top 50", "Chartbusters", "Hits"]
+  },
+  {
+    "id": "0CFuhNtY6BxdNJSVC2ZY5x",
+    "title": "Latest Malayalam Top 100 Hits",
+    "tagline": "100-Track Mega Cinema Playlist",
+    "category": "Top 100",
+    "badge": "Top 100",
+    "description": "100 premier Malayalam hits from recent theatre releases and melodic modern classics that every Malayalam music fan loves.",
+    "thumbnail": "https://mosaic.scdn.co/300/ab67616d00001e02281672d5181c18ba358f7ffcab67616d00001e02323fa134215b5cdd9125d219ab67616d00001e02543b367eb8571bad77a3995aab67616d00001e02dba063395a0aa427489d1c7b",
+    "featured": false,
+    "tags": ["Top 100", "Cinema", "Binge Listen"]
+  },
+  {
+    "id": "0BbmpxpSdfV6LMkD5uiK6b",
+    "title": "Latest Malayalam Album & Indie Songs",
+    "tagline": "Fresh Independent & Non-Film Releases",
+    "category": "Indie & Pop",
+    "badge": "Indie Music",
+    "description": "Spotlighting Kerala's vibrant independent music scene, breakout singles, indie artists, and non-film musical projects.",
+    "thumbnail": "https://mosaic.scdn.co/300/ab67616d00001e027146d99926a2a12bff6c407eab67616d00001e028c681e9dd49d13f7d223f8bfab67616d00001e02adf1da6ee7e9ae78bf3f1e32ab67616d00001e02afb90a615f31c1f9b7e63088",
+    "featured": false,
+    "tags": ["Indie", "Music Videos", "Alternative"]
+  }
+]
