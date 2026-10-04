@@ -18,7 +18,7 @@ android {
     }
     signingConfigs {
         release {
-            def keystoreFile = file('../raga-finder-release.keystore')
+            def keystoreFile = file("${project.rootDir}/raga-finder-release.keystore")
             if (keystoreFile.exists()) {
                 storeFile keystoreFile
                 storePassword System.getenv("KEYSTORE_PASSWORD") ?: "ragafinder2026"
@@ -58,7 +58,7 @@ apply from: 'capacitor.build.gradle'
 
 try {
     def servicesJSON = file('google-services.json')
-    if (servicesJSON.text) {
+    if (servicesJSON.exists() && servicesJSON.text) {
         apply plugin: 'com.google.gms.google-services'
     }
 } catch(Exception e) {

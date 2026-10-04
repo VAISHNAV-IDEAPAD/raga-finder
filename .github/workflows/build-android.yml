@@ -45,6 +45,10 @@ jobs:
       - name: Sync Capacitor Android
         run: npx cap sync android
 
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
+
       - name: Build Release APK & AAB
         working-directory: android
         env:
@@ -54,6 +58,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD || 'ragafinder2026' }}
         run: |
           chmod +x gradlew
+          ./gradlew --version
           ./gradlew assembleRelease --stacktrace
           ./gradlew bundleRelease --stacktrace
 
