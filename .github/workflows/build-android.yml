@@ -23,7 +23,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -42,24 +42,20 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Sync Capacitor Android
         run: npx cap sync android
-
-      - name: Make Gradle Wrapper Executable
-        run: chmod +x android/gradlew
 
       - name: Build Release APK & AAB
         working-directory: android
         env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD || 'ragafinder2026' }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS || 'ragafinder' }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD || 'ragafinder2026' }}
         run: |
-          ./gradlew assembleRelease
-          ./gradlew bundleRelease
+          chmod +x gradlew
+          ./gradlew assembleRelease --stacktrace
+          ./gradlew bundleRelease --stacktrace
 
       - name: Upload Signed APK (For Direct Phone Testing & Sideloading)
         uses: actions/upload-artifact@v4
