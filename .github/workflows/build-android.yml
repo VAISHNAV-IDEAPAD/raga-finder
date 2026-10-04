@@ -35,11 +35,11 @@ jobs:
       - name: Build Next.js Application
         run: npm run build
 
-      - name: Setup Java 17
+      - name: Setup Java 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
           cache: 'gradle'
 
       - name: Sync Capacitor Android
@@ -59,8 +59,8 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew --version
-          ./gradlew assembleRelease --stacktrace
-          ./gradlew bundleRelease --stacktrace
+          ./gradlew assembleRelease --no-daemon --stacktrace
+          ./gradlew bundleRelease --no-daemon --stacktrace
 
       - name: Upload Signed APK (For Direct Phone Testing & Sideloading)
         uses: actions/upload-artifact@v4

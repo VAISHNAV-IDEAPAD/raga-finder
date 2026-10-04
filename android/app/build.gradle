@@ -18,14 +18,19 @@ android {
     }
     signingConfigs {
         release {
-            def keystoreFile = file("${project.rootDir}/raga-finder-release.keystore")
-            if (keystoreFile.exists()) {
-                storeFile keystoreFile
-                storePassword System.getenv("KEYSTORE_PASSWORD") ?: "ragafinder2026"
-                keyAlias System.getenv("KEY_ALIAS") ?: "ragafinder"
-                keyPassword System.getenv("KEY_PASSWORD") ?: "ragafinder2026"
+            def keystoreFile = file('raga-finder-release.keystore')
+            if (!keystoreFile.exists()) {
+                keystoreFile = file("${project.rootDir}/raga-finder-release.keystore")
             }
+            storeFile keystoreFile
+            storePassword System.getenv("KEYSTORE_PASSWORD") ?: "ragafinder2026"
+            keyAlias System.getenv("KEY_ALIAS") ?: "ragafinder"
+            keyPassword System.getenv("KEY_PASSWORD") ?: "ragafinder2026"
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     buildTypes {
         release {
