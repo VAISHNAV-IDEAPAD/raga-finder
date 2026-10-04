@@ -15,6 +15,9 @@ on:
           - release
           - debug
 
+permissions:
+  contents: write
+
 jobs:
   build-android:
     runs-on: ubuntu-latest
@@ -63,25 +66,19 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew --version
-          ./gradlew assembleRelease --no-daemon --stacktrace --info 2>&1 | tee assemble.log || (echo "=== GRADLE ASSEMBLE RELEASE FAILED ===" && tail -n 250 assemble.log && exit 1)
-          ./gradlew bundleRelease --no-daemon --stacktrace --info 2>&1 | tee bundle.log || (echo "=== GRADLE BUNDLE RELEASE FAILED ===" && tail -n 250 bundle.log && exit 1)
-
-      - name: Upload Gradle Build Logs on Failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: gradle-build-logs
-          path: |
-            android/assemble.log
-            android/bundle.log
-            android/app/build/reports/
-          retention-days: 7
+          ./gradlew assembleRelease --no-daemon --stacktrace
+          ./gradlew bundleRelease --no-daemon --stacktrace
+          echo "=== Release APK Output Directory ==="
+          ls -la app/build/outputs/apk/release/ || true
+          echo "=== Release Bundle Output Directory ==="
+          ls -la app/build/outputs/bundle/release/ || true
 
       - name: Upload Signed APK (For Direct Phone Testing & Sideloading)
         uses: actions/upload-artifact@v4
         with:
           name: raga-finder-release-apk
           path: android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
           retention-days: 30
 
       - name: Upload Signed AAB (For Google Play Store Console Upload)
@@ -89,4 +86,28 @@ jobs:
         with:
           name: raga-finder-playstore-aab
           path: android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
           retention-days: 30
+
+      - name: Publish to GitHub Releases (Direct 1-Click Download)
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+        with:
+          tag_name: v1.0.0
+          name: "Raga Finder Android Release v1.0"
+          body: |
+            ## 🎵 Raga Finder Android App (v1.0)
+            
+            ### 📱 Direct Downloads:
+            - **Release APK** (Direct phone installation & testing): download below under Assets.
+            - **Google Play AAB** (Google Play Store upload bundle): download below under Assets.
+            
+            ### 🔑 Production Keystore:
+            - Package ID: `com.ragafinder.app`
+            - Target SDK: 35 (Android 15)
+            - Signing: RSA 2048-bit, valid until Feb 2054
+          files: |
+            android/app/build/outputs/apk/release/*.apk
+            android/app/build/outputs/bundle/release/*.aab
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

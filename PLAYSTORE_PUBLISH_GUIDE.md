@@ -40,12 +40,12 @@ Keep these credentials safe (Google Play Store requires all future app updates t
 
 Since your project is already connected to GitHub (`origin https://github.com/VAISHNAV-IDEAPAD/raga-finder.git`), your release `.apk` and `.aab` are already built and ready!
 
-* **Latest Successful Build**: [GitHub Actions Run #37187933525](https://github.com/VAISHNAV-IDEAPAD/raga-finder/actions/runs/37187933525)
-* Scroll down to the **Artifacts** section on that page to download:
-  * **`raga-finder-release-apk`**: Download this to get the signed `.apk` file to install and test directly on your Android phone.
-  * **`raga-finder-playstore-aab`**: Download this to get the signed `.aab` (Android App Bundle) file to upload directly to Google Play Console.
+* **Direct 1-Click Download**: [GitHub Releases](https://github.com/VAISHNAV-IDEAPAD/raga-finder/releases)
+  * Download **`app-release.apk`**: Install and test directly on your Android phone.
+  * Download **`app-release.aab`**: Upload directly to Google Play Console.
+* **Actions Run Artifacts**: [GitHub Actions Builds](https://github.com/VAISHNAV-IDEAPAD/raga-finder/actions/workflows/build-android.yml)
 
-Whenever you push new changes to the `main` branch, GitHub Actions will automatically re-build and sign fresh `.apk` and `.aab` artifacts.
+Whenever you push new changes to the `main` branch, GitHub Actions will automatically compile, sign, and publish fresh `.apk` and `.aab` files to the Releases page.
 
 ---
 
