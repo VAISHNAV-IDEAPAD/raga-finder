@@ -1,0 +1,49 @@
+{
+  "name": "Raga Finder - Carnatic & Hindustani Musicology",
+  "short_name": "Raga Finder",
+  "description": "Identify Carnatic & Hindustani ragas by notes, search thousands of classical & cinema songs, and listen to 90 live Raga Radio stations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1917",
+  "theme_color": "#d97706",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["music", "education", "entertainment"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Raga Radio",
+      "short_name": "Radio",
+      "description": "Stream 90 classical & film raga stations",
+      "url": "/?tab=radio",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "908 Ragas Explorer",
+      "short_name": "Ragas",
+      "description": "Browse 908 Melakarta and Janya ragas",
+      "url": "/?tab=ragas",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "SOS Musician Rescue",
+      "short_name": "SOS",
+      "description": "Fast raga identification during live concerts",
+      "url": "/?tab=sos",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

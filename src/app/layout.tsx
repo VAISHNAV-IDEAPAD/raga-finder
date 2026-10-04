@@ -24,6 +24,16 @@ export const metadata: Metadata = {
     'Arohana Avarohana',
     'Indian Classical Music',
   ],
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/icon-192.png',
+    apple: '/icon-192.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Raga Finder',
+  },
 };
 
 export default function RootLayout({
