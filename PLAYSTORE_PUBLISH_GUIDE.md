@@ -38,20 +38,14 @@ Keep these credentials safe (Google Play Store requires all future app updates t
 
 ### Method 1: Automated 1-Click Cloud Build via GitHub Actions (Recommended)
 
-Since your project is already connected to GitHub (`origin https://github.com/VAISHNAV-IDEAPAD/raga-finder.git`), you can build the release APK and AAB with zero setup:
+Since your project is already connected to GitHub (`origin https://github.com/VAISHNAV-IDEAPAD/raga-finder.git`), your release `.apk` and `.aab` are already built and ready!
 
-1. Commit and push your changes to GitHub:
-   ```bash
-   git add .
-   git commit -m "feat(android): Add native Android project, keystore, and GitHub Actions build workflow"
-   git push origin main
-   ```
-2. Open your repository on GitHub: `https://github.com/VAISHNAV-IDEAPAD/raga-finder`
-3. Click on the **Actions** tab.
-4. Select **Build Android APK & Play Store AAB** on the left sidebar and click **Run workflow**.
-5. When the build completes (~3 minutes), scroll down to the **Artifacts** section:
-   * **`raga-finder-release-apk`**: Download this to get the `.apk` file to install directly on your Android phone.
-   * **`raga-finder-playstore-aab`**: Download this to get the `.aab` file to upload directly to the Google Play Console!
+* **Latest Successful Build**: [GitHub Actions Run #37187933525](https://github.com/VAISHNAV-IDEAPAD/raga-finder/actions/runs/37187933525)
+* Scroll down to the **Artifacts** section on that page to download:
+  * **`raga-finder-release-apk`**: Download this to get the signed `.apk` file to install and test directly on your Android phone.
+  * **`raga-finder-playstore-aab`**: Download this to get the signed `.aab` (Android App Bundle) file to upload directly to Google Play Console.
+
+Whenever you push new changes to the `main` branch, GitHub Actions will automatically re-build and sign fresh `.apk` and `.aab` artifacts.
 
 ---
 
