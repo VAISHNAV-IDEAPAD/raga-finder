@@ -18,6 +18,9 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
     steps:
       - name: Checkout Code
@@ -45,22 +48,34 @@ jobs:
       - name: Sync Capacitor Android
         run: npx cap sync android
 
-      - name: Accept Android SDK Licenses
+      - name: Setup Android SDK Environment & Licenses
         run: |
+          echo "sdk.dir=/usr/local/lib/android/sdk" > android/local.properties
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" 2>/dev/null || true
 
       - name: Build Release APK & AAB
         working-directory: android
         env:
-          ANDROID_HOME: /usr/local/lib/android/sdk
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD || 'ragafinder2026' }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS || 'ragafinder' }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD || 'ragafinder2026' }}
         run: |
           chmod +x gradlew
           ./gradlew --version
-          ./gradlew assembleRelease --no-daemon --stacktrace
-          ./gradlew bundleRelease --no-daemon --stacktrace
+          ./gradlew assembleRelease --no-daemon --stacktrace --info 2>&1 | tee assemble.log || (echo "=== GRADLE ASSEMBLE RELEASE FAILED ===" && tail -n 250 assemble.log && exit 1)
+          ./gradlew bundleRelease --no-daemon --stacktrace --info 2>&1 | tee bundle.log || (echo "=== GRADLE BUNDLE RELEASE FAILED ===" && tail -n 250 bundle.log && exit 1)
+
+      - name: Upload Gradle Build Logs on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-build-logs
+          path: |
+            android/assemble.log
+            android/bundle.log
+            android/app/build/reports/
+          retention-days: 7
 
       - name: Upload Signed APK (For Direct Phone Testing & Sideloading)
         uses: actions/upload-artifact@v4

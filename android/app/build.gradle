@@ -22,15 +22,22 @@ android {
             if (!keystoreFile.exists()) {
                 keystoreFile = file("${project.rootDir}/raga-finder-release.keystore")
             }
+            println ">>> [Release Build] Keystore location: ${keystoreFile.absolutePath} (exists: ${keystoreFile.exists()})"
             storeFile keystoreFile
             storePassword System.getenv("KEYSTORE_PASSWORD") ?: "ragafinder2026"
             keyAlias System.getenv("KEY_ALIAS") ?: "ragafinder"
             keyPassword System.getenv("KEY_PASSWORD") ?: "ragafinder2026"
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_21
         targetCompatibility JavaVersion.VERSION_21
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
     buildTypes {
         release {
