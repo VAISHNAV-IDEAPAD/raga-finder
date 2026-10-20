@@ -93,10 +93,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: v1.0.0
-          name: "Raga Finder Android Release v1.0"
+          tag_name: v1.0.1
+          name: "Raga Finder Android Release v1.0.1"
           body: |
-            ## 🎵 Raga Finder Android App (v1.0)
+            ## 🎵 Raga Finder Android App (v1.0.1)
             
             ### 📱 Direct Downloads:
             - **Release APK** (Direct phone installation & testing): download below under Assets.

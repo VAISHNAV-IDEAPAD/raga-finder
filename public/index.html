@@ -94,12 +94,22 @@
   <div class="status-text" id="status">Loading Ragas...</div>
 
   <script>
-    // If running in Capacitor with a live server URL configured, this shell will transition automatically
+    const APP_URL = 'https://raga-finder-ideapad.vercel.app';
     window.addEventListener('DOMContentLoaded', () => {
+      const statusEl = document.getElementById('status');
+      if (statusEl) statusEl.textContent = 'Launching Raga Finder...';
+      
+      // Auto navigate to live application
       setTimeout(() => {
-        const statusEl = document.getElementById('status');
-        if (statusEl) statusEl.textContent = 'Starting Engine...';
-      }, 1000);
+        window.location.replace(APP_URL);
+      }, 300);
+
+      // Timeout fallback if offline or unreachable
+      setTimeout(() => {
+        if (statusEl) {
+          statusEl.innerHTML = '<span style="color:#f87171">Connection timeout</span><br><br><button onclick="window.location.replace(\'' + APP_URL + '\')" style="background:#d97706;color:white;border:none;padding:10px 20px;border-radius:10px;font-weight:bold;cursor:pointer;font-size:14px;margin-top:8px;">Retry Connection</button>';
+        }
+      }, 7000);
     });
   </script>
 </body>

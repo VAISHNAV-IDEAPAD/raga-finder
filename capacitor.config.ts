@@ -6,9 +6,8 @@ const config: CapacitorConfig = {
   webDir: 'public',
   server: {
     androidScheme: 'https',
+    url: 'https://raga-finder-ideapad.vercel.app',
     cleartext: true,
-    // When your Vercel/live URL is ready, set it below to connect live backend & AI:
-    // url: 'https://raga-finder.vercel.app',
   },
   android: {
     allowMixedContent: true,
