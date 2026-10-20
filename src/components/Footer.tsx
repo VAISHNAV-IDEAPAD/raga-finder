@@ -57,9 +57,15 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-stone-800 text-xs text-stone-500 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>
-            Crafted for classical musicians, students, and connoisseurs.
-          </p>
+          <div className="flex items-center gap-4">
+            <p>
+              Crafted for classical musicians, students, and connoisseurs.
+            </p>
+            <span>&bull;</span>
+            <Link href="/privacy" className="text-amber-400/90 hover:text-amber-300 underline underline-offset-2">
+              Privacy Policy
+            </Link>
+          </div>
           <div className="flex items-center gap-1">
             <span>Powered by</span>
             <span className="text-stone-300 font-medium">OpenAI</span>
