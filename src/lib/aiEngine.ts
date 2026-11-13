@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition, RagaProfile, SongRagaEntry } from '@/types/raga';
 import { retrieveSongRAGContext, RetrievedRAGContext } from './ragRetriever';
+import { graphRagOrchestrator } from './graphRag';
 
 export interface AIAvailability {
   available: boolean;
@@ -262,18 +263,30 @@ export async function executeAIEngine(
     throw new Error('Missing API key for AI provider ' + availability.provider);
   }
 
-  // 0. If this is a song query, retrieve grounding context via Vector DB & Encyclopedic Search (RAG)
+  // 0. If this is a song query, retrieve grounding context via Vector DB, Encyclopedic Search (RAG) & Knowledge Graph (GraphRAG)
   let ragContext: RetrievedRAGContext | null = null;
+  let graphRagSnippet = '';
+  let graphReasoningPath = '';
+
   if (request.mode === 'song' && request.songQuery) {
     try {
       ragContext = await retrieveSongRAGContext(request.songQuery);
     } catch (e) {
       console.warn('[RAG Retrieval Warning]:', e);
     }
+
+    try {
+      const graphRagRes = await graphRagOrchestrator.retrieveGraphRAGContext(request.songQuery);
+      graphRagSnippet = graphRagRes.groundedPromptSnippet;
+      graphReasoningPath = graphRagRes.reasoningPath;
+    } catch (e) {
+      console.warn('[GraphRAG Retrieval Warning]:', e);
+    }
   }
 
+  const combinedKnowledge = [ragContext?.promptKnowledgeBlock, graphRagSnippet].filter(Boolean).join('\n\n');
   const systemPrompt = buildSystemPrompt(activeRules);
-  const userQuery = buildUserQuery(request, ragContext?.promptKnowledgeBlock);
+  const userQuery = buildUserQuery(request, combinedKnowledge);
 
   let parsed: any;
   if (availability.provider === 'gemini') {
@@ -333,7 +346,14 @@ export async function executeAIEngine(
     } : undefined,
     rawQuery: request,
     aiProvider: availability.provider,
-    ragContext: ragContext ? ragContext.ragContextInfo : undefined,
+    ragContext: ragContext
+      ? {
+          ...ragContext.ragContextInfo,
+          graphReasoningPath: graphReasoningPath || undefined,
+        }
+      : graphReasoningPath
+      ? { graphReasoningPath }
+      : undefined,
   };
 }
 

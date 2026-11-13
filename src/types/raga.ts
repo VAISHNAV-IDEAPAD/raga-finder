@@ -98,6 +98,7 @@ export interface RAGContextInfo {
     title: string;
     raga: string;
   }>;
+  graphReasoningPath?: string;
 }
 
 export interface IdentifyResponse {

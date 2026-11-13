@@ -18,12 +18,14 @@ import {
   ArrowRight,
   Mic,
   Binary,
+  Network,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
 import ActivateAiModal from '@/components/ActivateAiModal';
 import AudioRagaDetectorModal from '@/components/AudioRagaDetectorModal';
 import RuleSearchModal from '@/components/RuleSearchModal';
+import KnowledgeGraphModal from '@/components/KnowledgeGraphModal';
 import RagasExplorerTab from '@/components/RagasExplorerTab';
 import DownloadsTab from '@/components/DownloadsTab';
 import SosTab from '@/components/SosTab';
@@ -46,6 +48,7 @@ export default function HomePage() {
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isAudioModalOpen, setIsAudioModalOpen] = useState(false);
   const [isRuleModalOpen, setIsRuleModalOpen] = useState(false);
+  const [isGraphModalOpen, setIsGraphModalOpen] = useState(false);
   const [needsAiActivationFor, setNeedsAiActivationFor] = useState<string | null>(null);
   const [needsAiActivationContext, setNeedsAiActivationContext] = useState<any | null>(null);
 
@@ -460,6 +463,15 @@ export default function HomePage() {
                 <Binary className="w-3.5 h-3.5 text-amber-700" />
                 <span>Rule Engine &amp; Katapayadi</span>
               </button>
+
+              <button
+                type="button"
+                onClick={() => setIsGraphModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl bg-violet-500/15 hover:bg-violet-500/25 border border-violet-500/40 text-violet-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+              >
+                <Network className="w-3.5 h-3.5 text-violet-600" />
+                <span>Knowledge Graph &amp; GraphRAG</span>
+              </button>
             </div>
           </>
         )}
@@ -813,6 +825,12 @@ export default function HomePage() {
       <RuleSearchModal
         isOpen={isRuleModalOpen}
         onClose={() => setIsRuleModalOpen(false)}
+        onSelectRaga={handleSelectRagaFromModal}
+      />
+
+      <KnowledgeGraphModal
+        isOpen={isGraphModalOpen}
+        onClose={() => setIsGraphModalOpen(false)}
         onSelectRaga={handleSelectRagaFromModal}
       />
     </div>

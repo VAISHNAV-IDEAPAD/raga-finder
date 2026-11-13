@@ -10,6 +10,7 @@ import {
   Heart,
   BookOpen,
   AlertCircle,
+  Share2,
 } from 'lucide-react';
 import { IdentifyResponse } from '@/types/raga';
 import { playSwaraSequence } from '@/lib/audioSynth';
@@ -236,6 +237,18 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                 </span>
                 <span className="text-stone-300">
                   {result.ragContext.candidateRagas.slice(0, 3).map((c) => `${c.name} (${Math.round(c.score * 100)}%)`).join(' • ')}
+                </span>
+              </div>
+            )}
+
+            {/* GraphRAG Ontological Lineage */}
+            {result.ragContext && result.ragContext.graphReasoningPath && (
+              <div className="mt-2 pt-2 border-t border-stone-700/60 flex items-start gap-1.5 text-[11px] text-stone-300">
+                <span className="font-bold text-amber-300 flex items-center gap-1 shrink-0">
+                  <Share2 className="w-3 h-3 text-amber-400" /> GraphRAG Lineage:
+                </span>
+                <span className="text-amber-100 font-mono text-[10px] break-words">
+                  {result.ragContext.graphReasoningPath}
                 </span>
               </div>
             )}
