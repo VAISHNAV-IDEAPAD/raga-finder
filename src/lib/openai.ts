@@ -7,6 +7,8 @@ import { lookupSongOnMSIDB } from './msidbLookup';
 import { executeAIEngine, getAIAvailability } from './aiEngine';
 import { resolveSongWithOfflineRAG } from './ragRetriever';
 import { vectorStore } from './vectorStore';
+import { hybridSearch } from './hybridSearch';
+import { structuredDb } from './structuredDb';
 
 export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyResponse> {
   const adminRules = await getAdminRules();
@@ -222,31 +224,19 @@ function resolveFromDatabaseAndRules(
     }
   }
 
-  // Vector Database search by swaras
+  // Hybrid Search by swaras (Dense Embeddings + Pitch Bitvectors + Structured DB)
   if (request.mode === 'swaras' && request.swaras && request.swaras.length > 0) {
-    const vectorMatches = vectorStore.searchRagas('', request.swaras, 1);
-    const bestMatch = vectorMatches.length > 0 ? vectorMatches[0].raga : vectorStore.getAllRagas()[0];
-    const score = vectorMatches.length > 0 ? vectorMatches[0].score : 0.5;
+    const hybridMatches = hybridSearch.searchRagas('', request.swaras, 1);
+    const bestMatch = hybridMatches.length > 0 ? hybridMatches[0].raga : structuredDb.ragas[0];
+    const score = hybridMatches.length > 0 ? hybridMatches[0].score : 0.5;
 
     return {
       success: true,
       source: 'database',
       confidence: score > 0.8 ? 'High' : 'Moderate',
       raga: {
-        name: bestMatch.name,
-        alternateNames: bestMatch.alternateNames,
-        tradition: bestMatch.tradition as Tradition,
-        melakartaNumber: bestMatch.melakartaNumber,
-        thaat: bestMatch.thaat,
-        parentRaga: bestMatch.parentRaga,
-        arohana: bestMatch.arohana,
-        avarohana: bestMatch.avarohana,
-        swarasCarnatic: bestMatch.swarasCarnatic || bestMatch.swaras,
-        swarasHindustani: bestMatch.swarasHindustani || [],
-        rasaOrMood: bestMatch.rasa || 'Melodic',
-        timeOfDay: bestMatch.timeOfDay || 'Anytime',
-        famousSongs: [],
-        explanation: `Matched from curated Raga knowledge base via Vector Swara indexing. ${bestMatch.explanation || ''}`,
+        ...bestMatch,
+        explanation: `Matched from curated Raga knowledge base via Hybrid Search (Dense Embeddings + Structured Melakarta/Thaat Index). ${bestMatch.explanation || ''}`,
       },
       rawQuery: request,
     };
@@ -287,28 +277,16 @@ function resolveFromDatabaseAndRules(
       };
     }
 
-    const vectorMatches = vectorStore.searchRagas(request.description, [], 1);
-    if (vectorMatches.length > 0) {
-      const match = vectorMatches[0].raga;
+    const hybridMatches = hybridSearch.searchRagas(request.description, [], 1);
+    if (hybridMatches.length > 0) {
+      const match = hybridMatches[0].raga;
       return {
         success: true,
         source: 'database',
-        confidence: vectorMatches[0].score > 0.3 ? 'High' : 'Moderate',
+        confidence: hybridMatches[0].score > 0.3 ? 'High' : 'Moderate',
         raga: {
-          name: match.name,
-          alternateNames: match.alternateNames,
-          tradition: match.tradition as Tradition,
-          melakartaNumber: match.melakartaNumber,
-          thaat: match.thaat,
-          parentRaga: match.parentRaga,
-          arohana: match.arohana,
-          avarohana: match.avarohana,
-          swarasCarnatic: match.swarasCarnatic || match.swaras,
-          swarasHindustani: match.swarasHindustani || [],
-          rasaOrMood: match.rasa || 'Melodic',
-          timeOfDay: match.timeOfDay || 'Anytime',
-          famousSongs: [],
-          explanation: `Matched from curated Raga knowledge base via Vector Semantic Search. ${match.explanation || ''}`,
+          ...match,
+          explanation: `Matched from curated Raga knowledge base via Hybrid Search (Dense Embeddings + Structured Melakarta/Thaat Index). ${match.explanation || ''}`,
         },
         rawQuery: request,
       };

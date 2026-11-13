@@ -2,6 +2,8 @@ import { request as httpsRequest } from 'https';
 import { vectorStore, VectorSearchResult, ComposerRagaProfile } from './vectorStore';
 import { RagaProfile, SongRagaEntry, Tradition, RAGContextInfo } from '@/types/raga';
 import { resolveRagaProfile } from './songSearch';
+import { hybridSearch, HybridRagaResult } from './hybridSearch';
+import { structuredDb } from './structuredDb';
 
 export interface RetrievedRAGContext {
   songQuery: string;
@@ -198,7 +200,7 @@ export async function retrieveSongRAGContext(songQuery: string): Promise<Retriev
     });
   }
 
-  // 3. Vector Database Search over 190+ Verified Ragas
+  // 3. Hybrid Search over 190+ Verified Ragas (Dense Embeddings + BM25 + Structured DB)
   // Build a rich semantic query combining song title, extract, mood, and composer style
   const semanticVectorQuery = [
     songQuery,
@@ -210,16 +212,16 @@ export async function retrieveSongRAGContext(songQuery: string): Promise<Retriev
     .filter(Boolean)
     .join(' ');
 
-  const vectorMatches: VectorSearchResult[] = vectorStore.searchRagas(semanticVectorQuery, [], 5);
+  const hybridMatches: HybridRagaResult[] = hybridSearch.searchRagas(semanticVectorQuery, [], 5);
 
-  const candidateRagas = vectorMatches.map((m) => ({
+  const candidateRagas = hybridMatches.map((m) => ({
     name: m.raga.name,
     score: Math.round(m.score * 100) / 100,
     tradition: m.raga.tradition,
     arohana: m.raga.arohana,
     avarohana: m.raga.avarohana,
     swaras: m.raga.swarasCarnatic,
-    rasa: m.raga.rasa,
+    rasa: m.raga.rasaOrMood,
     melakartaNumber: m.raga.melakartaNumber,
     thaat: m.raga.thaat,
   }));

@@ -2,6 +2,7 @@ import songsData from '@/data/song_ragas_db.json';
 import seedRagas from '@/data/seed_ragas.json';
 import msidbRagasProfiles from '@/data/msidb_ragas_profiles.json';
 import { SongRagaEntry, Tradition, RagaProfile } from '@/types/raga';
+import { hybridSearch } from './hybridSearch';
 
 // Normalization helper: strips accents, symbols, and standardizes transliteration
 export function normalizeSongQuery(str: string): string {
@@ -759,6 +760,15 @@ export function findSongInDatabase(query: string): {
       highestScore = score;
       bestMatch = song;
       if (score === 100) break; // Perfect match
+    }
+  }
+
+  // If exact loop didn't yield high score, query Hybrid Search (BM25 + Dense Embeddings + Structured DB)
+  if (!bestMatch || highestScore < 70) {
+    const hybridMatches = hybridSearch.searchSongs(rawQ, undefined, 1);
+    if (hybridMatches.length > 0 && hybridMatches[0].score >= 0.25) {
+      bestMatch = hybridMatches[0].song;
+      highestScore = 75;
     }
   }
 
