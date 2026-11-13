@@ -79,9 +79,30 @@ export interface RagaProfile {
   closelyRelatedRagas?: string[];
 }
 
+export interface RAGContextInfo {
+  detectedTitle?: string;
+  detectedFilm?: string;
+  detectedComposer?: string;
+  detectedSingers?: string;
+  detectedYear?: string;
+  detectedLanguage?: string;
+  retrievalSummary?: string;
+  candidateRagas?: Array<{
+    name: string;
+    score: number;
+    tradition: string;
+    arohana: string;
+    avarohana: string;
+  }>;
+  composerStyleSamples?: Array<{
+    title: string;
+    raga: string;
+  }>;
+}
+
 export interface IdentifyResponse {
   success: boolean;
-  source: 'openai' | 'gemini' | 'admin_rule' | 'database' | 'ai_musicologist';
+  source: 'openai' | 'gemini' | 'admin_rule' | 'database' | 'ai_musicologist' | 'rag_augmented';
   confidence: 'Exact Match' | 'High' | 'Moderate' | 'Low';
   raga: RagaProfile;
   isMultiRaga?: boolean;
@@ -96,6 +117,7 @@ export interface IdentifyResponse {
   needsAiActivation?: boolean;
   aiProvider?: 'gemini' | 'openai' | 'none';
   unindexedSongTitle?: string;
+  ragContext?: RAGContextInfo;
 }
 
 export interface AdminRule {

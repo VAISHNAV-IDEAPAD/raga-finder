@@ -5,6 +5,8 @@ import { findSongInDatabase, resolveRagaProfile } from './songSearch';
 import { identifyWithAIMusicologist } from './aiMusicologist';
 import { lookupSongOnMSIDB } from './msidbLookup';
 import { executeAIEngine, getAIAvailability } from './aiEngine';
+import { resolveSongWithOfflineRAG } from './ragRetriever';
+import { vectorStore } from './vectorStore';
 
 export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyResponse> {
   const adminRules = await getAdminRules();
@@ -108,7 +110,7 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
     }
   }
 
-  // STAGE 3: Offline AI Musicologist Knowledge Base
+  // STAGE 3: Offline AI Musicologist & Vector RAG Resolution (Zero-AI-Key)
   if (request.mode === 'song' && request.songQuery) {
     const offlineResult = identifyWithAIMusicologist(request.songQuery);
     if (offlineResult && offlineResult.success) {
@@ -122,14 +124,34 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
       return offlineResult;
     }
 
-    // Song is truly not in offline DB and AI is not active: Prompt user to activate AI!
+    // Try Vector RAG Resolution
+    const offlineRag = await resolveSongWithOfflineRAG(request.songQuery);
+    if (offlineRag.success && offlineRag.ragaProfile) {
+      return {
+        success: true,
+        source: 'rag_augmented',
+        confidence: 'High',
+        raga: offlineRag.ragaProfile,
+        matchedSong: offlineRag.matchedSong,
+        ragContext: offlineRag.ragInfo,
+        appliedAdminRule: matchedRule ? {
+          id: matchedRule.id,
+          title: matchedRule.title,
+          reason: matchedRule.ruleInstruction,
+        } : undefined,
+        rawQuery: request,
+      };
+    }
+
+    // Song is not in offline DB and AI is not active: Prompt user to activate AI with retrieved context!
     return {
       success: false,
-      source: 'ai_musicologist',
+      source: 'rag_augmented',
       confidence: 'Low',
       needsAiActivation: true,
       unindexedSongTitle: request.songQuery,
       aiProvider: 'none',
+      ragContext: offlineRag.ragInfo,
       raga: {
         name: 'Song Not In Offline Database',
         alternateNames: [],
@@ -141,7 +163,9 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
         rasaOrMood: 'Activate AI to analyze',
         timeOfDay: 'Anytime',
         famousSongs: [],
-        explanation: `"${request.songQuery}" is not in our offline database yet. Activate AI (Google Gemini or OpenAI) to instantly identify this song's raga, notes, and musicology!`,
+        explanation: offlineRag.ragInfo?.detectedFilm
+          ? `We retrieved details for "${request.songQuery}" from the film "${offlineRag.ragInfo.detectedFilm}"${offlineRag.ragInfo.detectedComposer ? ` composed by ${offlineRag.ragInfo.detectedComposer}` : ''}. Activate AI (Google Gemini or OpenAI) to analyze its exact musical scale and raga!`
+          : `"${request.songQuery}" is not in our offline database yet. Activate AI (Google Gemini or OpenAI) to instantly identify this song's raga, notes, and musicology!`,
       },
       rawQuery: request,
     };
@@ -198,31 +222,16 @@ function resolveFromDatabaseAndRules(
     }
   }
 
-  // Database search by swaras
+  // Vector Database search by swaras
   if (request.mode === 'swaras' && request.swaras && request.swaras.length > 0) {
-    const inputSet = new Set(request.swaras.map(s => s.trim().toUpperCase()));
-    let bestMatch = seedRagas[0];
-    let maxOverlap = 0;
-
-    for (const r of seedRagas) {
-      const swaraSet = new Set(r.swaras.map(s => s.trim().toUpperCase()));
-      let overlap = 0;
-      for (const s of inputSet) {
-        if (swaraSet.has(s)) overlap++;
-      }
-      // Score based on Jaccard similarity
-      const union = new Set([...Array.from(inputSet), ...Array.from(swaraSet)]).size;
-      const score = overlap / union;
-      if (score > maxOverlap) {
-        maxOverlap = score;
-        bestMatch = r;
-      }
-    }
+    const vectorMatches = vectorStore.searchRagas('', request.swaras, 1);
+    const bestMatch = vectorMatches.length > 0 ? vectorMatches[0].raga : vectorStore.getAllRagas()[0];
+    const score = vectorMatches.length > 0 ? vectorMatches[0].score : 0.5;
 
     return {
       success: true,
       source: 'database',
-      confidence: maxOverlap > 0.8 ? 'High' : 'Moderate',
+      confidence: score > 0.8 ? 'High' : 'Moderate',
       raga: {
         name: bestMatch.name,
         alternateNames: bestMatch.alternateNames,
@@ -232,15 +241,12 @@ function resolveFromDatabaseAndRules(
         parentRaga: bestMatch.parentRaga,
         arohana: bestMatch.arohana,
         avarohana: bestMatch.avarohana,
-        swarasCarnatic: bestMatch.swaras,
-        swarasHindustani: bestMatch.hindustaniNotes ? bestMatch.hindustaniNotes.split(', ') : [],
-        vadi: bestMatch.vadi,
-        samvadi: bestMatch.samvadi,
-        pakadOrSignature: bestMatch.pakad,
+        swarasCarnatic: bestMatch.swarasCarnatic || bestMatch.swaras,
+        swarasHindustani: bestMatch.swarasHindustani || [],
         rasaOrMood: bestMatch.rasa || 'Melodic',
         timeOfDay: bestMatch.timeOfDay || 'Anytime',
-        famousSongs: bestMatch.famousSongs || [],
-        explanation: `Matched from curated Raga knowledge base based on swara profile overlap. ${bestMatch.description || ''}`,
+        famousSongs: [],
+        explanation: `Matched from curated Raga knowledge base via Vector Swara indexing. ${bestMatch.explanation || ''}`,
       },
       rawQuery: request,
     };
@@ -267,7 +273,7 @@ function resolveFromDatabaseAndRules(
     }
   }
 
-  // Default fallback for description mode
+  // Vector search for description mode
   if (request.mode === 'description' && request.description) {
     const dbMatch = findSongInDatabase(request.description);
     if (dbMatch) {
@@ -277,6 +283,33 @@ function resolveFromDatabaseAndRules(
         confidence: 'Moderate',
         raga: dbMatch.ragaProfile,
         matchedSong: dbMatch.matchedSong,
+        rawQuery: request,
+      };
+    }
+
+    const vectorMatches = vectorStore.searchRagas(request.description, [], 1);
+    if (vectorMatches.length > 0) {
+      const match = vectorMatches[0].raga;
+      return {
+        success: true,
+        source: 'database',
+        confidence: vectorMatches[0].score > 0.3 ? 'High' : 'Moderate',
+        raga: {
+          name: match.name,
+          alternateNames: match.alternateNames,
+          tradition: match.tradition as Tradition,
+          melakartaNumber: match.melakartaNumber,
+          thaat: match.thaat,
+          parentRaga: match.parentRaga,
+          arohana: match.arohana,
+          avarohana: match.avarohana,
+          swarasCarnatic: match.swarasCarnatic || match.swaras,
+          swarasHindustani: match.swarasHindustani || [],
+          rasaOrMood: match.rasa || 'Melodic',
+          timeOfDay: match.timeOfDay || 'Anytime',
+          famousSongs: [],
+          explanation: `Matched from curated Raga knowledge base via Vector Semantic Search. ${match.explanation || ''}`,
+        },
         rawQuery: request,
       };
     }

@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition, RagaProfile, SongRagaEntry } from '@/types/raga';
+import { retrieveSongRAGContext, RetrievedRAGContext } from './ragRetriever';
 
 export interface AIAvailability {
   available: boolean;
@@ -121,12 +122,19 @@ function buildSystemPrompt(activeRules: AdminRule[]): string {
     '}';
 }
 
-function buildUserQuery(request: IdentifyRequest): string {
+function buildUserQuery(request: IdentifyRequest, ragKnowledgeBlock?: string): string {
   if (request.mode === 'song') {
-    return 'Identify the classical Raga of this Indian song, composition, or film track:\n' +
+    let q = 'Identify the classical Raga of this Indian song, composition, or film track:\n' +
       'Title / Query: "' + request.songQuery + '"\n' +
-      'Preferred Tradition: ' + (request.traditionPreference || 'Both') + '\n\n' +
-      'Please accurately determine the exact raga, film/album context, composer, singers, scale notes (Arohana and Avarohana), and detailed musical explanation.';
+      'Preferred Tradition: ' + (request.traditionPreference || 'Both') + '\n\n';
+
+    if (ragKnowledgeBlock) {
+      q += ragKnowledgeBlock + '\n' +
+        'CRITICAL MUSICOLOGICAL INSTRUCTION: You MUST ground your answer in the retrieved facts and candidate raga scales above. Align with the closest verified scale without hallucinating Arohana/Avarohana notes.\n\n';
+    }
+
+    q += 'Please accurately determine the exact raga, film/album context, composer, singers, scale notes (Arohana and Avarohana), and detailed musical explanation.';
+    return q;
   }
 
   if (request.mode === 'swaras') {
@@ -254,8 +262,18 @@ export async function executeAIEngine(
     throw new Error('Missing API key for AI provider ' + availability.provider);
   }
 
+  // 0. If this is a song query, retrieve grounding context via Vector DB & Encyclopedic Search (RAG)
+  let ragContext: RetrievedRAGContext | null = null;
+  if (request.mode === 'song' && request.songQuery) {
+    try {
+      ragContext = await retrieveSongRAGContext(request.songQuery);
+    } catch (e) {
+      console.warn('[RAG Retrieval Warning]:', e);
+    }
+  }
+
   const systemPrompt = buildSystemPrompt(activeRules);
-  const userQuery = buildUserQuery(request);
+  const userQuery = buildUserQuery(request, ragContext?.promptKnowledgeBlock);
 
   let parsed: any;
   if (availability.provider === 'gemini') {
@@ -291,18 +309,20 @@ export async function executeAIEngine(
   if (request.mode === 'song' && request.songQuery) {
     matchedSong = {
       title: request.songQuery,
-      filmOrAlbum: parsed.filmOrAlbum || (parsed.language ? parsed.language + ' Composition' : 'Indian Cinema'),
-      composer: parsed.composer || 'Traditional / Film Composer',
-      singers: parsed.singers || '',
-      language: parsed.language || 'Indian Soundtrack',
+      filmOrAlbum: parsed.filmOrAlbum || ragContext?.detectedFilm || (parsed.language ? parsed.language + ' Composition' : 'Indian Cinema'),
+      composer: parsed.composer || ragContext?.detectedComposer || 'Traditional / Film Composer',
+      singers: parsed.singers || ragContext?.detectedSingers || '',
+      language: parsed.language || ragContext?.detectedLanguage || 'Indian Soundtrack',
       raga: ragaProfile.name,
-      source: availability.provider === 'gemini' ? 'Google Gemini AI' : 'OpenAI GPT',
+      source: ragContext ? 'RAG-Augmented AI' : (availability.provider === 'gemini' ? 'Google Gemini AI' : 'OpenAI GPT'),
     };
   }
 
+  const isRAG = Boolean(ragContext && (ragContext.wikiExtract || ragContext.candidateRagas.length > 0));
+
   return {
     success: true,
-    source: availability.provider,
+    source: isRAG ? 'rag_augmented' : availability.provider,
     confidence: matchedRule ? 'Exact Match' : 'High',
     raga: ragaProfile,
     matchedSong,
@@ -313,6 +333,7 @@ export async function executeAIEngine(
     } : undefined,
     rawQuery: request,
     aiProvider: availability.provider,
+    ragContext: ragContext ? ragContext.ragContextInfo : undefined,
   };
 }
 

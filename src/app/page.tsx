@@ -41,6 +41,7 @@ export default function HomePage() {
   // AI Activation states
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [needsAiActivationFor, setNeedsAiActivationFor] = useState<string | null>(null);
+  const [needsAiActivationContext, setNeedsAiActivationContext] = useState<any | null>(null);
   const [aiStatus, setAiStatus] = useState<{ active: boolean; provider: string }>({
     active: false,
     provider: '',
@@ -182,6 +183,7 @@ export default function HomePage() {
       // If song not in database and AI needs activation, prompt user
       if (data.needsAiActivation) {
         setNeedsAiActivationFor(data.unindexedSongTitle || songQuery);
+        setNeedsAiActivationContext(data.ragContext || null);
         setSearchResult(null);
         setErrorMsg('');
         setTimeout(() => {
@@ -192,6 +194,7 @@ export default function HomePage() {
       }
 
       setNeedsAiActivationFor(null);
+      setNeedsAiActivationContext(null);
       setSearchResult(data);
       if (!data.success && data.raga?.explanation) {
         setErrorMsg(data.raga.explanation);
@@ -620,6 +623,20 @@ export default function HomePage() {
                 <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-xl leading-relaxed">
                   Activate the AI Musicologist with 1 click to dynamically identify this song&apos;s classical Raga, Arohana, Avarohana, swaras, and musical director analysis using Google Gemini (100% Free) or OpenAI.
                 </p>
+                {needsAiActivationContext && (needsAiActivationContext.detectedFilm || needsAiActivationContext.detectedComposer) && (
+                  <div className="mt-2.5 flex items-center gap-2 flex-wrap text-xs text-stone-700 bg-white/70 px-3 py-1.5 rounded-xl border border-amber-300/60">
+                    <span className="font-bold text-amber-800">Retrieved Song Context:</span>
+                    {needsAiActivationContext.detectedFilm && (
+                      <span>Film: <strong>{needsAiActivationContext.detectedFilm}</strong></span>
+                    )}
+                    {needsAiActivationContext.detectedComposer && (
+                      <span>• Music: <strong>{needsAiActivationContext.detectedComposer}</strong></span>
+                    )}
+                    {needsAiActivationContext.detectedSingers && (
+                      <span>• Vocals: <strong>{needsAiActivationContext.detectedSingers}</strong></span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

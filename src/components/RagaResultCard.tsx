@@ -78,6 +78,11 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                   <Sparkles className="w-3 h-3" /> Ragamalika ({ragasList.length} Ragas)
                 </span>
               )}
+              {source === 'rag_augmented' && (
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-violet-500/25 text-violet-300 border border-violet-500/40 flex items-center gap-1 shadow-xs">
+                  <Sparkles className="w-3 h-3 text-violet-300" /> RAG-Augmented AI
+                </span>
+              )}
               {source === 'gemini' && (
                 <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-cyan-300" /> Google Gemini AI
@@ -220,6 +225,18 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                     </span>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Vector Database Candidate Matches */}
+            {result.ragContext && result.ragContext.candidateRagas && result.ragContext.candidateRagas.length > 0 && (
+              <div className="mt-2.5 pt-2 border-t border-stone-700/60 flex items-center gap-1.5 flex-wrap text-[11px] text-stone-300">
+                <span className="font-bold text-violet-300 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-violet-400" /> Vector Database Matches:
+                </span>
+                <span className="text-stone-300">
+                  {result.ragContext.candidateRagas.slice(0, 3).map((c) => `${c.name} (${Math.round(c.score * 100)}%)`).join(' • ')}
+                </span>
               </div>
             )}
           </div>
