@@ -423,9 +423,22 @@ class MusicologyVectorStore {
       const denseSimilarity = this.denseSim(qDense, targetDense);
 
       // Blended Multi-Modal Embedding Score
-      const score = hasSwaras
+      let score = hasSwaras
         ? denseSimilarity * 0.35 + textSimilarity * 0.25 + swaraSimilarity * 0.40
         : denseSimilarity * 0.60 + textSimilarity * 0.40;
+
+      // Prefer canonical Melakarta or parent ragas when scales align
+      if (hasSwaras && doc.melakartaNumber && doc.swaras.length >= 7) {
+        score += 0.08;
+      }
+      if (hasSwaras && doc.parentRaga && (doc.parentRaga.toLowerCase().includes('janaka') || doc.parentRaga.toLowerCase().includes('melakarta'))) {
+        score += 0.12;
+      }
+
+      // Bonus for name overlap with query
+      if (queryText && doc.name.toLowerCase().includes(queryText.toLowerCase())) {
+        score += 0.15;
+      }
 
       if (score > 0.04) {
         results.push({
