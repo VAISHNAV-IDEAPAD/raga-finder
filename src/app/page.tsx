@@ -16,16 +16,20 @@ import {
   LifeBuoy,
   Radio,
   ArrowRight,
+  Mic,
+  Binary,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
 import ActivateAiModal from '@/components/ActivateAiModal';
+import AudioRagaDetectorModal from '@/components/AudioRagaDetectorModal';
+import RuleSearchModal from '@/components/RuleSearchModal';
 import RagasExplorerTab from '@/components/RagasExplorerTab';
 import DownloadsTab from '@/components/DownloadsTab';
 import SosTab from '@/components/SosTab';
 import RagaRadioTab from '@/components/RagaRadioTab';
 import UpdatesTab from '@/components/UpdatesTab';
-import { IdentifyRequest, IdentifyResponse, Tradition } from '@/types/raga';
+import { IdentifyRequest, IdentifyResponse, Tradition, RagaProfile } from '@/types/raga';
 
 export default function HomePage() {
   const [activeTopTab, setActiveTopTab] = useState<'home' | 'ragas' | 'downloads' | 'sos' | 'radio' | 'updates'>('home');
@@ -40,8 +44,25 @@ export default function HomePage() {
 
   // AI Activation states
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isAudioModalOpen, setIsAudioModalOpen] = useState(false);
+  const [isRuleModalOpen, setIsRuleModalOpen] = useState(false);
   const [needsAiActivationFor, setNeedsAiActivationFor] = useState<string | null>(null);
   const [needsAiActivationContext, setNeedsAiActivationContext] = useState<any | null>(null);
+
+  const handleSelectRagaFromModal = (raga: RagaProfile) => {
+    setSearchResult({
+      success: true,
+      source: 'ai_musicologist',
+      confidence: 'Exact Match',
+      raga,
+      rawQuery: raga.name,
+    });
+    setActiveTopTab('home');
+    setTimeout(() => {
+      const el = document.getElementById('raga-result-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
   const [aiStatus, setAiStatus] = useState<{ active: boolean; provider: string }>({
     active: false,
     provider: '',
@@ -419,6 +440,27 @@ export default function HomePage() {
                 <span>Western / Notes</span>
               </button>
             </div>
+
+            {/* Advanced Musicology & Audio AI Action Pills */}
+            <div className="mt-3 flex items-center justify-center flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setIsAudioModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+              >
+                <Mic className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                <span>Audio AI: Sing / Hum Raga</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsRuleModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200/90 border border-stone-300 text-stone-800 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+              >
+                <Binary className="w-3.5 h-3.5 text-amber-700" />
+                <span>Rule Engine &amp; Katapayadi</span>
+              </button>
+            </div>
           </>
         )}
       </section>
@@ -476,9 +518,19 @@ export default function HomePage() {
                     value={songQuery}
                     onChange={(e) => setSongQuery(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    className="w-full px-4 py-3.5 pr-12 text-sm sm:text-base rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white shadow-inner"
+                    className="w-full px-4 py-3.5 pr-20 text-sm sm:text-base rounded-2xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white shadow-inner"
                   />
-                  <Search className="w-5 h-5 text-stone-400 absolute right-4 top-1/2 -translate-y-1/2" />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setIsAudioModalOpen(true)}
+                      title="Hum / Sing to identify"
+                      className="p-1.5 rounded-lg text-amber-600 hover:bg-amber-100 transition-colors cursor-pointer"
+                    >
+                      <Mic className="w-4 h-4" />
+                    </button>
+                    <Search className="w-5 h-5 text-stone-400" />
+                  </div>
                 </div>
               </div>
 
@@ -750,6 +802,18 @@ export default function HomePage() {
           setNeedsAiActivationFor(null);
           handleSearch();
         }}
+      />
+
+      <AudioRagaDetectorModal
+        isOpen={isAudioModalOpen}
+        onClose={() => setIsAudioModalOpen(false)}
+        onSelectRaga={handleSelectRagaFromModal}
+      />
+
+      <RuleSearchModal
+        isOpen={isRuleModalOpen}
+        onClose={() => setIsRuleModalOpen(false)}
+        onSelectRaga={handleSelectRagaFromModal}
       />
     </div>
   );

@@ -9,6 +9,7 @@ import { resolveSongWithOfflineRAG } from './ragRetriever';
 import { vectorStore } from './vectorStore';
 import { hybridSearch } from './hybridSearch';
 import { structuredDb } from './structuredDb';
+import { searchByMusicologicalRule, calculateKatapayadiMelakarta } from './ruleEngine';
 
 export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyResponse> {
   const adminRules = await getAdminRules();
@@ -287,6 +288,25 @@ function resolveFromDatabaseAndRules(
         raga: {
           ...match,
           explanation: `Matched from curated Raga knowledge base via Hybrid Search (Dense Embeddings + Structured Melakarta/Thaat Index). ${match.explanation || ''}`,
+        },
+        rawQuery: request,
+      };
+    }
+  }
+
+  // Musicological Rule Engine (Katapayadi, Audava/Shadava/Sampoorna, Bhashanga, Vakra)
+  const ruleQuery = request.songQuery || request.description || '';
+  if (ruleQuery) {
+    const ruleMatches = searchByMusicologicalRule(ruleQuery);
+    if (ruleMatches.length > 0) {
+      const best = ruleMatches[0];
+      return {
+        success: true,
+        source: 'database',
+        confidence: 'Exact Match',
+        raga: {
+          ...best,
+          explanation: `Identified via Carnatic Rule Engine: Scale Grammar / Katapayadi cipher match for "${ruleQuery}". ${best.explanation || ''}`,
         },
         rawQuery: request,
       };

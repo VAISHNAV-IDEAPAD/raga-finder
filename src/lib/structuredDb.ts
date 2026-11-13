@@ -218,6 +218,38 @@ class StructuredMusicologyDB {
   }
 
   /**
+   * Look up a Raga Profile by canonical or alternate name
+   */
+  public getRagaByName(name: string): RagaProfile | null {
+    if (!name) return null;
+    const norm = normalize(name);
+    const idx = this.ragaByName.get(norm);
+    if (idx !== undefined && this.ragas[idx]) return this.ragas[idx];
+
+    // Substring or alternate name fallback
+    return (
+      this.ragas.find((r) => {
+        if (normalize(r.name) === norm) return true;
+        if (r.alternateNames?.some((alt) => normalize(alt) === norm)) return true;
+        return false;
+      }) || null
+    );
+  }
+
+  /**
+   * Get compositions composed in a given raga
+   */
+  public getSongsForRaga(ragaName: string, limit = 10): SongRagaEntry[] {
+    if (!ragaName) return [];
+    const norm = normalize(ragaName);
+    const indices = this.songByRaga.get(norm);
+    if (!indices) return [];
+    return Array.from(indices)
+      .slice(0, limit)
+      .map((i) => this.songs[i]);
+  }
+
+  /**
    * Filter Songs by Structured Attributes
    */
   public querySongs(filters: StructuredSongFilters): SongRagaEntry[] {
