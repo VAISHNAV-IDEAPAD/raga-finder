@@ -250,6 +250,26 @@ class StructuredMusicologyDB {
   }
 
   /**
+   * Search songs by query string with optional attribute filters
+   */
+  public searchSongs(query: string, filters: StructuredSongFilters = {}, limit = 10): SongRagaEntry[] {
+    const normQ = normalize(query);
+    if (!normQ) return this.querySongs(filters).slice(0, limit);
+
+    const matches: SongRagaEntry[] = [];
+    for (const song of this.songs) {
+      const titleNorm = normalize(song.title);
+      if (titleNorm.includes(normQ) || (song.filmOrAlbum && normalize(song.filmOrAlbum).includes(normQ))) {
+        if (filters.composer && (!song.composer || !normalize(song.composer).includes(normalize(filters.composer)))) continue;
+        if (filters.raga && (!song.raga || !normalize(song.raga).includes(normalize(filters.raga)))) continue;
+        matches.push(song);
+        if (matches.length >= limit) break;
+      }
+    }
+    return matches;
+  }
+
+  /**
    * Filter Songs by Structured Attributes
    */
   public querySongs(filters: StructuredSongFilters): SongRagaEntry[] {

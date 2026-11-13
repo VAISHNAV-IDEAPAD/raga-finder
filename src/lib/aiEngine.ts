@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition, RagaProfile, SongRagaEntry } from '@/types/raga';
 import { retrieveSongRAGContext, RetrievedRAGContext } from './ragRetriever';
 import { graphRagOrchestrator } from './graphRag';
+import { executeSelfRAGPipeline } from './selfRag';
 
 export interface AIAvailability {
   available: boolean;
@@ -317,6 +318,19 @@ export async function executeAIEngine(
     explanation: parsed.explanation || ('Identified via ' + (availability.provider === 'gemini' ? 'Google Gemini AI' : 'OpenAI GPT') + '.'),
   };
 
+  // Self-RAG Reflection & Groundedness Critique
+  const queryText = request.songQuery || request.description || request.arohana || (request.swaras ? request.swaras.join(' ') : 'Raga Query');
+  const selfRagAssessment = executeSelfRAGPipeline(
+    queryText,
+    ragaProfile,
+    combinedKnowledge,
+    ragContext?.candidateRagas.length || 1,
+    (request.mode === 'song' ? 'song' : request.mode === 'swaras' ? 'swaras' : 'raga')
+  );
+
+  const finalRagaProfile = selfRagAssessment.correctedRaga || ragaProfile;
+  const selfRagReflection = selfRagAssessment.reflection;
+
   // If this was a song query, build matchedSong entry
   let matchedSong: SongRagaEntry | undefined;
   if (request.mode === 'song' && request.songQuery) {
@@ -326,7 +340,7 @@ export async function executeAIEngine(
       composer: parsed.composer || ragContext?.detectedComposer || 'Traditional / Film Composer',
       singers: parsed.singers || ragContext?.detectedSingers || '',
       language: parsed.language || ragContext?.detectedLanguage || 'Indian Soundtrack',
-      raga: ragaProfile.name,
+      raga: finalRagaProfile.name,
       source: ragContext ? 'RAG-Augmented AI' : (availability.provider === 'gemini' ? 'Google Gemini AI' : 'OpenAI GPT'),
     };
   }
@@ -337,7 +351,7 @@ export async function executeAIEngine(
     success: true,
     source: isRAG ? 'rag_augmented' : availability.provider,
     confidence: matchedRule ? 'Exact Match' : 'High',
-    raga: ragaProfile,
+    raga: finalRagaProfile,
     matchedSong,
     appliedAdminRule: matchedRule ? {
       id: matchedRule.id,
@@ -350,10 +364,12 @@ export async function executeAIEngine(
       ? {
           ...ragContext.ragContextInfo,
           graphReasoningPath: graphReasoningPath || undefined,
+          selfRagReflection,
         }
-      : graphReasoningPath
-      ? { graphReasoningPath }
-      : undefined,
+      : {
+          graphReasoningPath: graphReasoningPath || undefined,
+          selfRagReflection,
+        },
   };
 }
 

@@ -11,6 +11,11 @@ import {
   BookOpen,
   AlertCircle,
   Share2,
+  Bot,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Cpu,
 } from 'lucide-react';
 import { IdentifyResponse } from '@/types/raga';
 import { playSwaraSequence } from '@/lib/audioSynth';
@@ -27,6 +32,7 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
   const isMultiRaga = Boolean(result.isMultiRaga && result.ragas && result.ragas.length > 1);
   const ragasList = isMultiRaga && result.ragas ? result.ragas : [result.raga];
   const [selectedRagaIdx, setSelectedRagaIdx] = useState(0);
+  const [isAgentTraceOpen, setIsAgentTraceOpen] = useState(false);
 
   // Active raga being viewed in deep detail
   const raga = ragasList[selectedRagaIdx] || result.raga;
@@ -250,6 +256,83 @@ export default function RagaResultCard({ result, rawQuery }: RagaResultCardProps
                 <span className="text-amber-100 font-mono text-[10px] break-words">
                   {result.ragContext.graphReasoningPath}
                 </span>
+              </div>
+            )}
+
+            {/* Self-RAG Reflection Tokens & Groundedness */}
+            {result.ragContext && result.ragContext.selfRagReflection && (
+              <div className="mt-2.5 pt-2 border-t border-stone-700/60 flex flex-wrap items-center gap-2 text-[11px]">
+                <span className="font-bold text-emerald-300 flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Self-RAG:
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-[10px] font-medium">
+                  [IsSup]: {result.ragContext.selfRagReflection.groundednessVerdict} ({Math.round(result.ragContext.selfRagReflection.groundednessScore * 100)}%)
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-200 text-[10px] font-medium">
+                  [IsRel]: {result.ragContext.selfRagReflection.retrievalRelevanceVerdict}
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-amber-950/80 border border-amber-500/40 text-amber-200 text-[10px] font-medium">
+                  [IsUse]: {result.ragContext.selfRagReflection.utilityScore}/5 Utility
+                </span>
+                {result.ragContext.selfRagReflection.isSelfCorrected && (
+                  <span className="px-2 py-0.5 rounded-full bg-purple-950/80 border border-purple-500/40 text-purple-200 text-[10px] font-medium">
+                    ⚡ Auto-Corrected
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Agentic RAG Multi-Step Trajectory Toggle */}
+            {result.ragContext && result.ragContext.agentTrajectory && (
+              <div className="mt-3 pt-2 border-t border-stone-700/60">
+                <button
+                  type="button"
+                  onClick={() => setIsAgentTraceOpen(!isAgentTraceOpen)}
+                  className="w-full flex items-center justify-between text-left px-2.5 py-1.5 rounded-lg bg-stone-900/80 hover:bg-stone-800/80 border border-stone-700/80 text-[11px] text-stone-200 transition-colors"
+                >
+                  <span className="flex items-center gap-1.5 font-semibold text-violet-300">
+                    <Bot className="w-3.5 h-3.5 text-violet-400" />
+                    Agentic RAG Scratchpad ({result.ragContext.agentTrajectory.steps.length} Steps, {result.ragContext.agentTrajectory.toolsInvoked.length} Tools)
+                  </span>
+                  {isAgentTraceOpen ? (
+                    <ChevronUp className="w-3.5 h-3.5 text-stone-400" />
+                  ) : (
+                    <ChevronDown className="w-3.5 h-3.5 text-stone-400" />
+                  )}
+                </button>
+
+                {isAgentTraceOpen && (
+                  <div className="mt-2 p-3 rounded-lg bg-stone-950/90 border border-stone-800 text-[11px] space-y-2.5 font-mono">
+                    <div className="text-violet-400 font-sans font-semibold text-xs border-b border-stone-800 pb-1 flex items-center justify-between">
+                      <span>Autonomous Execution Trajectory</span>
+                      {result.ragContext.agentTrajectory.totalLatencyMs && (
+                        <span className="text-[10px] text-stone-400 font-mono">
+                          {result.ragContext.agentTrajectory.totalLatencyMs}ms
+                        </span>
+                      )}
+                    </div>
+                    {result.ragContext.agentTrajectory.steps.map((st) => (
+                      <div key={st.stepNumber} className="border-l-2 border-violet-500/50 pl-2 space-y-1">
+                        <div className="text-stone-300 font-semibold flex items-center justify-between">
+                          <span className="text-violet-300">Step {st.stepNumber}: {st.toolName || 'Reasoning'}</span>
+                          <span className="text-stone-400 text-[10px]">
+                            Confidence: {Math.round(st.confidenceAfterStep * 100)}%
+                          </span>
+                        </div>
+                        <p className="text-stone-400 text-[10px] italic font-sans leading-relaxed">
+                          Thought: {st.thought}
+                        </p>
+                        <p className="text-amber-200/90 text-[10px] leading-relaxed">
+                          Observation: {st.observation}
+                        </p>
+                      </div>
+                    ))}
+                    <div className="pt-1.5 border-t border-stone-800 text-[10px] text-stone-400 font-sans">
+                      <span className="font-semibold text-stone-300">Final Agent Reasoning: </span>
+                      {result.ragContext.agentTrajectory.finalReasoning}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

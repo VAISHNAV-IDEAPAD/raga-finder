@@ -99,11 +99,43 @@ export interface RAGContextInfo {
     raga: string;
   }>;
   graphReasoningPath?: string;
+  selfRagReflection?: SelfRAGReflectionInfo;
+  agentTrajectory?: AgentTrajectoryInfo;
+}
+
+export interface SelfRAGReflectionInfo {
+  needRetrieval: boolean;
+  retrievalRelevanceScore: number; // 0.0 to 1.0
+  retrievalRelevanceVerdict: 'Fully Relevant' | 'Partially Relevant' | 'Irrelevant';
+  groundednessScore: number; // 0.0 to 1.0
+  groundednessVerdict: 'Fully Grounded' | 'Partially Grounded' | 'Hallucinated / Unsupported';
+  utilityScore: number; // 1 to 5
+  critiqueNotes: string[];
+  isSelfCorrected: boolean;
+  correctionsApplied?: string[];
+}
+
+export interface AgentStep {
+  stepNumber: number;
+  thought: string;
+  action: string;
+  toolName?: string;
+  toolInput?: any;
+  observation: string;
+  confidenceAfterStep: number;
+}
+
+export interface AgentTrajectoryInfo {
+  plan: string[];
+  steps: AgentStep[];
+  toolsInvoked: string[];
+  finalReasoning: string;
+  totalLatencyMs?: number;
 }
 
 export interface IdentifyResponse {
   success: boolean;
-  source: 'openai' | 'gemini' | 'admin_rule' | 'database' | 'ai_musicologist' | 'rag_augmented';
+  source: 'openai' | 'gemini' | 'admin_rule' | 'database' | 'ai_musicologist' | 'rag_augmented' | 'agentic_rag' | 'self_rag';
   confidence: 'Exact Match' | 'High' | 'Moderate' | 'Low';
   raga: RagaProfile;
   isMultiRaga?: boolean;

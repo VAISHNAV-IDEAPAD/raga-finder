@@ -19,6 +19,7 @@ import {
   Mic,
   Binary,
   Network,
+  Bot,
 } from 'lucide-react';
 import SwaraKeyboard from '@/components/SwaraKeyboard';
 import RagaResultCard from '@/components/RagaResultCard';
@@ -26,6 +27,7 @@ import ActivateAiModal from '@/components/ActivateAiModal';
 import AudioRagaDetectorModal from '@/components/AudioRagaDetectorModal';
 import RuleSearchModal from '@/components/RuleSearchModal';
 import KnowledgeGraphModal from '@/components/KnowledgeGraphModal';
+import AgenticRagModal from '@/components/AgenticRagModal';
 import RagasExplorerTab from '@/components/RagasExplorerTab';
 import DownloadsTab from '@/components/DownloadsTab';
 import SosTab from '@/components/SosTab';
@@ -49,6 +51,7 @@ export default function HomePage() {
   const [isAudioModalOpen, setIsAudioModalOpen] = useState(false);
   const [isRuleModalOpen, setIsRuleModalOpen] = useState(false);
   const [isGraphModalOpen, setIsGraphModalOpen] = useState(false);
+  const [isAgenticModalOpen, setIsAgenticModalOpen] = useState(false);
   const [needsAiActivationFor, setNeedsAiActivationFor] = useState<string | null>(null);
   const [needsAiActivationContext, setNeedsAiActivationContext] = useState<any | null>(null);
 
@@ -472,6 +475,15 @@ export default function HomePage() {
                 <Network className="w-3.5 h-3.5 text-violet-600" />
                 <span>Knowledge Graph &amp; GraphRAG</span>
               </button>
+
+              <button
+                type="button"
+                onClick={() => setIsAgenticModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+              >
+                <Bot className="w-3.5 h-3.5 text-purple-600" />
+                <span>Agentic &amp; Self-RAG</span>
+              </button>
             </div>
           </>
         )}
@@ -831,6 +843,12 @@ export default function HomePage() {
       <KnowledgeGraphModal
         isOpen={isGraphModalOpen}
         onClose={() => setIsGraphModalOpen(false)}
+        onSelectRaga={handleSelectRagaFromModal}
+      />
+
+      <AgenticRagModal
+        isOpen={isAgenticModalOpen}
+        onClose={() => setIsAgenticModalOpen(false)}
         onSelectRaga={handleSelectRagaFromModal}
       />
     </div>

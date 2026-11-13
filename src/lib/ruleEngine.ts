@@ -214,6 +214,8 @@ export function disambiguateRagaRule(ragaA: string, ragaB: string): string | nul
   return rules[key] || null;
 }
 
+export const disambiguateRagas = disambiguateRagaRule;
+
 /**
  * Execute Rule-Based Search
  */
