@@ -18,7 +18,7 @@ export function getAIAvailability(request?: IdentifyRequest): AIAvailability {
   // 1. Client-supplied credentials take first precedence
   if (request?.aiApiKey && request.aiApiKey.trim().length > 5) {
     const provider = request.aiProvider || (request.aiApiKey.startsWith('AIza') ? 'gemini' : 'openai');
-    const defaultModel = provider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini';
+    const defaultModel = provider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini';
     return {
       available: true,
       provider,
@@ -33,7 +33,7 @@ export function getAIAvailability(request?: IdentifyRequest): AIAvailability {
     return {
       available: true,
       provider: 'gemini',
-      model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
+      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
       source: 'server',
     };
   }
@@ -153,7 +153,7 @@ function buildUserQuery(request: IdentifyRequest, ragKnowledgeBlock?: string): s
 }
 
 /**
- * Call Google Gemini API directly via REST endpoint
+ * Call Google Gemini API directly via REST endpoint with resilient fallback
  */
 async function callGemini(
   apiKey: string,
@@ -161,49 +161,81 @@ async function callGemini(
   systemPrompt: string,
   userQuery: string
 ): Promise<any> {
-  const targetModel = model || 'gemini-2.0-flash';
-  const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + targetModel + ':generateContent?key=' + encodeURIComponent(apiKey);
+  const modelsToTry: string[] = [
+    model === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (model || 'gemini-2.5-flash'),
+    'gemini-2.5-flash',
+    'gemini-1.5-flash',
+    'gemini-2.5-pro',
+    'gemini-1.5-pro',
+  ];
+  const uniqueModels: string[] = Array.from(new Set(modelsToTry));
 
-  const requestBody = {
-    contents: [
-      {
-        role: 'user',
-        parts: [{ text: userQuery }],
-      },
-    ],
-    systemInstruction: {
-      parts: [{ text: systemPrompt }],
-    },
-    generationConfig: {
-      temperature: 0.1,
-      responseMimeType: 'application/json',
-    },
-  };
-
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(requestBody),
-  });
-
-  if (!res.ok) {
-    const errorBody = await res.text();
-    let errorMsg = 'Gemini API error (' + res.status + ')';
+  let lastError = '';
+  for (let i = 0; i < uniqueModels.length; i++) {
+    const targetModel = uniqueModels[i];
     try {
-      const errJson = JSON.parse(errorBody);
-      if (errJson.error?.message) errorMsg = errJson.error.message;
-    } catch {}
-    throw new Error(errorMsg);
+      const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + targetModel + ':generateContent?key=' + encodeURIComponent(apiKey);
+
+      const requestBody = {
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: userQuery }],
+          },
+        ],
+        systemInstruction: {
+          parts: [{ text: systemPrompt }],
+        },
+        generationConfig: {
+          temperature: 0.1,
+          responseMimeType: 'application/json',
+        },
+      };
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!res.ok) {
+        const errorBody = await res.text();
+        let errorMsg = 'Gemini API error (' + res.status + ')';
+        try {
+          const errJson = JSON.parse(errorBody);
+          if (errJson.error?.message) errorMsg = errJson.error.message;
+        } catch {}
+        lastError = errorMsg;
+
+        // If deprecated/retired or not found, try the next model
+        if (
+          (errorMsg.includes('no longer available') || errorMsg.includes('not found') || res.status === 404) &&
+          i < uniqueModels.length - 1
+        ) {
+          console.warn(`[Gemini Fallback] Model ${targetModel} unavailable: ${errorMsg}. Trying ${uniqueModels[i + 1]}...`);
+          continue;
+        }
+        throw new Error(errorMsg);
+      }
+
+      const data = await res.json();
+      const textContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (!textContent) {
+        throw new Error('Gemini returned an empty response.');
+      }
+
+      return JSON.parse(textContent);
+    } catch (err: any) {
+      lastError = err.message || 'Gemini request error';
+      if (i < uniqueModels.length - 1 && (lastError.includes('no longer available') || lastError.includes('not found'))) {
+        continue;
+      }
+      throw err;
+    }
   }
 
-  const data = await res.json();
-  const textContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-  if (!textContent) {
-    throw new Error('Gemini returned an empty response.');
-  }
-
-  return JSON.parse(textContent);
+  throw new Error(lastError || 'All Gemini models failed.');
 }
 
 /**
@@ -390,32 +422,58 @@ export async function testAIKey(
 
   try {
     if (provider === 'gemini') {
-      const targetModel = model || 'gemini-2.0-flash';
-      const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + targetModel + ':generateContent?key=' + encodeURIComponent(cleanKey);
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: testPrompt }] }],
-          generationConfig: { responseMimeType: 'application/json' },
-        }),
-      });
+      const modelsToTry: string[] = [
+        model === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (model || 'gemini-2.5-flash'),
+        'gemini-2.5-flash',
+        'gemini-1.5-flash',
+        'gemini-2.5-pro',
+        'gemini-1.5-pro',
+      ];
+      const uniqueModels: string[] = Array.from(new Set(modelsToTry));
 
-      if (!res.ok) {
-        const err = await res.text();
-        let msg = 'Gemini API returned HTTP ' + res.status;
-        try {
-          const j = JSON.parse(err);
-          if (j.error?.message) msg = j.error.message;
-        } catch {}
-        return { success: false, message: msg, modelUsed: targetModel };
+      let lastError = '';
+      for (let i = 0; i < uniqueModels.length; i++) {
+        const targetModel = uniqueModels[i];
+        const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + targetModel + ':generateContent?key=' + encodeURIComponent(cleanKey);
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: testPrompt }] }],
+            generationConfig: { responseMimeType: 'application/json' },
+          }),
+        });
+
+        if (!res.ok) {
+          const err = await res.text();
+          let msg = 'Gemini API returned HTTP ' + res.status;
+          try {
+            const j = JSON.parse(err);
+            if (j.error?.message) msg = j.error.message;
+          } catch {}
+          lastError = msg;
+
+          // If deprecated model or not found, try the next model in fallback list
+          if (
+            (msg.includes('no longer available') || msg.includes('not found') || res.status === 404) &&
+            i < uniqueModels.length - 1
+          ) {
+            continue;
+          }
+          return { success: false, message: msg, modelUsed: targetModel };
+        }
+
+        const data = await res.json();
+        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          return {
+            success: true,
+            message: `Google Gemini API key verified successfully! (Model: ${targetModel})`,
+            modelUsed: targetModel,
+          };
+        }
       }
 
-      const data = await res.json();
-      if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-        return { success: true, message: 'Google Gemini API key verified successfully!', modelUsed: targetModel };
-      }
-      return { success: false, message: 'Empty response from Gemini', modelUsed: targetModel };
+      return { success: false, message: lastError || 'Gemini verification failed', modelUsed: uniqueModels[0] };
     } else {
       const targetModel = model || 'gpt-4o-mini';
       const openai = new OpenAI({ apiKey: cleanKey });

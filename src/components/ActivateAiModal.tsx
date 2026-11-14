@@ -47,7 +47,12 @@ export default function ActivateAiModal({
 
     setApiKey(savedKey);
     setProvider(savedProvider);
-    setModel(savedModel || (savedProvider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini'));
+    // Auto-heal deprecated model name if previously cached
+    const effectiveModel = savedModel === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (savedModel || (savedProvider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini'));
+    setModel(effectiveModel);
+    if (savedModel === 'gemini-2.0-flash') {
+      localStorage.setItem('raga_ai_model', 'gemini-2.5-flash');
+    }
     setIsCurrentlyActive(Boolean(savedKey && savedKey.trim().length > 5));
     setTestResult(null);
 
@@ -66,7 +71,7 @@ export default function ActivateAiModal({
 
   const handleProviderChange = (newProvider: 'gemini' | 'openai') => {
     setProvider(newProvider);
-    setModel(newProvider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini');
+    setModel(newProvider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini');
     setTestResult(null);
   };
 
@@ -80,6 +85,8 @@ export default function ActivateAiModal({
     setIsTesting(true);
     setTestResult(null);
 
+    const targetModel = model || (provider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini');
+
     try {
       const res = await fetch('/api/ai/status', {
         method: 'POST',
@@ -87,16 +94,18 @@ export default function ActivateAiModal({
         body: JSON.stringify({
           apiKey: apiKey.trim(),
           provider,
-          model: model || (provider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini'),
+          model: targetModel,
         }),
       });
 
       const data = await res.json();
       if (res.ok && data.success) {
+        const verifiedModel = data.modelUsed || targetModel;
         // Save to localStorage
         localStorage.setItem('raga_ai_key', apiKey.trim());
         localStorage.setItem('raga_ai_provider', provider);
-        localStorage.setItem('raga_ai_model', model || (provider === 'gemini' ? 'gemini-2.0-flash' : 'gpt-4o-mini'));
+        localStorage.setItem('raga_ai_model', verifiedModel);
+        setModel(verifiedModel);
 
         setIsCurrentlyActive(true);
         setTestResult({
@@ -240,7 +249,7 @@ export default function ActivateAiModal({
                 </a>
               </div>
               <p className="text-[11px] text-emerald-800 leading-relaxed">
-                Google AI Studio provides a free API key with no credit card required. Supports Gemini 2.0 Flash with sub-second response times!
+                Google AI Studio provides a free API key with no credit card required. Supports Gemini 2.5 Flash and Gemini 1.5 Flash with sub-second response times!
               </p>
             </div>
           ) : (
@@ -292,6 +301,11 @@ export default function ActivateAiModal({
               </div>
               <p className="text-[11px] text-stone-400 mt-1">
                 Your key is stored securely in your browser&apos;s local storage and sent only to identify ragas.
+                {provider === 'gemini' && (
+                  <span className="block text-[10px] text-amber-700/80 font-medium mt-0.5">
+                    Tip: Google AI Studio API keys typically start with &ldquo;AIzaSy...&rdquo;. Click &ldquo;Get Free Key&rdquo; above to copy yours from Google AI Studio.
+                  </span>
+                )}
               </p>
             </div>
 
@@ -307,9 +321,10 @@ export default function ActivateAiModal({
               >
                 {provider === 'gemini' ? (
                   <>
-                    <option value="gemini-2.0-flash">gemini-2.0-flash (Recommended & Ultra-Fast)</option>
-                    <option value="gemini-1.5-flash">gemini-1.5-flash (Standard)</option>
-                    <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Reasoning)</option>
+                    <option value="gemini-2.5-flash">gemini-2.5-flash (Recommended & Ultra-Fast)</option>
+                    <option value="gemini-1.5-flash">gemini-1.5-flash (Standard Stable)</option>
+                    <option value="gemini-2.5-pro">gemini-2.5-pro (Flagship Deep Reasoning)</option>
+                    <option value="gemini-1.5-pro">gemini-1.5-pro (Pro Stable)</option>
                   </>
                 ) : (
                   <>
