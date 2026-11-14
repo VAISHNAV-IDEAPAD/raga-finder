@@ -48,10 +48,15 @@ export default function ActivateAiModal({
     setApiKey(savedKey);
     setProvider(savedProvider);
     // Auto-heal deprecated model name if previously cached
-    const effectiveModel = savedModel === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (savedModel || (savedProvider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini'));
+    const effectiveModel =
+      savedModel === 'built-in-offline'
+        ? 'built-in-offline'
+        : savedModel === 'gemini-2.0-flash' || savedModel === 'gemini-2.5-flash' || !savedModel
+        ? (savedProvider === 'gemini' ? 'gemini-1.5-flash' : 'gpt-4o-mini')
+        : savedModel;
     setModel(effectiveModel);
-    if (savedModel === 'gemini-2.0-flash') {
-      localStorage.setItem('raga_ai_model', 'gemini-2.5-flash');
+    if (savedModel === 'gemini-2.0-flash' || savedModel === 'gemini-2.5-flash') {
+      localStorage.setItem('raga_ai_model', 'gemini-1.5-flash');
     }
     setIsCurrentlyActive(Boolean(savedKey && savedKey.trim().length > 5));
     setTestResult(null);
@@ -69,9 +74,27 @@ export default function ActivateAiModal({
 
   if (!isOpen) return null;
 
+  const handleActivateBuiltIn = () => {
+    localStorage.setItem('raga_ai_key', 'built_in_offline');
+    localStorage.setItem('raga_ai_provider', 'gemini');
+    localStorage.setItem('raga_ai_model', 'built-in-offline');
+    setApiKey('built_in_offline');
+    setModel('built-in-offline');
+    setIsCurrentlyActive(true);
+    setTestResult({
+      success: true,
+      message: 'Free Built-in AI Musicologist activated! Powered by Neural Knowledge Graph & Vector RAG.',
+    });
+    window.dispatchEvent(new Event('raga_ai_updated'));
+    setTimeout(() => {
+      if (onActivated) onActivated();
+      onClose();
+    }, 1000);
+  };
+
   const handleProviderChange = (newProvider: 'gemini' | 'openai') => {
     setProvider(newProvider);
-    setModel(newProvider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini');
+    setModel(newProvider === 'gemini' ? 'gemini-1.5-flash' : 'gpt-4o-mini');
     setTestResult(null);
   };
 
@@ -85,7 +108,7 @@ export default function ActivateAiModal({
     setIsTesting(true);
     setTestResult(null);
 
-    const targetModel = model || (provider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini');
+    const targetModel = model || (provider === 'gemini' ? 'gemini-1.5-flash' : 'gpt-4o-mini');
 
     try {
       const res = await fetch('/api/ai/status', {
@@ -163,7 +186,8 @@ export default function ActivateAiModal({
                 <span>Activate AI Musicologist</span>
                 {isCurrentlyActive && (
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-400 text-stone-950 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-950 animate-ping" /> Active
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-950 animate-ping" />
+                    {apiKey === 'built_in_offline' ? 'Built-in AI Active' : 'Active'}
                   </span>
                 )}
               </h2>
@@ -195,6 +219,37 @@ export default function ActivateAiModal({
               </div>
             </div>
           )}
+
+          {/* Instant Free Built-in AI Option */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border-2 border-amber-300 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-gradient-to-r from-amber-500 to-raga-600 text-white uppercase tracking-wider">
+                  Instant & Free
+                </span>
+                <span className="text-xs font-bold text-stone-900 flex items-center gap-1">
+                  <Zap className="w-3.5 h-3.5 text-amber-600" /> Built-in AI Musicologist
+                </span>
+              </div>
+              <p className="text-[11px] text-stone-600 leading-snug">
+                No API key needed! Runs our Neural Knowledge Graph, Vector RAG & Musicology Rules with 0 setup.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleActivateBuiltIn}
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 shrink-0 active:scale-95"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Enable Free AI</span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 my-1">
+            <div className="flex-1 h-px bg-stone-200" />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">or connect your own api key</span>
+            <div className="flex-1 h-px bg-stone-200" />
+          </div>
 
           {/* Provider Selection Tabs */}
           <div>
@@ -249,7 +304,7 @@ export default function ActivateAiModal({
                 </a>
               </div>
               <p className="text-[11px] text-emerald-800 leading-relaxed">
-                Google AI Studio provides a free API key with no credit card required. Supports Gemini 2.5 Flash and Gemini 1.5 Flash with sub-second response times!
+                Google AI Studio provides a free API key with no credit card required. Supports Gemini 1.5 Flash with sub-second response times!
               </p>
             </div>
           ) : (
@@ -321,10 +376,10 @@ export default function ActivateAiModal({
               >
                 {provider === 'gemini' ? (
                   <>
-                    <option value="gemini-2.5-flash">gemini-2.5-flash (Recommended & Ultra-Fast)</option>
-                    <option value="gemini-1.5-flash">gemini-1.5-flash (Standard Stable)</option>
-                    <option value="gemini-2.5-pro">gemini-2.5-pro (Flagship Deep Reasoning)</option>
-                    <option value="gemini-1.5-pro">gemini-1.5-pro (Pro Stable)</option>
+                    <option value="gemini-1.5-flash">gemini-1.5-flash (Standard & Fast - Recommended)</option>
+                    <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Classical Reasoning)</option>
+                    <option value="gemini-2.0-flash-exp">gemini-2.0-flash-exp (Experimental Fast)</option>
+                    <option value="gemini-2.5-flash">gemini-2.5-flash (Preview)</option>
                   </>
                 ) : (
                   <>

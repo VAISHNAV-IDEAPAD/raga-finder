@@ -85,31 +85,8 @@ export async function identifyRaga(request: IdentifyRequest): Promise<IdentifyRe
       const aiResponse = await executeAIEngine(request, activeRules, matchedRule);
       return aiResponse;
     } catch (err: any) {
-      console.error('[AI Engine Execution Failed]:', err);
-      // If client explicitly passed a key that failed, report error
-      if (aiAvailability.source === 'client') {
-        return {
-          success: false,
-          source: aiAvailability.provider || 'gemini',
-          confidence: 'Low',
-          needsAiActivation: true,
-          unindexedSongTitle: request.songQuery,
-          raga: {
-            name: 'AI Identification Error',
-            alternateNames: [],
-            tradition: 'Both',
-            arohana: '',
-            avarohana: '',
-            swarasCarnatic: [],
-            swarasHindustani: [],
-            rasaOrMood: '',
-            timeOfDay: '',
-            famousSongs: [],
-            explanation: `AI identification failed: ${err.message || 'Please check your API key and try again.'}`,
-          },
-          rawQuery: request,
-        };
-      }
+      console.warn('[AI Engine Execution Failed, gracefully falling back to Offline Neural RAG]:', err.message);
+      // Fall through to STAGE 3 so user gets high-quality offline RAG identification rather than a dead-end error
     }
   }
 

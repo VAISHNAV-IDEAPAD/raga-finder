@@ -77,8 +77,10 @@ export default function HomePage() {
   const checkAiStatus = () => {
     const key = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_key') : null;
     const provider = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_provider') || 'gemini' : 'gemini';
+    const model = typeof window !== 'undefined' ? localStorage.getItem('raga_ai_model') : null;
     if (key && key.trim().length > 5) {
-      setAiStatus({ active: true, provider: provider === 'gemini' ? 'Gemini' : 'OpenAI' });
+      const displayProvider = key === 'built_in_offline' || model === 'built-in-offline' ? 'Built-in AI' : (provider === 'gemini' ? 'Gemini' : 'OpenAI');
+      setAiStatus({ active: true, provider: displayProvider });
       return;
     }
 
@@ -719,14 +721,30 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 type="button"
+                onClick={() => {
+                  localStorage.setItem('raga_ai_key', 'built_in_offline');
+                  localStorage.setItem('raga_ai_provider', 'gemini');
+                  localStorage.setItem('raga_ai_model', 'built-in-offline');
+                  window.dispatchEvent(new Event('raga_ai_updated'));
+                  setNeedsAiActivationFor(null);
+                  handleSearch();
+                }}
+                className="px-5 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-black text-sm shadow-lg transition-all flex items-center gap-2 hover:scale-[1.02]"
+              >
+                <Zap className="w-4 h-4 text-amber-400" />
+                <span>Instant Free Identify</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={() => setIsAiModalOpen(true)}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-raga-600 to-amber-600 hover:from-raga-700 hover:to-amber-700 text-white font-black text-sm shadow-lg shadow-raga-500/25 transition-all flex items-center gap-2 hover:scale-[1.02]"
+                className="px-5 py-3 rounded-xl bg-gradient-to-r from-raga-600 to-amber-600 hover:from-raga-700 hover:to-amber-700 text-white font-bold text-sm shadow-lg shadow-raga-500/25 transition-all flex items-center gap-2 hover:scale-[1.02]"
               >
                 <Sparkles className="w-4 h-4" />
-                <span>Activate AI & Identify &ldquo;{needsAiActivationFor}&rdquo;</span>
+                <span>Custom API Key / Setup</span>
               </button>
               <span className="text-xs text-stone-500 font-medium">
-                (Takes 30 seconds &bull; Free with Google Gemini)
+                (Built-in AI is 100% Free &bull; Google Gemini supported)
               </span>
             </div>
           </div>

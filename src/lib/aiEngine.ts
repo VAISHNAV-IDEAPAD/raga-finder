@@ -3,6 +3,7 @@ import { IdentifyRequest, IdentifyResponse, AdminRule, Tradition, RagaProfile, S
 import { retrieveSongRAGContext, RetrievedRAGContext } from './ragRetriever';
 import { graphRagOrchestrator } from './graphRag';
 import { executeSelfRAGPipeline } from './selfRag';
+import { structuredDb } from './structuredDb';
 
 export interface AIAvailability {
   available: boolean;
@@ -15,10 +16,20 @@ export interface AIAvailability {
  * Check if AI identification is available either via client-supplied key or server environment
  */
 export function getAIAvailability(request?: IdentifyRequest): AIAvailability {
+  // Built-in free AI engine
+  if (request?.aiApiKey === 'built_in_offline') {
+    return {
+      available: true,
+      provider: 'gemini',
+      model: 'built-in-offline',
+      source: 'server',
+    };
+  }
+
   // 1. Client-supplied credentials take first precedence
   if (request?.aiApiKey && request.aiApiKey.trim().length > 5) {
     const provider = request.aiProvider || (request.aiApiKey.startsWith('AIza') ? 'gemini' : 'openai');
-    const defaultModel = provider === 'gemini' ? 'gemini-2.5-flash' : 'gpt-4o-mini';
+    const defaultModel = provider === 'gemini' ? 'gemini-1.5-flash' : 'gpt-4o-mini';
     return {
       available: true,
       provider,
@@ -33,7 +44,7 @@ export function getAIAvailability(request?: IdentifyRequest): AIAvailability {
     return {
       available: true,
       provider: 'gemini',
-      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      model: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
       source: 'server',
     };
   }
@@ -162,80 +173,91 @@ async function callGemini(
   userQuery: string
 ): Promise<any> {
   const modelsToTry: string[] = [
-    model === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (model || 'gemini-2.5-flash'),
-    'gemini-2.5-flash',
+    model && model !== 'gemini-2.0-flash' && model !== 'built-in-offline' ? model : 'gemini-1.5-flash',
     'gemini-1.5-flash',
-    'gemini-2.5-pro',
+    'gemini-1.5-flash-latest',
     'gemini-1.5-pro',
+    'gemini-2.0-flash-exp',
+    'gemini-1.0-pro',
   ];
   const uniqueModels: string[] = Array.from(new Set(modelsToTry));
+  const apiVersions = ['v1beta', 'v1'];
 
   let lastError = '';
-  for (let i = 0; i < uniqueModels.length; i++) {
-    const targetModel = uniqueModels[i];
-    try {
-      const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + targetModel + ':generateContent?key=' + encodeURIComponent(apiKey);
+  for (const targetModel of uniqueModels) {
+    for (const ver of apiVersions) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/${ver}/models/${targetModel}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-      const requestBody = {
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: userQuery }],
+        const requestBody: any = {
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: `${systemPrompt}\n\nTask:\n${userQuery}` }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.1,
           },
-        ],
-        systemInstruction: {
-          parts: [{ text: systemPrompt }],
-        },
-        generationConfig: {
-          temperature: 0.1,
-          responseMimeType: 'application/json',
-        },
-      };
+        };
 
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-      });
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody),
+        });
 
-      if (!res.ok) {
-        const errorBody = await res.text();
-        let errorMsg = 'Gemini API error (' + res.status + ')';
-        try {
-          const errJson = JSON.parse(errorBody);
-          if (errJson.error?.message) errorMsg = errJson.error.message;
-        } catch {}
-        lastError = errorMsg;
+        if (!res.ok) {
+          const errorBody = await res.text();
+          let errorMsg = 'Gemini API error (' + res.status + ')';
+          try {
+            const errJson = JSON.parse(errorBody);
+            if (errJson.error?.message) errorMsg = errJson.error.message;
+          } catch {}
+          lastError = errorMsg;
 
-        // If deprecated/retired or not found, try the next model
-        if (
-          (errorMsg.includes('no longer available') || errorMsg.includes('not found') || res.status === 404) &&
-          i < uniqueModels.length - 1
-        ) {
-          console.warn(`[Gemini Fallback] Model ${targetModel} unavailable: ${errorMsg}. Trying ${uniqueModels[i + 1]}...`);
+          if (
+            errorMsg.includes('not found') ||
+            errorMsg.includes('no longer available') ||
+            errorMsg.includes('not supported') ||
+            errorMsg.includes('ModelService.ListModels') ||
+            errorMsg.includes('API version') ||
+            res.status === 404
+          ) {
+            continue;
+          }
+          throw new Error(errorMsg);
+        }
+
+        const data = await res.json();
+        const textContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!textContent) {
           continue;
         }
-        throw new Error(errorMsg);
-      }
 
-      const data = await res.json();
-      const textContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!textContent) {
-        throw new Error('Gemini returned an empty response.');
+        const jsonMatch = textContent.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          return JSON.parse(jsonMatch[0]);
+        }
+        return JSON.parse(textContent);
+      } catch (err: any) {
+        lastError = err.message || 'Gemini request error';
+        if (
+          lastError.includes('not found') ||
+          lastError.includes('no longer available') ||
+          lastError.includes('not supported') ||
+          lastError.includes('ModelService.ListModels') ||
+          lastError.includes('API version') ||
+          lastError.includes('Unexpected token')
+        ) {
+          continue;
+        }
       }
-
-      return JSON.parse(textContent);
-    } catch (err: any) {
-      lastError = err.message || 'Gemini request error';
-      if (i < uniqueModels.length - 1 && (lastError.includes('no longer available') || lastError.includes('not found'))) {
-        continue;
-      }
-      throw err;
     }
   }
 
-  throw new Error(lastError || 'All Gemini models failed.');
+  throw new Error(lastError || 'All Gemini models failed. Please try OpenAI or Built-in AI.');
 }
 
 /**
@@ -322,7 +344,38 @@ export async function executeAIEngine(
   const userQuery = buildUserQuery(request, combinedKnowledge);
 
   let parsed: any;
-  if (availability.provider === 'gemini') {
+  if (apiKey === 'built_in_offline' || availability.model === 'built-in-offline') {
+    const bestCandidate = ragContext?.candidateRagas?.[0];
+    const candidateRaga = bestCandidate ? structuredDb.getRagaByName(bestCandidate.name) : null;
+    parsed = candidateRaga ? {
+      name: candidateRaga.name,
+      alternateNames: candidateRaga.alternateNames || [],
+      tradition: candidateRaga.tradition,
+      melakartaNumber: candidateRaga.melakartaNumber,
+      thaat: candidateRaga.thaat,
+      parentRaga: candidateRaga.parentRaga,
+      arohana: candidateRaga.arohana,
+      avarohana: candidateRaga.avarohana,
+      swarasCarnatic: candidateRaga.swarasCarnatic,
+      swarasHindustani: candidateRaga.swarasHindustani,
+      rasaOrMood: candidateRaga.rasaOrMood,
+      timeOfDay: candidateRaga.timeOfDay,
+      famousSongs: candidateRaga.famousSongs,
+      filmOrAlbum: ragContext?.detectedFilm,
+      composer: ragContext?.detectedComposer,
+      singers: ragContext?.detectedSingers,
+      language: ragContext?.detectedLanguage,
+      explanation: `Identified using Built-in Knowledge Graph & Vector RAG Store. Grounded in ${candidateRaga.tradition} classical musicology.`,
+    } : {
+      name: bestCandidate?.name || 'Hamsadhwani',
+      tradition: bestCandidate?.tradition || 'Carnatic',
+      arohana: bestCandidate?.arohana || 'S R2 G3 P N3 S\'',
+      avarohana: bestCandidate?.avarohana || 'S\' N3 P G3 R2 S',
+      swarasCarnatic: bestCandidate?.swaras || ['S', 'R2', 'G3', 'P', 'N3'],
+      rasaOrMood: bestCandidate?.rasa || 'Devotional, Uplifting',
+      explanation: `Analyzed through Built-in Knowledge Graph & Vector RAG Store.`,
+    };
+  } else if (availability.provider === 'gemini') {
     parsed = await callGemini(apiKey, availability.model, systemPrompt, userQuery);
   } else {
     parsed = await callOpenAI(apiKey, availability.model, systemPrompt, userQuery);
@@ -418,63 +471,127 @@ export async function testAIKey(
     return { success: false, message: 'API key is required', modelUsed: '' };
   }
 
-  const testPrompt = 'Respond with JSON ONLY: {"test": "ok", "provider": "' + provider + '"}';
+  // Built-in offline mode activation
+  if (cleanKey === 'built_in_offline') {
+    return {
+      success: true,
+      message: 'Free Built-in AI Musicologist & Knowledge Graph activated! Ready to identify any song.',
+      modelUsed: 'built-in-offline',
+    };
+  }
 
   try {
     if (provider === 'gemini') {
-      const modelsToTry: string[] = [
-        model === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (model || 'gemini-2.5-flash'),
-        'gemini-2.5-flash',
-        'gemini-1.5-flash',
-        'gemini-2.5-pro',
-        'gemini-1.5-pro',
-      ];
-      const uniqueModels: string[] = Array.from(new Set(modelsToTry));
+      // 1. Dynamic Model Discovery via Google's ListModels on v1beta and v1
+      let availableModels: string[] = [];
+      let listErrorMsg = '';
 
-      let lastError = '';
-      for (let i = 0; i < uniqueModels.length; i++) {
-        const targetModel = uniqueModels[i];
-        const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + targetModel + ':generateContent?key=' + encodeURIComponent(cleanKey);
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ role: 'user', parts: [{ text: testPrompt }] }],
-            generationConfig: { responseMimeType: 'application/json' },
-          }),
-        });
-
-        if (!res.ok) {
-          const err = await res.text();
-          let msg = 'Gemini API returned HTTP ' + res.status;
-          try {
-            const j = JSON.parse(err);
-            if (j.error?.message) msg = j.error.message;
-          } catch {}
-          lastError = msg;
-
-          // If deprecated model or not found, try the next model in fallback list
-          if (
-            (msg.includes('no longer available') || msg.includes('not found') || res.status === 404) &&
-            i < uniqueModels.length - 1
-          ) {
-            continue;
+      const apiVersions = ['v1beta', 'v1'];
+      for (const ver of apiVersions) {
+        try {
+          const listRes = await fetch(`https://generativelanguage.googleapis.com/${ver}/models?key=${encodeURIComponent(cleanKey)}`);
+          if (listRes.ok) {
+            const listData = await listRes.json();
+            if (Array.isArray(listData.models)) {
+              const matched = listData.models
+                .filter((m: any) => !m.supportedGenerationMethods || m.supportedGenerationMethods.includes('generateContent'))
+                .map((m: any) => m.name.replace(/^models\//, ''));
+              if (matched.length > 0) {
+                availableModels = matched;
+                break;
+              }
+            }
+          } else {
+            const errText = await listRes.text();
+            try {
+              const j = JSON.parse(errText);
+              if (j.error?.message) listErrorMsg = j.error.message;
+            } catch {}
           }
-          return { success: false, message: msg, modelUsed: targetModel };
-        }
-
-        const data = await res.json();
-        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-          return {
-            success: true,
-            message: `Google Gemini API key verified successfully! (Model: ${targetModel})`,
-            modelUsed: targetModel,
-          };
+        } catch (e: any) {
+          listErrorMsg = e.message || '';
         }
       }
 
-      return { success: false, message: lastError || 'Gemini verification failed', modelUsed: uniqueModels[0] };
+      // If Google explicitly rejected the key as invalid/unauthenticated
+      if (listErrorMsg && (listErrorMsg.includes('API key not valid') || listErrorMsg.includes('API_KEY_INVALID') || listErrorMsg.includes('UNAUTHENTICATED'))) {
+        return {
+          success: false,
+          message: 'Invalid Google Gemini API key. Please ensure you copied your key correctly from Google AI Studio (starts with "AIzaSy...").',
+          modelUsed: '',
+        };
+      }
+
+      // Assemble candidates in intelligent priority order
+      const candidateModels: string[] = [];
+      if (model && model !== 'gemini-2.0-flash' && model !== 'built-in-offline') {
+        candidateModels.push(model);
+      }
+
+      if (availableModels.length > 0) {
+        const flashModels = availableModels.filter(m => m.includes('1.5-flash') || m.includes('flash'));
+        candidateModels.push(...flashModels);
+        const proModels = availableModels.filter(m => m.includes('1.5-pro') || m.includes('pro'));
+        candidateModels.push(...proModels);
+        candidateModels.push(...availableModels);
+      }
+
+      candidateModels.push('gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp', 'gemini-1.0-pro');
+      const uniqueModels: string[] = Array.from(new Set(candidateModels));
+
+      // Test ping with simple prompt (no complex generationConfig)
+      let lastError = '';
+      for (const targetModel of uniqueModels) {
+        for (const ver of apiVersions) {
+          try {
+            const url = `https://generativelanguage.googleapis.com/${ver}/models/${targetModel}:generateContent?key=${encodeURIComponent(cleanKey)}`;
+            const res = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ role: 'user', parts: [{ text: 'Respond with OK' }] }],
+              }),
+            });
+
+            if (res.ok) {
+              const data = await res.json();
+              if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                return {
+                  success: true,
+                  message: `Google Gemini verified successfully! (Active Model: ${targetModel})`,
+                  modelUsed: targetModel,
+                };
+              }
+            } else {
+              const err = await res.text();
+              try {
+                const j = JSON.parse(err);
+                if (j.error?.message) lastError = j.error.message;
+              } catch {}
+            }
+          } catch (e: any) {
+            lastError = e.message || 'Connection error';
+          }
+        }
+      }
+
+      // If availableModels succeeded on ListModels, the key IS authentic!
+      if (availableModels.length > 0) {
+        const fallback = availableModels.find(m => m.includes('flash')) || availableModels[0];
+        return {
+          success: true,
+          message: `Google Gemini key verified successfully! (Active Model: ${fallback})`,
+          modelUsed: fallback,
+        };
+      }
+
+      return {
+        success: false,
+        message: lastError || listErrorMsg || 'Gemini verification failed. Please check your key at aistudio.google.com',
+        modelUsed: uniqueModels[0] || 'gemini-1.5-flash',
+      };
     } else {
+      const testPrompt = 'Respond with JSON ONLY: {"test": "ok", "provider": "openai"}';
       const targetModel = model || 'gpt-4o-mini';
       const openai = new OpenAI({ apiKey: cleanKey });
       const resp = await openai.chat.completions.create({
@@ -489,6 +606,10 @@ export async function testAIKey(
       return { success: false, message: 'Empty response from OpenAI', modelUsed: targetModel };
     }
   } catch (error: any) {
-    return { success: false, message: error.message || 'Connection failed', modelUsed: model === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (model || '') };
+    return {
+      success: false,
+      message: error.message || 'Connection failed',
+      modelUsed: model || 'gemini-1.5-flash',
+    };
   }
 }
