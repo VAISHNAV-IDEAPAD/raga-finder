@@ -489,6 +489,6 @@ export async function testAIKey(
       return { success: false, message: 'Empty response from OpenAI', modelUsed: targetModel };
     }
   } catch (error: any) {
-    return { success: false, message: error.message || 'Connection failed', modelUsed: model || '' };
+    return { success: false, message: error.message || 'Connection failed', modelUsed: model === 'gemini-2.0-flash' ? 'gemini-2.5-flash' : (model || '') };
   }
 }
